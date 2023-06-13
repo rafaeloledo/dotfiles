@@ -1,7 +1,5 @@
-_Obs: This README is both for helping me documenting and synthetically showing my setup/dotfiles_
-
-If you're curious, enter on my repos and filter for `config files` to get all
-the repos related to my dotfiles
+Enter on my repos and filter for `config files` to get all the repos related 
+to my dotfiles
 
 ## OS
 
