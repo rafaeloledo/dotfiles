@@ -1,4 +1,6 @@
 _Obs: This README is both for helping me documenting and synthetically showing my setup/dotfiles_
+If you're curious, enter on my repos and filter for `config files` to get all
+the repos related to my dotfiles
 
 ## Setup Ingredients
 
@@ -60,8 +62,6 @@ _Obs: This README is both for helping me documenting and synthetically showing m
 ## Other
 
 - `scripts`
-
-> For every item above i've a private repo and i not show for reducing maintenance
 
 ## OS
 
