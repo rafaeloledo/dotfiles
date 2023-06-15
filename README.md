@@ -25,8 +25,7 @@ to my dotfiles
 ## Preferred themes
 
 - `Rosé pine` - General applications
-- `One Dark Pro` - For applications that not have the above theme
-
+- `One Dark Pro`  
 ## Cloud on linux
 
 - `astrada/google-drive-ocamlfuse` - Google drive
