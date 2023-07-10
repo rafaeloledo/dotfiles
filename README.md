@@ -1,5 +1,6 @@
-Enter on my repos and filter for `config files` to get all the repos related 
-to my dotfiles
+Enter on my repos and filter for `config files` to get all the repos related
+to my dotfiles. If it is marked with `unused` it's because i already tested and
+found no use.
 
 ## OS
 
@@ -25,7 +26,8 @@ to my dotfiles
 ## Preferred themes
 
 - `Rosé pine` - General applications
-- `One Dark Pro`  
+- `One Dark Pro`
+
 ## Cloud on linux
 
 - `astrada/google-drive-ocamlfuse` - Google drive
@@ -34,5 +36,5 @@ to my dotfiles
 ## Aiming to use/test
 
 - `emacs` - An operating system
+  - tested but i found no use, just continued using vim
 - `ghq` - Remote repository manager
-
