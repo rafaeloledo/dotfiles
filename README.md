@@ -1,6 +1,6 @@
 Enter on my repos and filter for `config files` to get all the repos related
 to my dotfiles. If it is marked with `unused` it's because i already tested and
-found no use.
+found no important use.
 
 ## OS
 
@@ -36,5 +36,5 @@ found no use.
 ## Aiming to use/test
 
 - `emacs` - An operating system
-  - tested but i found no use, just continued using vim
+  - tested but i found no important use, just continued using vim
 - `ghq` - Remote repository manager
