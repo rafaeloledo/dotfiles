@@ -1,0 +1,3 @@
+#!/bin/bash
+# script that i want to remember, gets the parent working dir
+printf '%s\n' "${PWD##*/}"

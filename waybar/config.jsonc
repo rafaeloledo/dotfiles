@@ -1,0 +1,40 @@
+{
+  "position": "top",
+  "layer": "top",
+  "height": 16,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio"],
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 60,
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{name}",
+    "format-icons": {
+      "active": " ",
+      "default": " ",
+      "sort-by-number": true,
+    },
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M:%S - %d/%m/%y}",
+    "tooltip": true,
+    "tooltip-format": "{:%Y %B}\n{calendar}",
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume} ",
+    "format-muted": "󰝟",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"],
+    },
+    "on-click": "killall .pavucontrol-wrapped || pavucontrol",
+    "on-scroll-up": "sh ~/.local/scripts/volume up",
+    "on-scroll-down": "sh ~/.local/scripts/volume down",
+    "scroll-step": 5,
+    "on-click-right": "sh ~/.local/scripts/volume mute",
+    "tooltip": false,
+  },
+}

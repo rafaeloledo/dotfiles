@@ -1,0 +1,5 @@
+#! /usr/bin/fish
+
+# script that setups google drive
+
+google-drive-ocamlfuse /home/rgnh55/Documentos/GoogleDrive

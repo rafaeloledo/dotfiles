@@ -1,0 +1,21 @@
+# vim: ft=bash
+if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+  # hasExternalHDMI=$(xrandr | rg "HDMI-0 connected")
+  hasExternalHDMI=$(xrandr | rg "HDMI-1-0 connected")
+  # hasInnerDP=$(xrandr | rg "eDP-1-1 connected")
+  hasInnerDP=$(xrandr | rg "eDP-1 connected")
+  
+  if [ -n "$hasInnerDP" ] && [ -n "$hasExternalHDMI" ]; then
+    # xrandr --output eDP-1-1 --off
+    xrandr --output eDP-1 --off
+  fi
+else
+  hasExternalHDMI=$(hyprctl monitors | rg "ID 1")
+  hasInnerDP=$(hyprctl monitors | rg "ID 0")
+
+  if [ "$hasInnerDP" == "Monitor eDP-1 (ID 0):" ] && [ "$hasExternalHDMI" == "Monitor HDMI-A-1 (ID 1):" ]; then
+    inner_monitor disable
+  else
+    hyprctl keyword input:sensitivity -1
+  fi
+fi

@@ -1,0 +1,16 @@
+#!/usr/sbin/python
+# fetch and pull all git repos of cwd childs
+import os
+
+original_dir = os.getcwd()
+
+for d in os.listdir():
+    if os.path.isdir(d):
+        os.chdir(d)
+        if os.path.isdir('.git'):
+            print(f"fetching {d} ...")
+            os.system('git fetch 2> /dev/null')
+            print(f"pulling {d} ...")
+            os.system('git pull 2> /dev/null')
+        os.chdir(original_dir)
+

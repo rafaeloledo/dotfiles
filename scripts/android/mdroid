@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# mount android on specified dir
+
+mtp-detect 1> /dev/null 2> /dev/null
+aft-mtp-mount ~/mnt/android-phone 1> /dev/null 2> /dev/null

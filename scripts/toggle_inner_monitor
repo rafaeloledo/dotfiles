@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+	if [ "$INNER_DISPLAY" == "on" ] || [ "$INNER_DISPLAY" == "" ]; then
+		export INNER_DISPLAY=off
+		xrandr --output eDP-1 --off
+		return
+	fi
+	if [ "$INNER_DISPLAY" == "off" ]; then
+		export INNER_DISPLAY=on
+		xrandr --output eDP-1 --mode 1920x1080 --rate 144.15 --dpi 96
+	fi 
+fi

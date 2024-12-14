@@ -1,0 +1,3 @@
+#!/bin/bash
+# unmount android-phone
+umount ~/mnt/android-phone

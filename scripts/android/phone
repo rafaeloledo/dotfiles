@@ -1,0 +1,3 @@
+#!/bin/bash
+# wrapped scrcpy
+scrcpy -t --disable-screensaver -K -w --turn-screen-off

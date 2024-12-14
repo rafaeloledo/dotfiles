@@ -1,0 +1,7 @@
+#vim: ft=sh
+
+if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+  maim -s | xclip -selection clipboard -t image/png
+else
+  grim -g "$(slurp)" - | wl-copy
+fi

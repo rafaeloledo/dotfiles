@@ -1,0 +1,100 @@
+* {
+  font: "JetBrainsMono Bold 11";
+}
+
+window {
+  padding: 1em;
+  border-radius: 10px;
+  background-color: #282738;
+  border-color: #282738;
+  width: 33%;
+}
+
+mainbox {
+  children: [ message, inputbar, listview ];
+}
+
+element {
+  children: [ element-icon, element-text ];
+}
+
+element,element-text,element-icon, button {
+  cursor: pointer;
+}
+
+inputbar {
+  margin: 0 10px;
+  spacing: 0.4em;
+  children: [ entry, overlay, case-indicator ];
+}
+
+listview, message {
+  border-radius: 10px;
+  columns: 1;
+  lines: 8;
+}
+
+listview {
+  border: 0 5px 5px;
+  border-radius: 10px;
+  spacing: 10px;
+  border-color: #282738;
+  scrollbar: true;
+}
+
+element {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+element-text {
+  background-color: #282738;
+  text-color: #FFFFFF;
+  font: "JetBrains Mono Medium";
+}
+
+element normal.normal,
+element.normal.urgent,
+element.normal.active,
+element.alternate.normal
+{
+  background-color: #282738;
+  text-color: #22668D;
+}
+
+element.selected.normal
+{
+  background-color: #22668D;
+  border-color: #22668D;
+  text-color: #22668D;
+}
+
+element-text.selected.normal,
+element-text.selected.active
+{
+  background-color: #22668D;
+  border-color: #22668D;
+  text-color: #000000;
+  font: "JetBrains Mono Medium";
+}
+
+scrollbar {
+  width: 4px ;
+  handle-color: #22668D;
+  handle-width: 8px ;
+}
+
+entry {
+  placeholder: "Search here";
+  placeholder-color: #F0F0F0;
+  text-color: #F0F0F0;
+  border-color: #353446;
+  background-color: #353446;
+  border: 0;
+  padding: 14px;
+  border-radius: 20px;
+  blink: false;
+}
+
+/* vim:ft=css

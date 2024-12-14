@@ -1,0 +1,24 @@
+# vim: ft=sh
+
+function disable() {
+  if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+    xrandr --output eDP-1-1 --off
+  else
+    hyprctl keyword monitor eDP-1,disable
+    hyprctl keyword input:sensitivity -1
+  fi
+}
+
+function enable() {
+  if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+    xrandr --output eDP-1-1 --mode 1920x1080 --rate 144.15 --dpi 100
+  else
+    hyprctl keyword monitor eDP-1, 1920x1080, 0x0, 1
+    hyprctl keyword input:sensitivity 0
+  fi
+}
+
+case "$1" in
+  enable) enable;;
+  disable) disable;;
+esac

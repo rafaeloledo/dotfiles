@@ -1,0 +1,7 @@
+--target=~/.config
+--ignore=.stowrc
+--ignore=clean
+--ignore=setup
+--ignore=nix
+--ignore=.termux
+--ignore=win32

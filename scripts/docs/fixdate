@@ -1,0 +1,3 @@
+#!/bin/bash
+# set time to sync equal to windows' and firmware clocks
+timedatectl set-local-rtc 1

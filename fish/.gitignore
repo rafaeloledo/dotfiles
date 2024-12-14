@@ -1,0 +1,16 @@
+fish_variables
+_tide*
+tide*
+
+*prompt.fish
+fisher.fish
+!fish_prompt.fish
+__z*
+
+config-local.fish
+
+z.*
+
+completions/
+
+themes

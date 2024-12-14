@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\Directory\shell\Open with &Neovide]
+@="Open with &Neovide"
+"Icon"="C:\\dev\\scoop\\apps\\neovide\\current\\neovide.exe"
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\Directory\shell\Open with &Neovide\command]
+@="\"C:\\dev\\scoop\\apps\\neovide\\current\\neovide.exe\" \"%v\""
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\Directory\Background\shell\Open with &Neovide]
+@="Open with &Neovide"
+"Icon"="C:\\dev\\scoop\\apps\\neovide\\current\\neovide.exe"
+
+[HKEY_CURRENT_USER\SOFTWARE\Classes\Directory\Background\shell\Open with &Neovide\command]
+@="\"C:\\dev\\scoop\\apps\\neovide\\current\\neovide.exe\" \"%v\""

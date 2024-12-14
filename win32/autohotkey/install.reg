@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
+"BaseScript"="\"C:\\Users\\rafae\\.config\\autohotkey\\base.ahk\""
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
+"SecondScript"="\"C:\\Users\\rafae\\.config\\autohotkey\\_secondkbd.ahk\""
+

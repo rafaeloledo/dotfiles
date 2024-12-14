@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+stow .
+ln -s ~/.dotfiles/wallpapers/ ~/wallpapers
+ln -s ~/.dotfiles/scripts/ ~/.local/scripts

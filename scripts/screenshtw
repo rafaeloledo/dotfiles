@@ -1,0 +1,4 @@
+#!/bin/bash
+# tldr, make a print of the current window on the screen
+
+#slurp | grim -g - - | wl-copy <not-working>

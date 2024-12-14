@@ -1,0 +1,8 @@
+#!/bin/bash
+# script that wraps Hyprland execution
+
+cd ~
+
+export XCURSOR_SIZE=24
+
+exec Hyprland

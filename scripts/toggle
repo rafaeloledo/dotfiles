@@ -1,0 +1,4 @@
+# vim: ft=sh
+
+PID=$(pgrep "$1")
+kill $PID || $1
