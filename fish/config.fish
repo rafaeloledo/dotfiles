@@ -31,6 +31,8 @@ alias ta "tmux a"
 alias td "tmux detach"
 alias cat "bat -p"
 alias vim neovide
+alias gci "git commit"
+alias gst "git status"
 
 # exporting PATHs
 # set -gx PATH /home/rgnh55/.local/share/nvim/mason/bin $PATH 2>/dev/null
