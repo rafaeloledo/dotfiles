@@ -30,12 +30,18 @@ alias t tmux
 alias ta "tmux a"
 alias td "tmux detach"
 alias cat "bat -p"
-alias vim neovide
 alias gci "git commit"
 alias gst "git status"
 alias gps "git push"
 alias gpl "git pull"
 alias glg "git log"
+alias gcl "git clone"
+alias gco "git checkout"
+alias gbr "git branch"
+alias gd "git diff"
+alias gad "git add ."
+alias gf "git fetch"
+alias grm "git rm"
 
 # exporting PATHs
 # set -gx PATH /home/rgnh55/.local/share/nvim/mason/bin $PATH 2>/dev/null

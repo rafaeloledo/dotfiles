@@ -1,11 +1,11 @@
 # vim: ft=sh
 
-image_dir=~/.dotfiles/wallpapers/
-random_image=$(find "$image_dir" -type f -name '*.png' -o -name '*.jpg' | shuf -n 1)
+image_dir=~/wallpapers
+random_image=$(ls "$image_dir" | shuf -n 1)
 
 if [ -n "$random_image" ]; then
   if [ "$XDG_SESSION_TYPE" == "x11" ]; then
-    feh --bg-scale "$random_image"
+    feh --bg-scale $image_dir/"$random_image"
   else
     swaybg -i "$random_image"
   fi
