@@ -9,21 +9,19 @@ wezterm.on("gui-startup", function(cmd)
 	local tab, pane, window = wezterm.mux.spawn_window(cmd or {
 		position = { x = (screen.width - width) / 2, y = (screen.height - height) / 2 },
 	})
-	local _, second_pane, _ = window:spawn_tab({})
-	local _, third_pane, _ = window:spawn_tab({})
+
+	if wezterm.target_triple ~= "x86_64-pc-windows-msvc" then
+		window:gui_window():toggle_fullscreen()
+		return
+	end
 
 	window:gui_window():set_inner_size(width, height)
 end)
 
-config.colors = {
-	background = "hsla(192, 100%, 5%, 1)",
-	cursor_bg = "hsla(194, 14%, 40%, 1)",
-}
-
 config.enable_tab_bar = false -- toggle comment if want it
 config.enable_wayland = false
 config.font_size = 14
-config.font = wezterm.font("BlexMono Nerd Font") -- i didn't have trouble in termux
+config.font = wezterm.font("BlexMono Nerd Font")
 config.window_background_opacity = 0.9
 config.enable_scroll_bar = false
 config.initial_cols = 119

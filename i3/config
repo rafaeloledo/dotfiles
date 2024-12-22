@@ -3,7 +3,7 @@
 # exec xrandr --output HDMI-0 --mode 1920x1080 --rate 119.98 --dpi 96
 # exec xrandr --output HDMI-1-0 --mode 1920x1080 --rate 119.98 --dpi 96
 exec ~/scripts/randwall
-exec ~/scripts/toggle_inner_display_automatically
+# exec ~/scripts/toggle_inner_display_automatically
 
 exec_always /usr/bin/env picom -b
 exec_always /usr/bin/env emacs --daemon

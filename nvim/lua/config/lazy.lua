@@ -53,6 +53,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.dap.nlua" },
 
     { import = "lazyvim.plugins.extras.editor.mini-files" },
+    -- { import = "lazyvim.plugins.extras.editor.leap" },
 
     { import = "plugins" },
   },

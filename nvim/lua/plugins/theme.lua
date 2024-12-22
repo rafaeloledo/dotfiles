@@ -1,4 +1,9 @@
 return {
-  { "craftzdog/solarized-osaka.nvim" },
-  { "catppuccin/nvim", name = "catppuccin" },
+  {
+    "Mofiqul/vscode.nvim",
+    config = function()
+      require("vscode").setup()
+      vim.cmd("colorscheme vscode")
+    end,
+  },
 }
