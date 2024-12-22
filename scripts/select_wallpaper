@@ -1,6 +1,6 @@
 # vim: ft=bash
 
-folder=/mnt/share/.dotfiles/wallpapers
+folder=~/wallpapers
 file="$(ls "$folder" | rofi -dmenu)"
 
 if [ "$XDG_SESSION_TYPE" == "x11" ];

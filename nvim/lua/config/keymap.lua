@@ -1,0 +1,17 @@
+local opts = { silent = true }
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<leader>ct", ":LspStop<CR>", { desc = "LspStop" })
+vim.keymap.set("n", "<C-q>", "<C-z>")
+vim.keymap.set("n", "<leader>yy", "ggVG")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set("n", "n", "nzzzv", opts)
+vim.keymap.set("n", "N", "Nzzzv", opts)
+vim.keymap.set("n", "<leader><leader>", ":lua MiniFiles.open()<CR>", opts)
+vim.keymap.set("n", "QQ", ":q<CR>")
+vim.keymap.set("n", "WW", ":w<CR>")
+vim.keymap.set("n", "E", "$")
+vim.keymap.set("n", "B", "^")
+vim.keymap.set("n", "<C-s>", ":lua require('persistence').select()<CR>")

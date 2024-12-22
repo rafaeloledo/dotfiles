@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-eza -A -I=".git|.stowrc|nix|scripts|.termux|wallpapers|win32" | awk -v home="$HOME" '{ print home"/.config/"$0 }' | xargs rm -rf

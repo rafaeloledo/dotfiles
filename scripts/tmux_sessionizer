@@ -4,10 +4,10 @@
 if [[ $# -eq 1 ]]; then
   selected=$1 # note for future me: bash scripts can't have surrounding spaces in assignment
 else
-  selected=$(find ~/repos ~/repos/personal -mindepth 1 -maxdepth 1 -type d | fzf)
+  selected=$(find  ~/sync ~/dotfiles ~/repos ~/repos/gh -mindepth 1 -maxdepth 1 -type d -not -path "*/.stfolder" -not -path "*/.git" | fzf)
 fi
 
-# if selected is not empty
+# if selected is empty
 if [[ -z $selected ]]; then
   exit 0
 fi

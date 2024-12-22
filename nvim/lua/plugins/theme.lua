@@ -6,4 +6,9 @@ return {
       vim.cmd("colorscheme vscode")
     end,
   },
+  {
+    "ellisonleao/gruvbox.nvim",
+    config = true,
+    opts = ...,
+  },
 }

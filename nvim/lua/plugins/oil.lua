@@ -1,13 +1,9 @@
-if vim.fn.exists(":Oil") > 0 then
-  vim.keymap.set("n", "-", "<cmd>Oil<CR>")
-end
-
 return {
   "stevearc/oil.nvim",
+  enabled = false,
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {
-    default_file_explorer = true,
     view_options = {
       show_hidden = true,
       skip_confirm_for_simple_edits = true,

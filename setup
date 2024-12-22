@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
-stow .
-ln -s ~/.dotfiles/wallpapers/ ~/wallpapers
-ln -s ~/.dotfiles/scripts/ ~/.local/scripts
+# i don't really need stow since the -f options delete if already exist :D
+ln -n -f -s ~/dotfiles/scripts/ ~/.local/scripts
+
+ln -n -f -s ~/dotfiles/wallpapers/ ~/wallpapers
+
+ln -n -f -s ~/dotfiles/hypr ~/.config/hypr
+ln -n -f -s ~/dotfiles/i3 ~/.config/i3
+ln -n -f -s ~/dotfiles/doom ~/.config/doom
+ln -n -f -s ~/dotfiles/yazi ~/.config/yazi
+ln -n -f -s ~/dotfiles/picom ~/.config/picom
+ln -n -f -s ~/dotfiles/nvim ~/.config/nvim
+ln -n -f -s ~/dotfiles/tmux ~/.config/tmux
+ln -n -f -s ~/dotfiles/wezterm ~/.config/wezterm
+ln -n -f -s ~/dotfiles/waybar ~/.config/waybar
+ln -n -f -s ~/dotfiles/zshrc ~/.config/zshrc
+ln -n -f -s ~/dotfiles/ansible ~/.config/ansible
+ln -n -f -s ~/dotfiles/fish ~/.config/fish
+ln -n -f -s ~/dotfiles/viewnior ~/.config/viewnior
+ln -n -f -s ~/dotfiles/rofi ~/.config/rofi
+ln -n -f -s ~/dotfiles/fish ~/.config/fish
+ln -n -f -s ~/dotfiles/dunst ~/.config/dunst
+ln -n -f -s ~/dotfiles/keyd ~/.config/keyd
+ln -n -f -s ~/dotfiles/gtk-3.0 ~/.config/gtk-3.0
