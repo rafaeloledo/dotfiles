@@ -1,4 +1,4 @@
 build:
-	sudo nixos-rebuild build -I nixos-config=/home/rgnh55/dotfiles/nix-minimal/configuration.nix
+	sudo nixos-rebuild build --flake .
 switch:
-	sudo nixos-rebuild switch -I nixos-config=/home/rgnh55/dotfiles/nix-minimal/configuration.nix
+	sudo nixos-rebuild switch --flake .

@@ -38,6 +38,7 @@ let
   ];
 
   editor = with pkgs; [
+    neovim
     wezterm
     arduino-ide
     vscode-fhs

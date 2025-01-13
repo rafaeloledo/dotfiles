@@ -1,0 +1,9 @@
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  config.vim = {
+    theme.enable = true;
+  };
+}

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix  ./services.nix ./user.nix ];
@@ -20,7 +20,7 @@
     LC_TELEPHONE = "pt_BR.UTF-8";
     LC_TIME = "pt_BR.UTF-8";
   };
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [ vim wget ];
@@ -31,4 +31,5 @@
   };
   networking.firewall.allowedTCPPorts = [ 80 3000 22 ];
   system.stateVersion = "24.11";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
