@@ -17,7 +17,6 @@ ln -n -f -s ~/dotfiles/waybar ~/.config/waybar
 ln -n -f -s ~/dotfiles/zshrc ~/.config/zshrc
 ln -n -f -s ~/dotfiles/ansible ~/.config/ansible
 ln -n -f -s ~/dotfiles/fish ~/.config/fish
-ln -n -f -s ~/dotfiles/viewnior ~/.config/viewnior
 ln -n -f -s ~/dotfiles/rofi ~/.config/rofi
 ln -n -f -s ~/dotfiles/fish ~/.config/fish
 ln -n -f -s ~/dotfiles/dunst ~/.config/dunst

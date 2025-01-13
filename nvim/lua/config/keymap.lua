@@ -57,6 +57,8 @@ keymap.set("n", "N", "Nzzzv", opts)
 keymap.set("n", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-u>", "<C-u>zz")
 
-keymap.set("n", "sf", function()
-  require("mini.files").open()
-end, { desc = "Mini Files" })
+-- keymap.set("n", "sf", function()
+--   require("mini.files").open()
+-- end, { desc = "Mini Files" })
+
+keymap.set("n", "sf", "<cmd>Neotree<CR>", { desc = "Neotree" })

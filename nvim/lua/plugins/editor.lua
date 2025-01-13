@@ -36,9 +36,7 @@ return {
 
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enabled = false,
     opts = {
-      hijack_netrw_behavior = "open_default",
       filesystem = {
         filtered_items = {
           visible = true,
@@ -47,5 +45,14 @@ return {
         },
       },
     },
+  },
+
+  {
+    "stevearc/oil.nvim",
+    enabled = false,
+    event = "BufEnter",
+    config = function()
+      require("oil").setup()
+    end,
   },
 }
