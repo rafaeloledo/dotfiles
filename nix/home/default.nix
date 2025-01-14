@@ -25,7 +25,7 @@ let
   ];
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in
-{
+{ 
   imports = [
     ./software
     ./terminal
@@ -41,7 +41,7 @@ in
   home.file = builtins.listToAttrs (map (name: {
     name = ".config/${name}";
     value = {
-      source = mkOutOfStoreSymlink "/home/rgnh55/.dotfiles/${name}";
+      source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/${name}";
     };
   }) dotfiles);
 

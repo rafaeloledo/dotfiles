@@ -1,24 +1,10 @@
-{
-  pkgs,
-  options,
-  config,
-  lib,
-  ...
-}:
+{ pkgs, options, config, lib, ... }:
 
 {
-  imports = [ ./libinput.nix ];
-
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-    ];
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
-  };
+  imports = [
+    ./libinput.nix
+    ./plasma.nix
+  ];
 
   systemd.enableEmergencyMode = false;
 
@@ -104,7 +90,7 @@
     nvtopPackages.full
     killall
     egl-wayland
-        gcc
+    gcc
     gnumake
     cmake
     wget
@@ -113,10 +99,11 @@
     spice-vdagent
 		blueman
 		cloudflared
+    vim
   ];
   system.stateVersion = "24.05";
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config.allowUnfree = true;
+
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 

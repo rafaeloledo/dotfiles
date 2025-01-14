@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+
+{
   systemd.services.my_tunnel = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];

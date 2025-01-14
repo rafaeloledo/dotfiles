@@ -1,5 +1,6 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
 
+{
   imports = [
     ./tools
     ./wayland
@@ -8,8 +9,6 @@
     ./lsp
   ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
     brave

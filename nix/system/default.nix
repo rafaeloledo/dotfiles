@@ -1,22 +1,18 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   imports = [
     ./core
-    ./network
-		./software
+    ./network.nix
+		./software.nix
     ./hardware
-    ./fonts
-		./services
+    ./fonts.nix
+		./cloudflared.nix
   ];
 
   # environment.variables.NIXOS_OZONE_WL = "1";
 
-  config.services.postgresql = {
+  services.postgresql = {
     enable = true;
     ensureDatabases = [ "postgres" ];
     enableTCPIP = true;
@@ -25,5 +21,4 @@
       local all all trust
     '';
   };
-
 }

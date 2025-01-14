@@ -1,3 +1,0 @@
-{
-	imports = [ ./cloudflared.nix ];
-}

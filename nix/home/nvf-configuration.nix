@@ -1,8 +1,6 @@
+{ pkgs, lib, ... }:
+
 {
-  pkgs,
-  lib,
-  ...
-}: {
   config.vim = {
     theme.enable = true;
     theme.name = "gruvbox";
