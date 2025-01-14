@@ -7,7 +7,7 @@ if [ -n "$random_image" ]; then
   if [ "$XDG_SESSION_TYPE" == "x11" ]; then
     feh --bg-scale $image_dir/"$random_image"
   else
-    swaybg -i "$random_image"
+    swaybg -i $image_dir/"$random_image"
   fi
 else
   echo "No images found in $image_dir"
