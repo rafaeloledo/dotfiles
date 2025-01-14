@@ -20,7 +20,7 @@
     libinput.enable = true;
     libinput.mouse.accelProfile = "flat";
     libinput.touchpad.accelProfile = "flat";
-
+    
     printing.enable = true;
   };
 }

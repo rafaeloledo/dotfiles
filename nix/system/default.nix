@@ -2,71 +2,69 @@
 
 {
   imports = [
-    ./core.nix
-    ./network.nix
-		./software.nix
     ./hardware.nix
-    ./fonts.nix
 		./cloudflared.nix
     ./libinput.nix
     ./plasma.nix
+    # ./gnome.nix
   ];
 
   # environment.variables.NIXOS_OZONE_WL = "1";
 
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/16aebad7-8b44-4441-8589-e1fab97045f8";
+    fsType = "ext4";
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/7875-C267";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+  swapDevices = [ ];
+  
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   systemd.enableEmergencyMode = false;
 
-  users = {
-    users.rgnh55 = {
-      isNormalUser = true;
-      description = "rgnh55";
-      shell = pkgs.fish;
-      extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" ];
-      packages = with pkgs; [
-        kdePackages.kate scrcpy android-studio 
-      ];
-    };
-    defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.fish;
+  users.users.rgnh55 = {
+    isNormalUser = true;
+    description = "rgnh55";
+    shell = pkgs.fish;
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" ];
+    packages = with pkgs; [
+      kdePackages.kate scrcpy android-studio 
+    ];
   };
-
-  programs = {
-    fish.enable = true;
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
-    firefox.enable = true;
-
-    virt-manager.enable = true;
-    noisetorch.enable = true;
-  };
+  
+  programs.hyprland.enable = true;
+  programs.hyprland.xwayland.enable = true;
+  programs.fish.enable = true;
+  programs.firefox.enable = true;
+  programs.virt-manager.enable = true;
+  programs.noisetorch.enable = true;
 
   time.timeZone = "America/Bahia";
   time.hardwareClockInLocalTime = true;
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "pt_BR.UTF-8";
-      LC_IDENTIFICATION = "pt_BR.UTF-8";
-      LC_MEASUREMENT = "pt_BR.UTF-8";
-      LC_MONETARY = "pt_BR.UTF-8";
-      LC_NAME = "pt_BR.UTF-8";
-      LC_NUMERIC = "pt_BR.UTF-8";
-      LC_PAPER = "pt_BR.UTF-8";
-      LC_TELEPHONE = "pt_BR.UTF-8";
-      LC_TIME = "pt_BR.UTF-8";
-    };
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pt_BR.UTF-8";
+    LC_IDENTIFICATION = "pt_BR.UTF-8";
+    LC_MEASUREMENT = "pt_BR.UTF-8";
+    LC_MONETARY = "pt_BR.UTF-8";
+    LC_NAME = "pt_BR.UTF-8";
+    LC_NUMERIC = "pt_BR.UTF-8";
+    LC_PAPER = "pt_BR.UTF-8";
+    LC_TELEPHONE = "pt_BR.UTF-8";
+    LC_TIME = "pt_BR.UTF-8";
   };
 
-  security = {
-    rtkit.enable = true;
-    tpm2 = {
-      enable = true;
-      pkcs11.enable = true;
-      tctiEnvironment.enable = true;
-    };
-  };
+  security.rtkit.enable = true;
+  security.tpm2.enable = true;
+  security.tpm2.pkcs11.enable = true;
+  security.tpm2.tctiEnvironment.enable = true;
 
   environment.shells = with pkgs; [ bash fish ];
   fonts.packages = with pkgs; [
@@ -123,6 +121,40 @@
     enableSSHSupport = true;
   };
 
+  networking = {
+    networkmanager.enable = true;
+    hostName = "nixos";
+    useDHCP = lib.mkDefault true;
+    nat.enable = true; 
+		firewall.interfaces.wlp0s20f3.allowedTCPPorts = [ 3000 80 22 ];
+  };
+
+	environment.systemPackages = [
+		pkgs.networkmanagerapplet
+	];
+
+  fonts.packages = with pkgs; [
+		roboto-mono
+    noto-fonts-cjk-sans
+    noto-fonts
+    noto-fonts-emoji
+    noto-fonts-cjk-serif
+    ubuntu_font_family
+    jetbrains-mono
+    fira-code
+    nerdfonts
+  ];
+
+  services.xserver.windowManager.i3.enable = true;
+
+  users.users.rgnh55.extraGroups = [ "docker" ];
+  users.groups.docker = {};
+	virtualisation.docker = {
+		enable = true;
+		daemon.settings = {
+			data-root = "/mnt/share/docker-img";
+		};
+	};
   services.postgresql = {
     enable = true;
     ensureDatabases = [ "postgres" ];
