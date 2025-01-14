@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [
@@ -32,7 +32,7 @@
     isNormalUser = true;
     description = "rgnh55";
     shell = pkgs.fish;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" "docker" ];
     packages = with pkgs; [
       kdePackages.kate scrcpy android-studio 
     ];
@@ -67,9 +67,6 @@
   security.tpm2.tctiEnvironment.enable = true;
 
   environment.shells = with pkgs; [ bash fish ];
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Hack" ]; })
-  ];
 
   environment.sessionVariables = rec {
     GTK_SCALE = "1";
@@ -105,6 +102,7 @@
 		blueman
 		cloudflared
     vim
+    networkmanagerapplet
   ];
 
   system.stateVersion = "24.05";
@@ -126,12 +124,7 @@
     hostName = "nixos";
     useDHCP = lib.mkDefault true;
     nat.enable = true; 
-		firewall.interfaces.wlp0s20f3.allowedTCPPorts = [ 3000 80 22 ];
   };
-
-	environment.systemPackages = [
-		pkgs.networkmanagerapplet
-	];
 
   fonts.packages = with pkgs; [
 		roboto-mono
@@ -143,11 +136,11 @@
     jetbrains-mono
     fira-code
     nerdfonts
+    (nerdfonts.override { fonts = [ "Hack" ]; })
   ];
 
   services.xserver.windowManager.i3.enable = true;
 
-  users.users.rgnh55.extraGroups = [ "docker" ];
   users.groups.docker = {};
 	virtualisation.docker = {
 		enable = true;

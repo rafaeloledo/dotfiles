@@ -47,6 +47,7 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    userhostname = "rgnh55@nixos";
 
     hmConfig = hm.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
@@ -83,7 +84,7 @@
   in
 
   flake-parts.lib.mkFlake { inherit inputs; } {
-    flake = { homeConfigurations."rgnh55@nixos" = hmConfig; nixosConfigurations = noConfig; };
+    flake = { homeConfigurations.${userhostname} = hmConfig; nixosConfigurations = noConfig; };
     systems = [ system ];
     perSystem = { packages.myshell = myShell; };
   };
