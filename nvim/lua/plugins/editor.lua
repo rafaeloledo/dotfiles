@@ -41,7 +41,7 @@ return {
         filtered_items = {
           visible = true,
           hide_dotfiles = false,
-          hide_gitignored = false,
+          hide_gitignored = true,
         },
       },
     },
@@ -55,4 +55,11 @@ return {
       require("oil").setup()
     end,
   },
+
+  {
+    "MagicDuck/grug-far.nvim",
+    opts = {
+      startInInsertMode = false,
+    }
+  }
 }

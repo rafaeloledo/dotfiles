@@ -4,7 +4,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./desktop_amd.nix
-    ./boot.nix
     # ./nitro5_nvidia.nix
   ];
 

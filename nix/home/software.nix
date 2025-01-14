@@ -8,7 +8,6 @@ let
   ];
 
   browser = with pkgs; [
-    brave
     google-chrome
   ];
 

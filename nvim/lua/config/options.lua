@@ -5,3 +5,5 @@ vim.o.cursorline = false
 vim.g.autoformat = false
 vim.o.relativenumber = false
 vim.o.swapfile = false
+
+vim.g.neovide_transparency = 0.9

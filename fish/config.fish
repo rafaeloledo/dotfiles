@@ -55,6 +55,7 @@ set -gx PATH ~/.cargo/bin $PATH 2>/dev/null
 set -gx PATH $ANDROID_HOME/emulator $PATH 2>/dev/null
 set -gx PATH $ANDROID_HOME/platform-tools $PATH 2>/dev/null
 set -gx PATH ~/.nix-profile/bin $PATH 2>/dev/null
+set -gx PATH ~/.npm-global/bin $PATH 2>/dev/null
 
 zoxide init fish | source
 #starship init fish | source

@@ -1,4 +1,4 @@
-![](./img/image.png)
+![](./image.png)
 
 ### Useful commands
 

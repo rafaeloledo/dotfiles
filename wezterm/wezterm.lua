@@ -10,11 +10,6 @@ wezterm.on("gui-startup", function(cmd)
 		position = { x = (screen.width - width) / 2, y = (screen.height - height) / 2 },
 	})
 
-	if wezterm.target_triple ~= "x86_64-pc-windows-msvc" then
-		window:gui_window():toggle_fullscreen()
-		return
-	end
-
 	window:gui_window():set_inner_size(width, height)
 end)
 

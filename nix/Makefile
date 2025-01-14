@@ -5,6 +5,6 @@ b:
 s:
 	sudo nixos-rebuild switch --flake .
 hb:
-	home-manager build --flake .
+	home-manager build --flake . -b backup
 hs:
 	home-manager switch --flake . -b backup

@@ -4,7 +4,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hm.url = "github:nix-community/home-manager";
     hm.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
@@ -38,7 +38,7 @@
     waybar.url = "github:Alexays/Waybar";
 
     xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
-    
+
     nvf.url = "github:notashelf/nvf";
   };
 
