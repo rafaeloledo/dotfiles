@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ./core
+    ./core.nix
     ./network.nix
 		./software.nix
-    ./hardware
+    ./hardware.nix
     ./fonts.nix
 		./cloudflared.nix
   ];

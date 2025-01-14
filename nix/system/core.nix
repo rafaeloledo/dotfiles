@@ -78,7 +78,6 @@
 
   environment.systemPackages = with pkgs; [
 		pamixer
-		pavucontrol
     linuxKernel.packages.linux_6_9.turbostat
     i7z
     unzip
@@ -101,21 +100,18 @@
 		cloudflared
     vim
   ];
+
   system.stateVersion = "24.05";
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.allowedTCPPorts = [ 22 3000 8000 8080 80 5432 ];
   
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 }

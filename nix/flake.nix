@@ -50,7 +50,7 @@
 
     hmConfig = hm.lib.homeManagerConfiguration {
       extraSpecialArgs = { inherit inputs; };
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      inherit pkgs;
       modules = [
         { nixpkgs.config.allowUnfree = true; }
         nix-index-db.hmModules.nix-index
@@ -60,7 +60,8 @@
 
     noConfig = {
       nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
           { nixpkgs.config.allowUnfree = true; }
           ./system

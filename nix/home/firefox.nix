@@ -1,8 +1,6 @@
+{ pkgs, inputs, ... }:
+
 {
-  pkgs,
-  inputs,
-  ...
-}: {
   programs.firefox = {
     enable = true;
     profiles.default.extraConfig = ''

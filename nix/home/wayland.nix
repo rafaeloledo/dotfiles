@@ -1,10 +1,22 @@
+{ config, pkgs, ... }:
+
 {
-  config,
-  pkgs,
-  ...
-}:{
+  home.packages = with pkgs; [
+    pavucontrol
+    pamixer
+    waybar
+    grim
+    slurp
+    swaybg
+    anyrun
+    wl-clipboard
+    hyprpicker
+    wlogout
+    hyprpaper
+  ];
 
   wayland.windowManager.hyprland  = {
+    enable = false;
     extraConfig = ''
       monitor=eDP-1, 1920x1080@144, 0x0, 1
       monitor=HDMI-A-1, 1920x1080@120, 1920x0, 1

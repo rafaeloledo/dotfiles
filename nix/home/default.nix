@@ -1,11 +1,5 @@
-{
-  lib,
-  self,
-  config,
-  pkgs,
-  inputs,
-  ... 
-}:
+{ lib, self, config, pkgs, inputs, ... }:
+
 let
   dotfiles = [
     "wezterm"
@@ -23,14 +17,12 @@ let
     "waybar"
     "yazi"
   ];
+  
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in
+
 { 
-  imports = [
-    ./software
-    ./terminal
-    ./editors.nix
-  ];
+  imports = [ ./software.nix ];
 
   home = {
     username = "rgnh55";
