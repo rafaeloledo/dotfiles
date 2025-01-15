@@ -7,15 +7,10 @@ let
     feh
   ];
 
-  browser = with pkgs; [
-    google-chrome
-  ];
-
   db = with pkgs; [
     postgresql
     pgadmin4
-    mysql
-    mysql-workbench
+    mariadb
   ];
 
   editor = with pkgs; [
@@ -27,6 +22,10 @@ let
     neovide
   ];
 
+  browser = with pkgs; [
+    google-chrome
+  ];
+
   multimedia = with pkgs; [
     vlc
     obs-studio
@@ -34,7 +33,7 @@ let
   ];
 
   devops = with pkgs; [
-    psensor
+    mission-center
     inkscape-with-extensions
     postman
     discord
@@ -101,13 +100,12 @@ in
 
 {
   imports = [
-    ./git.nix
     ./wayland.nix
     ./terminal.nix
   ];
 
-  home.packages = xorg ++ browser ++ db ++ editor ++ multimedia
-  ++ devops ++ lang ++ framework ++ lsp ++ misc;
+  home.packages = xorg ++ db ++ editor ++ multimedia
+  ++ devops ++ lang ++ framework ++ lsp ++ misc ++ browser;
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
@@ -148,5 +146,10 @@ in
       user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
       user_pref("signon.rememberSignons", false);
     '';
+  };
+
+  home.file = {
+    ".gitconfig".source = 
+      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/.gitconfig;
   };
 }

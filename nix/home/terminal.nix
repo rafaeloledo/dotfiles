@@ -37,7 +37,7 @@ in
 {
   home.file = {
     ".local/scripts".source = 
-      config.lib.file.mkOutOfStoreSymlink /mnt/share/.dotfiles/scripts;
+      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/scripts;
   };
 
   home.packages = programs;

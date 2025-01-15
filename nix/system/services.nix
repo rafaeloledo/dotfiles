@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  # cloudflare
   systemd.services.my_tunnel = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
@@ -11,4 +12,12 @@
       Group = "users";
     };
   };
+
+  # plasma
+  services.displayManager.sddm.enable = true;
+	services.desktopManager.plasma6.enable = true;
+
+  # gnome
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 }

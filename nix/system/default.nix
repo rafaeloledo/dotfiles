@@ -3,10 +3,8 @@
 {
   imports = [
     ./hardware.nix
-		./cloudflared.nix
+		./services.nix
     ./libinput.nix
-    ./plasma.nix
-    # ./gnome.nix
   ];
 
   # environment.variables.NIXOS_OZONE_WL = "1";
@@ -81,7 +79,7 @@
 
   environment.systemPackages = with pkgs; [
 		pamixer
-    linuxKernel.packages.linux_6_9.turbostat
+    # linuxKernel.packages.linux_6_9.turbostat
     i7z
     unzip
     xorg.xbacklight
@@ -94,6 +92,7 @@
     egl-wayland
     gcc
     gnumake
+    git
     cmake
     wget
     libtool
@@ -103,9 +102,10 @@
 		cloudflared
     vim
     networkmanagerapplet
+    hydra-check
   ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   virtualisation.libvirtd.enable = true;
@@ -133,10 +133,10 @@
     noto-fonts-emoji
     noto-fonts-cjk-serif
     ubuntu_font_family
-    jetbrains-mono
+    nerd-fonts.jetbrains-mono
     fira-code
-    nerdfonts
-    (nerdfonts.override { fonts = [ "Hack" ]; })
+    # nerdfonts
+    # (nerdfonts.override { fonts = [ "Hack" ]; })
   ];
 
   services.xserver.windowManager.i3.enable = true;

@@ -39,7 +39,7 @@ alias gcl "git clone"
 alias gco "git checkout"
 alias gbr "git branch"
 alias gd "git diff"
-alias gad "git add ."
+alias gad. "git add ."
 alias gf "git fetch"
 alias grm "git rm"
 

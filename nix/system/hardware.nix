@@ -7,12 +7,10 @@
     # ./nitro5_nvidia.nix
   ];
 
-  hardware = {
-    bluetooth.enable = true;
-		bluetooth.powerOnBoot = true;
-    pulseaudio.enable = false;
-    graphics.enable = true;
-  };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  hardware.pulseaudio.enable = false;
+  hardware.graphics.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
