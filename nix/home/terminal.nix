@@ -16,8 +16,6 @@ let
   
   programs = with pkgs; [
     starship
-    wezterm
-
     tmux
     eza
     bat
@@ -25,6 +23,7 @@ let
     ripgrep
     fzf
     wezterm
+    ghostty
     starship
     htop
     yazi

@@ -1,4 +1,4 @@
-.PHONY: b s hb hs clean ub us
+.PHONY: b s hb hs clean ub us kill
 
 b:
 	sudo nixos-rebuild build --flake .

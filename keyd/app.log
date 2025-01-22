@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/nix/store/5mmyjssvakfbkw6j0gqbg0q0m8fcy1xr-keyd-application-mapper-2.5.0/bin/.keyd-application-mapper-wrapped", line 507, in <module>
+    mon.run()
+  File "/nix/store/5mmyjssvakfbkw6j0gqbg0q0m8fcy1xr-keyd-application-mapper-2.5.0/bin/.keyd-application-mapper-wrapped", line 253, in run
+    self.on_window_change(windows[obj].get('appid', ''), windows[obj].get('title', ''))
+  File "/nix/store/5mmyjssvakfbkw6j0gqbg0q0m8fcy1xr-keyd-application-mapper-2.5.0/bin/.keyd-application-mapper-wrapped", line 498, in on_window_change
+    subprocess.run(['keyd', 'bind', 'reset', *bindings], stdout=subprocess.DEVNULL)
+  File "/nix/store/c9m6yd8fg1flz2j5r4bif1ib5j20a0cy-python3-3.12.8/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/c9m6yd8fg1flz2j5r4bif1ib5j20a0cy-python3-3.12.8/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/nix/store/c9m6yd8fg1flz2j5r4bif1ib5j20a0cy-python3-3.12.8/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'keyd'
