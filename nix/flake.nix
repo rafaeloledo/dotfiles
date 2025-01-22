@@ -32,6 +32,7 @@
     hyprlock.inputs.systems.follows = "hyprland/systems";
     hyprland-hyprspace.url = "github:KZDKM/Hyprspace";
     hyprland-hyprspace.inputs.hyprland.follows = "hyprland";
+    hyprswitch.url = "github:h3rmt/hyprswitch/release";
 
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
@@ -54,6 +55,7 @@
       inherit pkgs;
       modules = [
         { nixpkgs.config.allowUnfree = true; }
+        inputs.nvf.homeManagerModules.default
         nix-index-db.hmModules.nix-index
         ./home
       ];
@@ -69,16 +71,14 @@
         ];
       };
     };
-
+  
+    # nix develop .#myShell
     myShell = pkgs.mkShell {
       buildInputs = with pkgs; [
-        cowsay
-        nodejs
       ];
 
       shellHook = ''
-        cowsay hello
-        node -v
+        echo ${pkgs.keyd}
       '';
     };
   in

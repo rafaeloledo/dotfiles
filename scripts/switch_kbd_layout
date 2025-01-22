@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+session=$DESKTOP_SESSION
+
+if [ "$session" == "hyprland" ]; then
+  layout=$(hyprctl getoption input:kb_layout | rg "str: br")
+  if [ "$layout" == "str: br" ]; then
+    dunstify "kbd is now us"
+    hyprctl keyword input:kb_layout us
+  else
+    dunstify "kbd is now br"
+    hyprctl keyword input:kb_layout br
+  fi
+else
+  kb_format=$(setxkbmap -print -verbose 10 | rg "layout:")
+
+  if [ "$kb_format" == "layout:     us" ]; then
+    dunstify "kbd is now br"
+    setxkbmap br
+  else
+    dunstify "kbd is now us"
+    setxkbmap us
+  fi
+fi
+

@@ -1,0 +1,9 @@
+window-height = 42
+window-width = 170
+window-decoration = false
+font-size = 14
+mouse-hide-while-typing = true
+theme = catppuccin-mocha
+confirm-close-surface = false
+gtk-tabs-location = hidden
+background-opacity = 0.9

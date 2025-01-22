@@ -1,19 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  boot = {
-    initrd = {
-      availableKernelModules = [ "xhci_pci" "vmd" "ahci" "nvme" "uas" "sd_mod" ];
-      kernelModules = [ ];
-    };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
-    kernelParams = [
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-    ];
-    kernelPackages = pkgs.linuxPackages_latest;
-  };
-
   hardware = {
     nvidia = {
       modesetting.enable = true;

@@ -27,7 +27,7 @@
   default = simple
 [core]
   excludesfile = ~/.gitignore
-  editor = neovim
+  editor = nvim
   ignorecase = false
 [push]
   default = simple

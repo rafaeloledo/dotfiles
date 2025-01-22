@@ -16,20 +16,23 @@ let
   editor = with pkgs; [
     arduino-ide
     helix
-    vscode-fhs
     zed-editor
     neovim
     neovide
-  ];
+    jetbrains.idea-community-bin
+    youtube-music
+    ueberzugpp
+    viu
 
-  browser = with pkgs; [
-    google-chrome
+    # for errors with LD
+    stylua
   ];
 
   multimedia = with pkgs; [
     vlc
     obs-studio
     davinci-resolve
+    easyeffects
   ];
 
   devops = with pkgs; [
@@ -38,6 +41,9 @@ let
     postman
     discord
 		lazygit
+    nautilus
+    gnome-tweaks
+    papirus-icon-theme
     xfce.thunar
     ngrok
     unixtools.xxd
@@ -52,11 +58,22 @@ let
     jq
     chromium
     stow
-    lmstudio
-    
     pavucontrol
-
     nodePackages.pnpm
+    android-tools
+    awscli2
+		zip
+		mvnd
+		maven
+		plantuml
+		# graphviz
+    brightnessctl
+    lmstudio
+    kdePackages.kdeconnect-kde
+
+    ncdu # check disk usage
+    cz-cli
+    firebase-tools
   ];
 
   lang = with pkgs; [
@@ -66,28 +83,32 @@ let
     pipx
     go
     php
-  ];
-
-  framework = with pkgs; [
+    python3Full
+    jdk
     flutter
+    ruby
+    sassc
   ];
 
   misc = with pkgs; [
     pkgs.xorg.libXrender
-
     picom
     dunst
     duf
     rofi
+    imagemagick
+    hyprshot
     viewnior
     nodePackages.live-server
-    rnnoise-plugin
-    rnnoise
+    ani-cli
+    sublime4
+    obsidian
+    google-chrome
   ];
 
   lsp = with pkgs; [
-    nodePackages_latest.typescript-language-server
-    nls
+    typescript-language-server
+    svelte-language-server
     clang-tools
     jdt-language-server
     gopls
@@ -105,7 +126,7 @@ in
   ];
 
   home.packages = xorg ++ db ++ editor ++ multimedia
-  ++ devops ++ lang ++ framework ++ lsp ++ misc ++ browser;
+  ++ devops ++ lang ++ lsp ++ misc;
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
@@ -151,5 +172,7 @@ in
   home.file = {
     ".gitconfig".source = 
       config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/.gitconfig;
+    "wallpapers".source = 
+      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/wallpapers;
   };
 }

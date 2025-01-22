@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -6,6 +6,7 @@
     waybar
     grim
     slurp
+    ags
     swaybg
     anyrun
     wl-clipboard
