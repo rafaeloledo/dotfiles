@@ -38,6 +38,9 @@ let
     postman
     discord
 		lazygit
+    nautilus
+    gnome-tweaks
+    papirus-icon-theme
     xfce.thunar
     ngrok
     unixtools.xxd
@@ -57,6 +60,9 @@ let
     pavucontrol
 
     nodePackages.pnpm
+    android-tools
+
+    awscli2
   ];
 
   lang = with pkgs; [
@@ -66,6 +72,7 @@ let
     pipx
     go
     php
+    python3Full
   ];
 
   framework = with pkgs; [
@@ -83,11 +90,13 @@ let
     nodePackages.live-server
     rnnoise-plugin
     rnnoise
+
+    ani-cli
+    sublime4
   ];
 
   lsp = with pkgs; [
-    nodePackages_latest.typescript-language-server
-    nls
+    typescript-language-server
     clang-tools
     jdt-language-server
     gopls
@@ -151,5 +160,7 @@ in
   home.file = {
     ".gitconfig".source = 
       config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/.gitconfig;
+    "wallpapers".source = 
+      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/wallpapers;
   };
 }

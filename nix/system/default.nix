@@ -7,8 +7,6 @@
     ./libinput.nix
   ];
 
-  # environment.variables.NIXOS_OZONE_WL = "1";
-
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/16aebad7-8b44-4441-8589-e1fab97045f8";
     fsType = "ext4";
@@ -111,7 +109,7 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 3000 8000 8080 80 5432 ];
+  networking.firewall.allowedTCPPorts = [ 22 3000 8000 8080 80 5432 5173 ];
   
   programs.mtr.enable = true;
   programs.gnupg.agent = {
@@ -145,7 +143,7 @@
 	virtualisation.docker = {
 		enable = true;
 		daemon.settings = {
-			data-root = "/mnt/share/docker-img";
+			data-root = "~/docker/img";
 		};
 	};
   services.postgresql = {
@@ -157,4 +155,6 @@
       local all all trust
     '';
   };
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

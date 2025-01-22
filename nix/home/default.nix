@@ -16,6 +16,7 @@ let
     "viewnior"
     "waybar"
     "yazi"
+    "ghostty"
   ];
   
   inherit (config.lib.file) mkOutOfStoreSymlink;
@@ -23,6 +24,10 @@ in
 
 { 
   imports = [ ./software.nix ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+  ];
 
   home = {
     username = "rgnh55";

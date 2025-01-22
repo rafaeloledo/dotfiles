@@ -31,6 +31,11 @@ return {
         "<cmd>FzfLua diagnostics_workspace<cr>",
         desc = "Lists Diagnostics for all open buffers or a specific buffer",
       },
+      {
+        ";;",
+        "<cmd>FzfLua resume<cr>",
+        desc = "FzfLua Resume",
+      },
     },
   },
 
@@ -39,7 +44,6 @@ return {
     opts = {
       filesystem = {
         filtered_items = {
-          visible = true,
           hide_dotfiles = false,
           hide_gitignored = true,
         },

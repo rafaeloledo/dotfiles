@@ -3,9 +3,9 @@ kb_format=$(setxkbmap -print -verbose 10 | rg "layout:")
 
 echo "$kb_format"
 if [ "$kb_format" == "layout:     us" ]; then
-	# dunstify "kb is us, changing to br"
+	dunstify "kbd is now br"
 	setxkbmap br
 else
-	# dunstify "kb is br, changing to us"
+	dunstify "kbd is now us"
 	setxkbmap us
 fi

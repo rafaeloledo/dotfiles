@@ -1,4 +1,4 @@
-.PHONY: b s hb hs clean ub us
+.PHONY: b s hb hs clean ub us kill
 
 b:
 	sudo nixos-rebuild build --flake .
@@ -20,3 +20,5 @@ clean:
 	sudo nix-collect-garbage -d
 update:
 	nix flake update
+kill:
+	pkill ghostty

@@ -34,7 +34,7 @@ alias gci "git commit"
 alias gst "git status"
 alias gps "git push"
 alias gpl "git pull"
-alias glg "git log"
+alias gl "git log"
 alias gcl "git clone"
 alias gco "git checkout"
 alias gbr "git branch"
@@ -42,6 +42,7 @@ alias gd "git diff"
 alias gad. "git add ."
 alias gf "git fetch"
 alias grm "git rm"
+alias e "emacsclient -c a"
 
 # exporting PATHs
 # set -gx PATH /home/rgnh55/.local/share/nvim/mason/bin $PATH 2>/dev/null
@@ -56,6 +57,7 @@ set -gx PATH $ANDROID_HOME/emulator $PATH 2>/dev/null
 set -gx PATH $ANDROID_HOME/platform-tools $PATH 2>/dev/null
 set -gx PATH ~/.nix-profile/bin $PATH 2>/dev/null
 set -gx PATH ~/.npm-global/bin $PATH 2>/dev/null
+set -x PATH ~/go/bin $PATH 2>/dev/null
 
 zoxide init fish | source
 #starship init fish | source

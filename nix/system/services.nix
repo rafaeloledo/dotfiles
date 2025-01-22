@@ -20,4 +20,23 @@
   # gnome
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
+  
+  # pulseaudio
+  services.pulseaudio.enable = false;
+
+  # keyd
+  services.keyd.enable = true;
+  services.keyd.keyboards.default.settings = {
+    main = {
+      capslock = "overload(control, esc)";
+      esc = "capslock";
+    };
+    alt = {
+      h = "left";
+      j = "down";
+      k = "up";
+      l = "right";
+    };
+  };
+  environment.variables.KEYD_HOME = "${pkgs.keyd}";
 }

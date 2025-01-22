@@ -2,17 +2,6 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 local config = wezterm.config_builder()
 
-wezterm.on("gui-startup", function(cmd)
-	local screen = wezterm.gui.screens().main
-	local ratio = 0.7
-	local width, height = screen.width * ratio, screen.height * ratio
-	local tab, pane, window = wezterm.mux.spawn_window(cmd or {
-		position = { x = (screen.width - width) / 2, y = (screen.height - height) / 2 },
-	})
-
-	window:gui_window():set_inner_size(width, height)
-end)
-
 config.enable_tab_bar = false
 config.enable_wayland = false
 config.font_size = 14

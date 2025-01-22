@@ -1,0 +1,5 @@
+gtk-titlebar = false
+font-size = 14
+theme = "Solarized Dark - Patched"
+background-opacity = 0.9
+confirm-close-surface = false

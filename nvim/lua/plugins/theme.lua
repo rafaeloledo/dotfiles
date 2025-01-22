@@ -2,6 +2,7 @@ return {
   {
     "Mofiqul/vscode.nvim",
     config = function()
+      vim.cmd('colorscheme vscode')
       require("vscode").setup()
     end,
   },
@@ -14,9 +15,6 @@ return {
     "craftzdog/solarized-osaka.nvim",
     lazy = false,
     opts = {},
-    config = function()
-      vim.cmd('colorscheme solarized-osaka')
-    end,
   },
   {
     "rose-pine/neovim",

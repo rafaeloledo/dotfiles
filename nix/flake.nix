@@ -69,16 +69,14 @@
         ];
       };
     };
-
+  
+    # nix develop .#myShell
     myShell = pkgs.mkShell {
       buildInputs = with pkgs; [
-        cowsay
-        nodejs
       ];
 
       shellHook = ''
-        cowsay hello
-        node -v
+        echo ${pkgs.keyd}
       '';
     };
   in
