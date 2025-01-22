@@ -19,3 +19,4 @@ $ pwd
 
 ~/dotfiles-nix
 ```
+
