@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+xdg-open 'https://linkedin.com/in/rafaeloledo'
+xdg-open 'https://web.whatsapp.com/'
+xdg-open 'https://web.telegram.org/k/'
+xdg-open 'https://mail.google.com/mail/u/0/#inbox'

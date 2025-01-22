@@ -1,13 +1,12 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   imports = [
     ./hardware.nix
 		./services.nix
     ./libinput.nix
+    ./wayland.nix
   ];
-
-  # environment.variables.NIXOS_OZONE_WL = "1";
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/16aebad7-8b44-4441-8589-e1fab97045f8";
@@ -35,8 +34,14 @@
       kdePackages.kate scrcpy android-studio 
     ];
   };
-  
-  programs.hyprland.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
+
+
   programs.hyprland.xwayland.enable = true;
   programs.fish.enable = true;
   programs.firefox.enable = true;
@@ -111,7 +116,7 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 3000 8000 8080 80 5432 ];
+  networking.firewall.allowedTCPPorts = [ 22 3000 8000 8080 80 5432 5173 ];
   
   programs.mtr.enable = true;
   programs.gnupg.agent = {
@@ -135,8 +140,7 @@
     ubuntu_font_family
     nerd-fonts.jetbrains-mono
     fira-code
-    # nerdfonts
-    # (nerdfonts.override { fonts = [ "Hack" ]; })
+    nerd-fonts.hack
   ];
 
   services.xserver.windowManager.i3.enable = true;
@@ -145,7 +149,7 @@
 	virtualisation.docker = {
 		enable = true;
 		daemon.settings = {
-			data-root = "/mnt/share/docker-img";
+			data-root = "~/docker/img";
 		};
 	};
   services.postgresql = {
@@ -155,6 +159,9 @@
     settings.port = 5432;
     authentication = pkgs.lib.mkOverride 10 ''
       local all all trust
+      host all all 127.0.0.1/32 trust
     '';
   };
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
