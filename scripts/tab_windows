@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+id=`python ~/dotfiles/scripts/id_list`
+i3-msg [id="$id"] focus > /dev/null
