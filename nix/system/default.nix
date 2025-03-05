@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, lib, inputs, config, ... }:
 
 {
   imports = [
@@ -6,32 +6,27 @@
 		./services.nix
     ./libinput.nix
     ./wayland.nix
+    /home/rgnh55/disk.nix
   ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/16aebad7-8b44-4441-8589-e1fab97045f8";
-    fsType = "ext4";
-  };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/7875-C267";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
   swapDevices = [ ];
   
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  services.lvm.enable = false;
   systemd.enableEmergencyMode = false;
+
+  programs.adb.enable = true;
 
   users.defaultUserShell = pkgs.fish;
   users.users.rgnh55 = {
     isNormalUser = true;
     description = "rgnh55";
     shell = pkgs.fish;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" "docker" "adbusers"];
     packages = with pkgs; [
-      kdePackages.kate scrcpy android-studio 
+      kdePackages.kate
+      scrcpy
     ];
   };
 
@@ -40,7 +35,6 @@
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
-
 
   programs.hyprland.xwayland.enable = true;
   programs.fish.enable = true;
@@ -117,7 +111,10 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 3000 8000 8080 80 5432 5173 ];
+  networking.firewall.allowedTCPPorts = [
+    22 3000 8000 8080 80 5432 5173
+    8081 8082
+  ];
   
   programs.mtr.enable = true;
   programs.gnupg.agent = {

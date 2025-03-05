@@ -1,9 +1,9 @@
 .PHONY: b s hb hs clean ub us kill
 
 b:
-	sudo nixos-rebuild build --flake .
+	sudo nixos-rebuild build --flake . --impure
 s:
-	sudo nixos-rebuild switch --flake .
+	sudo nixos-rebuild switch --flake . --impure
 hb:
 	home-manager build --flake . -b backup
 hs:

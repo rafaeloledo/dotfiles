@@ -66,26 +66,15 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
-          { nixpkgs.config.allowUnfree = true; }
+          { nixpkgs.config.allowUnfree = true; nixpkgs.config.android_sdk.accept_license = true; }
           ./system
         ];
       };
-    };
-  
-    # nix develop .#myShell
-    myShell = pkgs.mkShell {
-      buildInputs = with pkgs; [
-      ];
-
-      shellHook = ''
-        echo ${pkgs.keyd}
-      '';
     };
   in
 
   flake-parts.lib.mkFlake { inherit inputs; } {
     flake = { homeConfigurations.${userhostname} = hmConfig; nixosConfigurations = noConfig; };
     systems = [ system ];
-    perSystem = { packages.myshell = myShell; };
   };
 }

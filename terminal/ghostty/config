@@ -1,7 +1,7 @@
 window-height = 42
 window-width = 170
 window-decoration = false
-font-size = 14
+font-size = 18
 mouse-hide-while-typing = true
 theme = catppuccin-mocha
 confirm-close-surface = false

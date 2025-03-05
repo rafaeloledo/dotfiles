@@ -13,6 +13,8 @@ let
     "xorg/i3"
     "xorg/picom"
     "rofi"
+    # delegate vim setupts to Makefile cause i may change it frequently
+    # so, don't need to `make hs`
     # "editors/lazyvim"
     # "editors/vim"
     "terminal/tmux"
@@ -22,6 +24,10 @@ let
     "terminal/lazygit"
   ];
   
+  # i think its the same of 
+  # mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink
+  # just a alias to not type the full path
+  # TODO: check this (i've just picked up from docs)
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in
 
@@ -33,6 +39,7 @@ in
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
+    # sublime text problems
     "openssl-1.1.1w"
   ];
 
@@ -45,6 +52,8 @@ in
   home.file = builtins.listToAttrs (map (name: {
     name = ".config/${builtins.baseNameOf name}";
     value = {
+      # i don't want to rewrite my entire config files to be specific to nixos
+      # keep these distro-agnostic
       source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/${name}";
     };
   }) dotfiles);
