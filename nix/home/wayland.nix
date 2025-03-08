@@ -6,7 +6,6 @@
     waybar
     grim
     slurp
-    ags
     swaybg
     anyrun
     wl-clipboard

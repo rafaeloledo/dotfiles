@@ -1,5 +1,0 @@
-- name: Setup Linux Workstation
-  hosts: local
-  use_backend: dnf4
-  roles:
-    - fonts

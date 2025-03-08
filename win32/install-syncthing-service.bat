@@ -1,0 +1,1 @@
+schtasks /create /sc ONLOGON /tn Syncthing /tr "powershell D:\\dev\\dotfiles\\win32\\test.ps1"

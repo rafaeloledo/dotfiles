@@ -1,14 +1,6 @@
-# vim: ft=sh
+#!/usr/bin/env bash
 
 image_dir=~/wallpapers
 random_image=$(ls "$image_dir" | shuf -n 1)
 
-if [ -n "$random_image" ]; then
-  if [ "$XDG_SESSION_TYPE" == "x11" ]; then
-    feh --bg-scale $image_dir/"$random_image"
-  else
-    swaybg -i $image_dir/"$random_image"
-  fi
-else
-  echo "No images found in $image_dir"
-fi
+swaybg -i $image_dir/"$random_image"

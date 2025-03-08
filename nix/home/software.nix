@@ -1,132 +1,130 @@
 { config, pkgs, ... }:
 
-let
-  xorg = with pkgs; [
-    maim
-    xclip
-    feh
-  ];
-
-  db = with pkgs; [
-    postgresql
-    pgadmin4
-    mariadb
-  ];
-
-  editor = with pkgs; [
-    arduino-ide
-    helix
-    zed-editor
-    neovim
-    neovide
-    jetbrains.idea-community-bin
-    youtube-music
-    ueberzugpp
-    viu
-
-    # for errors with LD
-    stylua
-  ];
-
-  multimedia = with pkgs; [
-    vlc
-    obs-studio
-    davinci-resolve
-    easyeffects
-  ];
-
-  devops = with pkgs; [
-    mission-center
-    inkscape-with-extensions
-    postman
-    discord
-		lazygit
-    nautilus
-    gnome-tweaks
-    papirus-icon-theme
-    xfce.thunar
-    ngrok
-    unixtools.xxd
-    fastfetch
-    staruml
-    qemu_full
-    libvirt
-    mtpfs
-    android-file-transfer
-    android-udev-rules
-    libmtp
-    jq
-    chromium
-    stow
-    pavucontrol
-    nodePackages.pnpm
-    android-tools
-    awscli2
-		zip
-		mvnd
-		maven
-		plantuml
-		# graphviz
-    brightnessctl
-    lmstudio
-    kdePackages.kdeconnect-kde
-
-    ncdu # check disk usage
-    cz-cli
-    firebase-tools
-  ];
-
-  lang = with pkgs; [
-    nodejs
-    lua
-    rustup
-    pipx
-    go
-    php
-    python3Full
-    jdk
-    flutter
-    ruby
-    sassc
-  ];
-
-  misc = with pkgs; [
-    pkgs.xorg.libXrender
-    picom
-    dunst
-    duf
-    rofi
-    imagemagick
-    hyprshot
-    viewnior
-    nodePackages.live-server
-    ani-cli
-    sublime4
-    obsidian
-    google-chrome
-  ];
-
-  lsp = with pkgs; [
-    typescript-language-server
-    svelte-language-server
-    clang-tools
-    jdt-language-server
-    gopls
-    kotlin-language-server
-    lua-language-server
-    phpactor
-    pyright
-  ];
-in
-
 {
   imports = [
     ./wayland.nix
     ./terminal.nix
   ];
 
-  home.packages = xorg ++ db ++ editor ++ multimedia
-  ++ devops ++ lang ++ lsp ++ misc;
+  home.enableNixpkgsReleaseCheck = false;
+
+  home.packages = with pkgs; [
+    mariadb
+
+    arduino-ide
+    neovim
+    neovide
+    jetbrains.idea-community-bin
+    vscode-fhs
+    gimp
+    inkscape-with-extensions
+
+    vlc # player
+    easyeffects # audio post processing with CPU
+    playerctl # hyprland cmd line audio handler
+
+    pkg-config
+    mission-center # windows task mananager copy
+    postman # gui for making REST API requests
+    discord
+		lazygit
+    nautilus
+    gnome-tweaks
+    papirus-icon-theme
+    ngrok
+    unixtools.xxd
+    fastfetch # neofetch replacemente
+    staruml # UML
+		plantuml # text UML to image
+    qemu_full # VM
+
+    mtpfs # android
+    android-file-transfer # android
+    android-udev-rules # android
+    libmtp # android
+    android-tools # android
+    android-studio # android IDE
+
+    libvirt # dep for virt-manager
+    jq # json processing
+    pavucontrol # GUI audio manager
+    nodePackages.pnpm # package manager
+    awscli2 # cloud
+    firebase-tools # cloud
+		zip # why?
+		maven # ..
+		graphviz # complement to plantuml
+    brightnessctl # change notebook monitor light
+    kdePackages.kdeconnect-kde # sync android notifications
+
+    ncdu # check disk usage
+
+    mvnd # used when developing with java, why?
+
+    eas-cli # react native
+
+    flutter
+    nodejs
+    lua
+    rustup
+    python313
+
+    pkgs.xorg.libXrender # why?
+    dunst # just dunst
+    rofi-wayland # rofi
+    imagemagick # dep
+    hyprshot # why?
+    viewnior # lightweight image viewer
+    nodePackages.live-server # why?
+    ani-cli # animes
+    sublime4 # quick annotation editor
+    google-chrome # browser
+    vial # keyboard
+    bc # calculator for VIM
+    blender # design and modeling
+    ddcutil # change external monitor brightness
+    brave
+
+    qmk # keyboard
+    gcc-arm-embedded # arm compiler
+
+    distrobox # emulate other linux distros withtout leaving NixOS
+    rembg # rem bg of images made with py
+    # nix-serve
+
+    lutris # translation layer
+    vulkan-tools # graphics
+    vulkan-loader # graphics
+
+    tesseract # image to text
+    pandoc # latex
+    texliveFull # latex
+
+    dconf-editor # gnome system gui manager
+
+    jellyfin
+
+    svelte-language-server
+    clang-tools
+    jdt-language-server
+    gopls
+    kotlin-language-server
+    lua-language-server
+    typescript-language-server
+    phpactor
+    pyright
+    emmet-ls
+    ruby-lsp
+    nixfmt-rfc-style
+    stylua
+
+    gnome-calculator # GUI calculator
+
+    gparted # TODO: search for auth daemon
+
+    antimicrox # Gamepad
+    mupdf # PDF reader
+  ];
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
@@ -140,39 +138,10 @@ in
     package = pkgs.emacs-gtk;
   };
 
-  programs.firefox = {
-    enable = true;
-    profiles.default.extraConfig = ''
-      user_pref("ui.key.menuAccessKeyFocuses", false);
-      user_pref("extensions.pocket.enabled", false);
-      user_pref("full-screen-api.transition-duration.enter", "0 0");
-      user_pref("full-screen-api.transition-duration.leave", "0 0");
-      user_pref("full-screen-api.transition.timeout", 0);
-      user_pref("full-screen-api.warning.timeout", 0);
-      user_pref("full-screen-api.warning.delay", -1);
-      user_pref("browser.tabs.firefox-view", false);
-      user_pref("browser.uitour.enabled", false);
-
-      //user_pref("browser.cache.disk.enable", false);
-      // Graphics
-      //user_pref("gfx.webrender.all", true);
-      //user_pref("gfx.webrender.precache-shaders", true);
-      //user_pref("gfx.webrender.compositor", true);
-      //user_pref("gfx.canvas.accelerated", true);
-      //user_pref("layers.gpu-process.enabled", true);
-      //user_pref("media.hardware-video-decoding.enabled", true);
-
-      user_pref("browser.newtabpage.activity-stream.default.sites", "");
-      user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-      user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
-      user_pref("signon.rememberSignons", false);
-    '';
-  };
-
   home.file = {
-    ".gitconfig".source = 
+    ".gitconfig".source =
       config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/.gitconfig;
-    "wallpapers".source = 
+    "wallpapers".source =
       config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/wallpapers;
   };
 }

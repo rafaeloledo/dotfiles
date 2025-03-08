@@ -5,9 +5,10 @@
 window {
   padding: 1em;
   border-radius: 10px;
-  background-color: #282738;
-  border-color: #282738;
-  width: 33%;
+  background-color: #002b36;
+  border-color: #002b36;
+  width: 45%;
+  height: 40%;
 }
 
 mainbox {
@@ -38,7 +39,7 @@ listview {
   border: 0 5px 5px;
   border-radius: 10px;
   spacing: 10px;
-  border-color: #282738;
+  border-color: #002b36;
   scrollbar: true;
 }
 
@@ -49,8 +50,8 @@ element {
 }
 
 element-text {
-  background-color: #282738;
-  text-color: #FFFFFF;
+  background-color: #002b36;
+  text-color: #839496;
   font: "JetBrains Mono Medium";
 }
 
@@ -59,42 +60,40 @@ element.normal.urgent,
 element.normal.active,
 element.alternate.normal
 {
-  background-color: #282738;
-  text-color: #22668D;
+  background-color: #002b36;
+  text-color: #268bd2;
 }
 
 element.selected.normal
 {
-  background-color: #22668D;
-  border-color: #22668D;
-  text-color: #22668D;
+  background-color: #268bd2;
+  border-color: #268bd2;
+  text-color: #268bd2;
 }
 
 element-text.selected.normal,
 element-text.selected.active
 {
-  background-color: #22668D;
-  border-color: #22668D;
-  text-color: #000000;
+  background-color: #268bd2;
+  border-color: #268bd2;
+  text-color: #002b36;
   font: "JetBrains Mono Medium";
 }
 
 scrollbar {
   width: 4px ;
-  handle-color: #22668D;
+  handle-color: #268bd2;
   handle-width: 8px ;
 }
 
 entry {
-  placeholder: "Search here";
-  placeholder-color: #F0F0F0;
-  text-color: #F0F0F0;
-  border-color: #353446;
-  background-color: #353446;
+  placeholder: "";
+  placeholder-color: #93a1a1;
+  text-color: #93a1a1;
+  border-color: #073642;
+  background-color: #073642;
   border: 0;
   padding: 14px;
   border-radius: 20px;
   blink: false;
 }
-
-/* vim:ft=css

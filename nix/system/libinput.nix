@@ -4,7 +4,7 @@
   services = {
     xserver = {
       enable = true;
-      windowManager.i3.enable = true;
+      # windowManager.i3.enable = true;
       xkb.layout = "us,br";
       xkb.variant = "";
 			xkb.options= "ctrl:nocaps";

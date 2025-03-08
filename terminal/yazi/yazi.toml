@@ -1,5 +1,8 @@
-[manager]
+[mgr]
 show_hidden = true
 
 [preview]
 tab_size = 2
+max_width = 1920
+max_height = 1080
+ueberzug_scale = 10

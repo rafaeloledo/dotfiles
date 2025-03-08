@@ -1,31 +1,55 @@
-{ pkgs, lib, inputs, config, ... }:
+{ pkgs, lib, inputs, config, pkgs-unstable, ... }:
 
 {
   imports = [
     ./hardware.nix
 		./services.nix
     ./libinput.nix
-    ./wayland.nix
     /home/rgnh55/disk.nix
+    ./serve.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
+  nix.settings = {
+    substituters = [
+      "https://hyprland.cachix.org"
+    ];
+    trusted-substituters = [
+      "https://hyprland.cachix.org"
+    ];
+    trusted-public-keys = [
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
+  };
+
   swapDevices = [ ];
-  
+
+  # Real Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  security.polkit.enable = true;
+
+  # VM
+  # boot.loader.grub.enable = true;
+  # boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.useOSProber = true;
+
   services.lvm.enable = false;
+  hardware.graphics.enable32Bit = true;
   systemd.enableEmergencyMode = false;
 
   programs.adb.enable = true;
 
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.bash;
   users.users.rgnh55 = {
     isNormalUser = true;
     description = "rgnh55";
     shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "tss" "docker" "adbusers"];
     packages = with pkgs; [
-      kdePackages.kate
+      obs-studio
       scrcpy
     ];
   };
@@ -38,7 +62,6 @@
 
   programs.hyprland.xwayland.enable = true;
   programs.fish.enable = true;
-  programs.firefox.enable = true;
   programs.virt-manager.enable = true;
   programs.noisetorch.enable = true;
 
@@ -67,7 +90,7 @@
 
   environment.sessionVariables = rec {
     GTK_SCALE = "1";
-    VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.nvidiad/nvidia_icd.x86_64.json";
     NIXOS_OZONE_WL = "1";
   };
 
@@ -78,16 +101,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-		pamixer
-    # linuxKernel.packages.linux_6_9.turbostat
     i7z
     unzip
-    xorg.xbacklight
-    kdePackages.powerdevil
-    fish
-		zsh
-    cachix
-    nvtopPackages.full
     killall
     egl-wayland
     gcc
@@ -96,7 +111,6 @@
     cmake
     wget
     libtool
-    ntfs3g
     spice-vdagent
 		blueman
 		cloudflared
@@ -112,10 +126,24 @@
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 
   networking.firewall.allowedTCPPorts = [
-    22 3000 8000 8080 80 5432 5173
-    8081 8082
+    22
+    80
+
+    5432
+    5173
+
+    3000
+
+    8000
+    8080
+    8081
+    8082
+    8096
+
+    5000
+    5001
   ];
-  
+
   programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -126,11 +154,14 @@
     networkmanager.enable = true;
     hostName = "nixos";
     useDHCP = lib.mkDefault true;
-    nat.enable = true; 
+    nat.enable = true;
   };
 
-  fonts.packages = with pkgs; [
-		roboto-mono
+  fonts.packages =
+    # with pkgs-unstable;
+    with pkgs;
+    [
+    roboto-mono
     noto-fonts-cjk-sans
     noto-fonts
     noto-fonts-emoji
@@ -141,7 +172,7 @@
     nerd-fonts.hack
   ];
 
-  services.xserver.windowManager.i3.enable = true;
+  # services.xserver.windowManager.i3.enable = true;
 
   users.groups.docker = {};
 	virtualisation.docker = {
@@ -150,14 +181,15 @@
 			data-root = "~/docker/img";
 		};
 	};
+
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "postgres" ];
+    ensureDatabases = [ "postgres" "rgnh55" ];
     enableTCPIP = true;
     settings.port = 5432;
     authentication = pkgs.lib.mkOverride 10 ''
-      local all all trust
-      host all all 127.0.0.1/32 trust
+      local all       all     trust
+      host  all      all     127.0.0.1/32   trust
     '';
   };
 

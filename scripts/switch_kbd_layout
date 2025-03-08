@@ -2,14 +2,14 @@
 
 session=$DESKTOP_SESSION
 
-if [ "$session" == "hyprland" ]; then
-  layout=$(hyprctl getoption input:kb_layout | rg "str: br")
-  if [ "$layout" == "str: br" ]; then
+if [ "$session" == "wayland" ]; then
+  layout=$(hyprctl getoption input:kb_layout | rg "str:")
+  if [ "$layout" == "str: br, us" ]; then
     dunstify "kbd is now us"
-    hyprctl keyword input:kb_layout us
+    hyprctl keyword input:kb_layout "us, br"
   else
     dunstify "kbd is now br"
-    hyprctl keyword input:kb_layout br
+    hyprctl keyword input:kb_layout "br, us"
   fi
 else
   kb_format=$(setxkbmap -print -verbose 10 | rg "layout:")

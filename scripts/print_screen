@@ -1,7 +1,5 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # take a print screen of entire screen
-
-echo "teste" >> ~/tmp/teste.txt
 
 grim - | wl-copy

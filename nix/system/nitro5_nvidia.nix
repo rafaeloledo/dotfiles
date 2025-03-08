@@ -10,7 +10,7 @@
       };
       open = false;
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
 
       prime = {
         sync.enable = true;
@@ -25,5 +25,13 @@
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [
+    "modesetting"
+    "nvidia"
+  ];
+
+  environment.systemPackages = [
+    pkgs.ffmpeg
+    pkgs.nvidia-modprobe
+  ];
 }
