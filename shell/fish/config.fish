@@ -14,28 +14,41 @@ set -g theme_hostname always
 set -gx EDITOR nvim
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx STARSHIP_CONFIG ~/.config/starship/starship.toml
-set -gx ANDROID_HOME $HOME/Android/Sdk
-set -gx JAVA_HOME /usr/lib/jvm/default 2>/dev/null
+
+# not working with nixos projects
+# set -gx ANDROID_HOME $HOME/Android/Sdk
+# set -gx JAVA_HOME /usr/lib/jvm/default 2>/dev/null
+
+alias e "emacsclient -c -n"
 
 # aliases
-alias g git
 alias ll "eza -lga --icons"
 alias l "eza -lga --icons"
 alias lt "eza --tree"
+
 alias cls clear
-alias phone "scrcpy --disabel-screensaver --turn-screen-off --no-audio-playback -f"
 alias nf neofetch
+alias cat "bat -p"
+
 alias v nvim
 alias vd neovide
+
+alias lg lazygit
+alias view viewnior
+alias naut nautilus
+alias anime ani-cli
+
 alias t tmux
 alias ta "tmux a"
 alias td "tmux detach"
-alias cat "bat -p"
+
+alias g git
 alias gci "git commit"
 alias gst "git status"
 alias gps "git push"
 alias gpl "git pull"
-alias gl "git log"
+alias gl "git log --graph"
+alias gw "git worktree"
 alias gcl "git clone"
 alias gc "git checkout -b" # shorthand for checkout to branch creating at same time it if not exist
 alias gco "git checkout"
@@ -43,12 +56,14 @@ alias gbr "git branch"
 alias gd "git diff"
 alias gad "git add ."
 alias gf "git fetch"
+alias gs 'git stash'
 alias grm "git rm"
-alias lg lazygit
-alias e "emacsclient -c -n"
-alias view viewnior
-alias naut nautilus
-alias anime ani-cli
+
+alias db "distrobox"
+alias dbl "distrobox list"
+alias dbc "distrobox create"
+alias dbe "distrobox enter"
+alias dbrm "distrobox rm"
 
 # exporting PATHs
 # set -gx PATH /home/rgnh55/.local/share/nvim/mason/bin $PATH 2>/dev/null

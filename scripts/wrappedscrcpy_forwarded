@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+SDL_VIDEODRIVER=wayland scrcpy --disable-screensaver --turn-screen-off --stay-awake -f
