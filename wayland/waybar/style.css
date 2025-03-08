@@ -10,6 +10,12 @@
 
 #window {
   margin: 0 15px 0;
+  color: #ffffff;
+}
+
+#submap {
+  margin: 0 15px 0;
+  color: #ffffff;
 }
 
 window#waybar {
@@ -62,4 +68,14 @@ window#waybar {
 
 #workspaces {
   margin-left: 10px;
+}
+
+#windows {
+  margin: 0 15px 0;
+  color: #ffffff;
+}
+
+#custom-windows {
+  margin: 0 15px 0;
+  color: #ffffff;
 }
