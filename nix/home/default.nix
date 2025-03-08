@@ -10,13 +10,13 @@ let
     "dunst"
     "shell/fish"
     "wayland/hypr"
-    "xorg/i3"
+    # "xorg/i3"
     "xorg/picom"
     "rofi"
     # delegate vim setupts to Makefile cause i may change it frequently
     # so, don't need to `make hs`
-    # "editors/lazyvim"
-    # "editors/vim"
+    "editor/nvim"
+    # "editor/vim"
     "terminal/tmux"
     "wayland/waybar"
     "terminal/yazi"
@@ -36,6 +36,8 @@ in
     ./software.nix
     ./services.nix
     # ./nvf.nix
+    inputs.nur.modules.homeManager.default
+    ./firefox.nix
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
