@@ -106,3 +106,48 @@ clear/nvim:
 
 npm/prefix:
 	npm set prefix ~/.npm-global
+
+.PHONY: b s hb hs ub us kill
+
+b:
+	sudo nixos-rebuild build --flake nix/. --impure
+s:
+	sudo nixos-rebuild switch --flake nix/. --impure
+hb:
+	home-manager build --flake nix/.
+hs:
+	home-manager switch --flake nix/.
+ub:
+	sudo nixos-rebuild --upgrade build --flake nix/.
+us:
+	sudo nixos-rebuild --upgrade switch --flake nix/.
+uboot:
+	sudo nixos-rebuild --upgrade boot --flake nix/.
+nix/cleanu:
+	nix-collect-garbage -d
+nix/clean:
+	sudo nix-collect-garbage -d
+nix/update:
+	nix flake update
+
+.PHONY: archlinux
+
+archlinux/setup:
+	cd
+	mkdir tmp
+	cd tmp
+	sudo pacman -S firefox rustup
+	rustup default stable
+	git clone https://aur.archlinux.org/paru
+	cd paru
+	mkpkg -si
+	paru -S flatpak
+
+archlinux:
+	flatpak install flathub com.github.wwmm.easyeffects
+	paru -S discord postman-bin lazygit ngrok arduino-ide neovim neovide \
+	intellij-idea-community-edition visual-studio-code-bin nautilus gnome-tweaks \
+       	papirus-icon-theme fastfetch libvirt mtpfs android-file-transfer android-udev \
+	libmtp qemu-full pavucontrol pnpm vlc obs-studio playerctl staruml jq maim xclip feha \
+	android-tools zip maven plantuml brightnessctl kdeconnect ncdu firebase-tools mvnd
+

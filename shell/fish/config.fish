@@ -35,7 +35,8 @@ alias gci "git commit"
 alias gst "git status"
 alias gps "git push"
 alias gpl "git pull"
-alias gl "git log"
+alias gl "git log --graph"
+alias gw "git worktree"
 alias gcl "git clone"
 alias gc "git checkout -b" # shorthand for checkout to branch creating at same time it if not exist
 alias gco "git checkout"
@@ -43,6 +44,7 @@ alias gbr "git branch"
 alias gd "git diff"
 alias gad "git add ."
 alias gf "git fetch"
+alias gs 'git stash'
 alias grm "git rm"
 alias lg lazygit
 alias e "emacsclient -c -n"

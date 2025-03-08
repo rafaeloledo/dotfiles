@@ -10,7 +10,7 @@
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
   boot.initrd.kernelModules = [ ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
   hardware.bluetooth.enable = true;
