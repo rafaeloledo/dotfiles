@@ -39,17 +39,17 @@ CapsLock::Esc
 
 ; mirror screen with the phone sound redirected to computer
 #c:: {
-    RunWait "C:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off"
+    RunWait "D:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off"
 }
 
 ; mirror screen with the phone sound not redirected to computer
 #+c:: {
-    RunWait "C:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off --no-audio-playback"
+    RunWait "D:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off --no-audio-playback"
 }
 
 #q:: {
     ; kill process
-    RunWait "wscript C:\dev\.dotfiles\win32\kill-process.vbs " WinGetPID("A")
+    RunWait "wscript D:\dev\dotfiles\win32\kill-process.vbs " WinGetPID("A")
 }
 
 #HotIf WinActive("ahk_exe explorer.exe")
@@ -65,15 +65,15 @@ CapsLock::Esc
 }
 
 #Enter:: {
-    Run "C:\dev\scoop\apps\wezterm\current\wezterm-gui.exe"
+    Run "D:\dev\scoop\apps\wezterm\current\wezterm-gui.exe"
 }
 
 #o:: {
-    Run "C:\dev\scoop\apps\obsidian\current\Obsidian.exe"
+    Run "D:\dev\scoop\apps\obsidian\current\Obsidian.exe"
 }
 
 #n:: {
-    Run "C:\dev\scoop\apps\neovide\current\neovide.exe"
+    Run "D:\dev\scoop\apps\neovide\current\neovide.exe"
 }
 
 #b:: {
@@ -132,8 +132,8 @@ WinActive("Neovide")
 #HotIf
 
 #HotIf WinActive("ahk_exe League of Legends.exe")
-  !`::F1
-  !Esc::F1
+  Esc::`
+  #+q::Esc
   !1::F2
   !2::F3
   !3::F4
@@ -245,8 +245,8 @@ WinActive("ahk_exe brave.exe")
     SendEvent "{Ctrl down}{c down}{c up}{Ctrl up}"
     RepoURL := A_Clipboard
     RegExMatch(RepoURL, "/([^/]+)(?:\.git)?$", &repoName)
-    RunWait "C:\dev\.dotfiles\win32\clone_repo.vbs " RepoURL
-    RunWait "C:\dev\.dotfiles\win32\open_repo.vbs " "C:\dev\repos\github\" repoName[1]
+    RunWait "D:\dev\dotfiles\win32\clone_repo.vbs " RepoURL
+    RunWait "D:\dev\dotfiles\win32\open_repo.vbs " "D:\dev\repos\github\" repoName[1]
 }
 #HotIf
 
@@ -255,5 +255,5 @@ WinActive("ahk_exe brave.exe")
 }
 
 #a:: {
-  RunWait "neovide C:\dev\anotacoes"
+  RunWait "neovide D:\dev\anotacoes"
 }

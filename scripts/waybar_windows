@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Get the active workspace ID
+active_workspace=$(hyprctl monitors -j | jq '.[] | select(.focused) | .activeWorkspace.id')
+
+# Get all windows from the active workspace
+windows=$(hyprctl clients -j | jq -r --argjson active "$active_workspace" '.[] | select(.workspace.id == $active) | .title + " [" + .class + "]"')
+
+# Process windows and add icons
+result=""
+while IFS= read -r window; do
+  if [[ "$window" == *"Firefox"* ]]; then
+    result+=" Firefox  "
+  elif [[ "$window" == *"Code"* ]]; then
+    result+="󰨞 Visual Studio Code  " # VS Code original icon
+  elif [[ "$window" == *"ghostty"* ]]; then
+    result+=" Ghostty  " # Terminal/ghostty original icon
+  elif [[ "$window" == *"chrome"* || "$window" == *"Chrome"* ]]; then
+    result+=" Google Chrome  "
+  elif [[ "$window" == *"nautilus"* || "$window" == *"Nautilus"* ]]; then
+    result+="󰉋 Nautilus  "
+  elif [[ "$window" == *"pavucontrol"* ]]; then
+    result+=" Pavucontrol  "
+  elif [[ "$window" == *"scrcpy"* ]]; then
+    result+=" Scrcpy "
+  elif [[ "$window" == *"Neovide"* ]]; then
+    result+=" Neovide "
+  else
+    result+="$window"
+  fi
+done <<< "$windows"
+
+# Output the result
+echo "$result"
