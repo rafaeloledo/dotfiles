@@ -8,30 +8,25 @@ let
   ];
 
   db = with pkgs; [
-    postgresql
     pgadmin4
     mariadb
   ];
 
   editor = with pkgs; [
     arduino-ide
-    helix
-    zed-editor
     neovim
     neovide
     jetbrains.idea-community-bin
-    youtube-music
     ueberzugpp
     viu
-
     # for errors with LD
     stylua
+    code-cursor
   ];
 
   multimedia = with pkgs; [
     vlc
     obs-studio
-    davinci-resolve
     easyeffects
   ];
 
@@ -44,7 +39,6 @@ let
     nautilus
     gnome-tweaks
     papirus-icon-theme
-    xfce.thunar
     ngrok
     unixtools.xxd
     fastfetch
@@ -56,14 +50,11 @@ let
     android-udev-rules
     libmtp
     jq
-    chromium
-    stow
     pavucontrol
     nodePackages.pnpm
     android-tools
     awscli2
 		zip
-		mvnd
 		maven
 		plantuml
 		# graphviz
@@ -72,8 +63,13 @@ let
     kdePackages.kdeconnect-kde
 
     ncdu # check disk usage
-    cz-cli
     firebase-tools
+
+    mvnd
+    python313Packages.firebase-admin
+    python313Packages.psycopg2
+
+    eas-cli
   ];
 
   lang = with pkgs; [
@@ -95,7 +91,7 @@ let
     picom
     dunst
     duf
-    rofi
+    rofi-wayland
     imagemagick
     hyprshot
     viewnior
@@ -104,10 +100,15 @@ let
     sublime4
     obsidian
     google-chrome
+    vial
+    bc
+    blender
+    ddcutil
+    brave
+    # android-studio
   ];
 
   lsp = with pkgs; [
-    typescript-language-server
     svelte-language-server
     clang-tools
     jdt-language-server
@@ -117,6 +118,14 @@ let
     phpactor
     pyright
   ];
+
+  fmt = with pkgs; [
+    stylua
+  ];
+
+  desktop-tools = with pkgs; [
+    gnome-calculator
+  ];
 in
 
 {
@@ -125,8 +134,10 @@ in
     ./terminal.nix
   ];
 
+  home.enableNixpkgsReleaseCheck = false;
+
   home.packages = xorg ++ db ++ editor ++ multimedia
-  ++ devops ++ lang ++ lsp ++ misc;
+  ++ devops ++ lang ++ misc ++ lsp ++ fmt ++ desktop-tools;
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {

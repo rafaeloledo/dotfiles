@@ -1,17 +1,5 @@
-local nixos = require("config.nixos")
-
 return {
-  nixos,
-
-  {
-    "snacks.nvim",
-    opts = {
-      scroll = { enabled = false },
-    },
-  },
-
-  { "mistricky/codesnap.nvim", build = "make" },
-  { "Mofiqul/vscode.nvim" },
+  { "mofiqul/vscode.nvim" },
   { "craftzdog/solarized-osaka.nvim" },
   {
     "catppuccin/nvim",
@@ -32,7 +20,7 @@ return {
     "ellisonleao/gruvbox.nvim",
     priority = 1000,
     config = function()
-      -- Default options:
+      -- default options:
       require("gruvbox").setup({
         terminal_colors = true, -- add neovim terminal colors
         undercurl = true,
@@ -59,17 +47,4 @@ return {
       })
     end,
   },
-
-  {
-    "ThePrimeagen/git-worktree.nvim",
-  },
-
-  {
-    "nvim-telescope/telescope.nvim",
-  },
-  
-  {
-    "folke/flash.nvim",
-    enabled = false,
-  }
 }

@@ -1,0 +1,10 @@
+{
+    "name": "ags-config",
+    "version": "1.0.0",
+    "description": "AGS configuration based on Waybar",
+    "main": "app.ts",
+    "author": "rgnh55",
+    "dependencies": {
+        "astal": "latest"
+    }
+}
