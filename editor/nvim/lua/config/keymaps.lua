@@ -15,3 +15,15 @@ vim.keymap.set("n", "<Up>", "<c-w>k")
 vim.keymap.set("n", "<Down>", "<c-w>j")
 vim.keymap.set("n", "<Left>", "<c-w>h")
 vim.keymap.set("n", "<Right>", "<c-w>l")
+
+vim.keymap.set("n", "<leader>r", function()
+  require("craftzdog.hsl").replaceHexWithHSL()
+end)
+
+vim.keymap.set("n", "<leader>i", function()
+  require("craftzdog.lsp").toggleInlayHints()
+end)
+
+vim.api.nvim_create_user_command("ToggleAutoformat", function()
+  require("craftzdog.lsp").toggleAutoformat()
+end, {})

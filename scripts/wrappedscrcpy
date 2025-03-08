@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+scrcpy --disable-screensaver --turn-screen-off --no-audio-playback -f
