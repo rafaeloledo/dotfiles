@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 let
   xorg = with pkgs; [
@@ -15,15 +15,11 @@ let
 
   editor = with pkgs; [
     arduino-ide
-    helix
-    zed-editor
     neovim
     neovide
     jetbrains.idea-community-bin
-    youtube-music
     ueberzugpp
     viu
-
     # for errors with LD
     stylua
   ];
@@ -31,7 +27,6 @@ let
   multimedia = with pkgs; [
     vlc
     obs-studio
-    davinci-resolve
     easyeffects
   ];
 
@@ -44,7 +39,6 @@ let
     nautilus
     gnome-tweaks
     papirus-icon-theme
-    xfce.thunar
     ngrok
     unixtools.xxd
     fastfetch
@@ -56,14 +50,11 @@ let
     android-udev-rules
     libmtp
     jq
-    chromium
-    stow
     pavucontrol
     nodePackages.pnpm
     android-tools
     awscli2
 		zip
-		mvnd
 		maven
 		plantuml
 		# graphviz
@@ -72,8 +63,10 @@ let
     kdePackages.kdeconnect-kde
 
     ncdu # check disk usage
-    cz-cli
     firebase-tools
+
+    mvnd
+    python313Packages.firebase-admin
   ];
 
   lang = with pkgs; [
@@ -104,6 +97,7 @@ let
     sublime4
     obsidian
     google-chrome
+    vial
   ];
 
   lsp = with pkgs; [
@@ -124,6 +118,8 @@ in
     ./wayland.nix
     ./terminal.nix
   ];
+
+  home.enableNixpkgsReleaseCheck = false;
 
   home.packages = xorg ++ db ++ editor ++ multimedia
   ++ devops ++ lang ++ lsp ++ misc;

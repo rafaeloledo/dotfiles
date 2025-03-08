@@ -1,7 +1,10 @@
 {
   inputs = {
     systems.url = "github:nix-systems/default-linux";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
     hm.url = "github:nix-community/home-manager";
     hm.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -19,7 +22,7 @@
     agenix.inputs.home-manager.follows = "hm";
     agenix.inputs.systems.follows = "systems";
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland";
     hypridle.url = "github:hyprwm/hypridle";
     hypridle.inputs.hyprlang.follows = "hyprland/hyprlang";
     hypridle.inputs.nixpkgs.follows = "hyprland/nixpkgs";
@@ -32,10 +35,10 @@
     hyprlock.inputs.systems.follows = "hyprland/systems";
     hyprland-hyprspace.url = "github:KZDKM/Hyprspace";
     hyprland-hyprspace.inputs.hyprland.follows = "hyprland";
-    hyprswitch.url = "github:h3rmt/hyprswitch/release";
 
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
+
     waybar.url = "github:Alexays/Waybar";
 
     xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
@@ -64,7 +67,9 @@
     noConfig = {
       nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+            inherit inputs;
+          };
         modules = [
           { nixpkgs.config.allowUnfree = true; nixpkgs.config.android_sdk.accept_license = true; }
           ./system

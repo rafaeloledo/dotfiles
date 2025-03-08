@@ -10,7 +10,7 @@ let
     "dunst"
     "shell/fish"
     "wayland/hypr"
-    "xorg/i3"
+    # "xorg/i3"
     "xorg/picom"
     "rofi"
     # delegate vim setupts to Makefile cause i may change it frequently
