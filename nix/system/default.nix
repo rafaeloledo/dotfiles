@@ -1,13 +1,30 @@
-{ pkgs, lib, inputs, config, ... }:
+{ pkgs, lib, inputs, config, pkgs-unstable, ... }:
 
 {
   imports = [
     ./hardware.nix
 		./services.nix
     ./libinput.nix
-    ./wayland.nix
     /home/rgnh55/disk.nix
+    ./serve.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
+
+  nix.settings = {
+    substituters = [
+      "https://hyprland.cachix.org"
+      "http://192.168.0.12:5000"
+    ];
+    trusted-substituters = [
+      "https://hyprland.cachix.org"
+      "http://192.168.0.12:5000"
+    ];
+    trusted-public-keys = [
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "192.168.0.12:vSck9pL6tkv3Zz3VVHsiB0tAG8VTrv5Y3ZO3PANAYpg="
+    ];
+  };
 
   swapDevices = [ ];
   
@@ -18,7 +35,7 @@
 
   programs.adb.enable = true;
 
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.bash;
   users.users.rgnh55 = {
     isNormalUser = true;
     description = "rgnh55";
@@ -38,7 +55,6 @@
 
   programs.hyprland.xwayland.enable = true;
   programs.fish.enable = true;
-  programs.firefox.enable = true;
   programs.virt-manager.enable = true;
   programs.noisetorch.enable = true;
 
@@ -84,9 +100,6 @@
     unzip
     xorg.xbacklight
     kdePackages.powerdevil
-    fish
-		zsh
-    cachix
     nvtopPackages.full
     killall
     egl-wayland
@@ -103,6 +116,7 @@
     vim
     networkmanagerapplet
     hydra-check
+    nix-serve
   ];
 
   system.stateVersion = "24.11";
@@ -113,7 +127,7 @@
 
   networking.firewall.allowedTCPPorts = [
     22 3000 8000 8080 80 5432 5173
-    8081 8082
+    8081 8082 5000
   ];
   
   programs.mtr.enable = true;
@@ -129,8 +143,11 @@
     nat.enable = true; 
   };
 
-  fonts.packages = with pkgs; [
-		roboto-mono
+  fonts.packages =
+    # with pkgs-unstable;
+    with pkgs;
+    [
+    roboto-mono
     noto-fonts-cjk-sans
     noto-fonts
     noto-fonts-emoji
@@ -141,7 +158,7 @@
     nerd-fonts.hack
   ];
 
-  services.xserver.windowManager.i3.enable = true;
+  # services.xserver.windowManager.i3.enable = true;
 
   users.groups.docker = {};
 	virtualisation.docker = {
@@ -150,14 +167,15 @@
 			data-root = "~/docker/img";
 		};
 	};
+
   services.postgresql = {
     enable = true;
     ensureDatabases = [ "postgres" ];
     enableTCPIP = true;
     settings.port = 5432;
     authentication = pkgs.lib.mkOverride 10 ''
-      local all all trust
-      host all all 127.0.0.1/32 trust
+      local all       all     trust
+      host  all      all     127.0.0.1/32   trust
     '';
   };
 

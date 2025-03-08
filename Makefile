@@ -106,3 +106,26 @@ clear/nvim:
 
 npm/prefix:
 	npm set prefix ~/.npm-global
+
+.PHONY: b s hb hs ub us kill
+
+b:
+	sudo nixos-rebuild build --flake nix/. --impure
+s:
+	sudo nixos-rebuild switch --flake nix/. --impure
+hb:
+	home-manager build --flake nix/.
+hs:
+	home-manager switch --flake nix/.
+ub:
+	sudo nixos-rebuild --upgrade build --flake nix/.
+us:
+	sudo nixos-rebuild --upgrade switch --flake nix/.
+uboot:
+	sudo nixos-rebuild --upgrade boot --flake nix/.
+nix/cleanu:
+	nix-collect-garbage -d
+nix/clean:
+	sudo nix-collect-garbage -d
+nix/update:
+	nix flake update

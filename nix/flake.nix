@@ -1,7 +1,10 @@
 {
   inputs = {
     systems.url = "github:nix-systems/default-linux";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
+
     hm.url = "github:nix-community/home-manager";
     hm.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -11,6 +14,9 @@
     flake-utils.inputs.systems.follows = "systems";
     flake-compat.url = "github:edolstra/flake-compat";
 
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-index-db.url = "github:Mic92/nix-index-database";
     nix-index-db.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -19,7 +25,7 @@
     agenix.inputs.home-manager.follows = "hm";
     agenix.inputs.systems.follows = "systems";
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland";
     hypridle.url = "github:hyprwm/hypridle";
     hypridle.inputs.hyprlang.follows = "hyprland/hyprlang";
     hypridle.inputs.nixpkgs.follows = "hyprland/nixpkgs";
@@ -32,7 +38,6 @@
     hyprlock.inputs.systems.follows = "hyprland/systems";
     hyprland-hyprspace.url = "github:KZDKM/Hyprspace";
     hyprland-hyprspace.inputs.hyprland.follows = "hyprland";
-    hyprswitch.url = "github:h3rmt/hyprswitch/release";
 
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
@@ -43,11 +48,11 @@
     nvf.url = "github:notashelf/nvf";
   };
 
-  outputs = { flake-parts, nixpkgs, hm, hyprland, nix-index-db, ... } @ inputs:
+  outputs = { flake-parts, nixpkgs, hm, hyprland, nix-index-db, nur, ... } @ inputs:
 
   let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = nixpkgs.legacyPackages.${system}.extend nur.overlays.default;
     userhostname = "rgnh55@nixos";
 
     hmConfig = hm.lib.homeManagerConfiguration {
@@ -64,7 +69,9 @@
     noConfig = {
       nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+            inherit inputs;
+          };
         modules = [
           { nixpkgs.config.allowUnfree = true; nixpkgs.config.android_sdk.accept_license = true; }
           ./system
