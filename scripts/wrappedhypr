@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# for offloading with NVIDIA
+# export LIBVA_DRIVER_NAME="nvidia"
+# export __GLX_VENDOR_LIBRARY_NAME="nvidia"
+
+# session
+export XDG_SESSION_TYPE=wayland
+export DESKTOP_SESSION=wayland
+export XDG_SESSION_DESKTOP=Hyprland
+export XDG_CURRENT_DESKTOP=Hyprland
+export MOZ_ENABLE_WAYLAND=1
+export QT_QPA_PLATFORM=wayland
+export SDL_VIDEODRIVER=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
+export ELECTRON_OZONE_PLATFORM_HINT=wayland
+export PATH=~/.local/scripts:$PATH
+
+exec Hyprland

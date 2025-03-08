@@ -1,9 +1,10 @@
-window-height = 42
-window-width = 170
-window-decoration = false
-font-size = 18
+window-height = 30
+window-width = 130
+window-decoration = true
+font-size = 14
 mouse-hide-while-typing = true
-theme = catppuccin-mocha
 confirm-close-surface = false
-gtk-tabs-location = hidden
-background-opacity = 0.9
+# gtk-tabs-location = hidden
+background-opacity = 0.92
+# theme = Solarized Dark Higher Contrast
+theme = MaterialDesignColors

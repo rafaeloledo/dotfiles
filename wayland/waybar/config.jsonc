@@ -3,29 +3,40 @@
   "layer": "top",
   "height": 16,
   "modules-left": [
-    "hyprland/workspaces"
+    "hyprland/workspaces",
   ],
   "modules-center": [
-    "clock"
+    "custom/windows"
   ],
   "modules-right": [
+    "clock",
     "pulseaudio"
   ],
+
+  "custom/windows": {
+    "exec": "~/.local/scripts/waybar_windows",
+    "interval": 1,
+    "format": "{}",
+    "tooltip": false
+  },
+
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{name}",
     "format-icons": {
-      "active": " ",
-      "default": " ",
+      "active": " ",
+      "default": " ",
       "sort-by-number": true
     }
   },
+
   "clock": {
     "interval": 1,
     "format": "{:%H:%M:%S - %d/%m/%y} ",
     "tooltip": true,
     "tooltip-format": "{:%Y %B}\n{calendar}"
   },
+
   "pulseaudio": {
     "format": "{icon} {volume} ",
     "format-muted": "󰝟",
