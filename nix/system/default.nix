@@ -61,6 +61,12 @@
   };
 
   programs.hyprland.xwayland.enable = true;
+
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+
   programs.fish.enable = true;
   programs.virt-manager.enable = true;
   programs.noisetorch.enable = true;
@@ -117,9 +123,12 @@
     vim
     networkmanagerapplet
     hydra-check
+
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   virtualisation.libvirtd.enable = true;

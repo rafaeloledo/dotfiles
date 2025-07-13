@@ -21,72 +21,7 @@ keyd:
 keyd/service:
 	sudo systemctl enable keyd --now
 
-SYMLINKS := doom zshrc ansible fish rofi .gitconfig dunst keyd gtk-3.0
-SYMLINKS_TERMINAL := wezterm ghostty tmux yazi
-SYMLINKS_WLND := hypr waybar
-SYMLINKS_XORG := i3 picom
-SYMLINKS_SHELL := zshrc fish
-
-config:
-	@echo "Setting up config files..."
-	@for file in $(SYMLINKS); do \
-		ln -nfs ~/dotfiles/$$file ~/.config/$$file; \
-	done
-	$(MAKE) config/wayland
-	$(MAKE) config/xorg
-	$(MAKE) config/terminal
-	$(MAKE) config/shell
-	@ln -nfs ~/dotfiles/.gitconfig ~/.gitconfig
-
-config/terminal:
-	@for file in $(SYMLINKS_TERMINAL); do \
-		ln -nfs ~/dotfiles/terminal/$$file ~/.config/$$file; \
-	done
-
-config/shell:
-	@for file in $(SYMLINKS_SHELL); do \
-		ln -nfs ~/dotfiles/shell/$$file ~/.config/$$file; \
-	done
-
-config/wayland:
-	@for file in $(SYMLINKS_WLND); do \
-		ln -nfs ~/dotfiles/wayland/$$file ~/.config/$$file; \
-	done
-
-config/xorg:
-	@for file in $(SYMLINKS_XORG); do \
-		ln -nfs ~/dotfiles/xorg/$$file ~/.config/$$file; \
-	done
-
-wall_and_scripts:
-	@echo "Setting up wallpapers and scripts..."
-	@ln -nfs ~/dotfiles/scripts/ ~/.local/scripts
-	@ln -nfs ~/dotfiles/wallpapers/ ~/wallpapers
-
-push:
-	@git add . && git commit --amend --no-edit && git push -f
-
-DOOM_REPO := https://github.com/doomemacs/doomemacs
-DOOM_INSTALL_DIR = $(HOME)/.config/emacs
-
-doom:
-	@if [ ! -d "$(DOOM_INSTALL_DIR)" ]; then \
-		git clone --depth 1 "$(DOOM_REPO)" "$(DOOM_INSTALL_DIR)"; \
-		$(DOOM_INSTALL_DIR)/bin/doom install; \
-	else
-		@echo "Doom already installed."
-	fi
-
 NOTES_DIR := $(HOME)/sync
-
-shell:
-	chsh -s /usr/bin/fish rgnh55
-
-set_rust:
-	@rustup default nightly
-
-flatpak:
-	@echo "easyeffects"
 
 vim/vanilla:
 	ln -nfs ~/dotfiles/editor/vim ~/.config/nvim
@@ -112,7 +47,7 @@ npm/prefix:
 b:
 	sudo nixos-rebuild build --flake nix/. --impure
 s:
-	sudo nixos-rebuild switch --flake nix/. --impure
+	sudo nixos-rebuild switch --flake nix/. --impure --option substitute false --offline
 se:
 	sudo nixos-rebuild switch --flake nix/. --impure --option substituters https://cache.nixos.org
 hb:
@@ -134,28 +69,7 @@ nix/clean:
 nix/update:
 	nix flake update
 
-.PHONY: archlinux
-
-archlinux/setup:
-	cd
-	mkdir tmp
-	cd tmp
-	sudo pacman -S firefox rustup
-	rustup default stable
-	git clone https://aur.archlinux.org/paru
-	cd paru
-	mkpkg -si
-	paru -S flatpak
-
-archlinux:
-	flatpak install flathub com.github.wwmm.easyeffects
-	paru -S discord postman-bin lazygit ngrok arduino-ide neovim neovide \
-	intellij-idea-community-edition visual-studio-code-bin nautilus gnome-tweaks \
-	papirus-icon-theme fastfetch libvirt mtpfs android-file-transfer android-udev \
-	libmtp qemu-full pavucontrol pnpm vlc obs-studio playerctl staruml jq maim xclip \
-	android-tools zip maven plantuml brightnessctl kdeconnect ncdu firebase-tools mvnd \
-	fish ghostty xdg-desktop-portal-hyprland grim slurp hyprland rofi-wayland waybar \
-	eza bat tmux feh swaybg dunst typescript-language-server scrcpy inkscape gimp lua-language-server
+.PHONY: archlinux archlinux/link
 
 archlinux/link:
 	ln -nfs ~/dotfiles/wayland/hypr ~/.config/hypr

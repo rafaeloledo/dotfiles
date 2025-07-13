@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-# for offloading with NVIDIA
-# export LIBVA_DRIVER_NAME="nvidia"
-# export __GLX_VENDOR_LIBRARY_NAME="nvidia"
+export LIBVA_DRIVER_NAME="nvidia"
+export __GLX_VENDOR_LIBRARY_NAME="nvidia"
+export GBM_BACKEND="nvidia-drm"
+export AQ_FORCE_LINEAR_BLIT=1
 
 # session
 export XDG_SESSION_TYPE=wayland

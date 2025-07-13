@@ -124,6 +124,10 @@
 
     antimicrox # Gamepad
     mupdf # PDF reader
+
+    firefox
+
+    hyprcursor
   ];
 
   dconf.settings = {

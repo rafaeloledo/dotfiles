@@ -25,8 +25,9 @@
     agenix.inputs.home-manager.follows = "hm";
     agenix.inputs.systems.follows = "systems";
 
-    hyprland.url = "github:hyprwm/hyprland/9b51d73a1e22c86e8d6ec78750e622da9242e32f";
+    hyprland.url = "github:hyprwm/hyprland/e15014e031589e1df2dc29a5ce94325676796ac4";
     hypridle.url = "github:hyprwm/hypridle";
+    hyprland.inputs.aquamarine.url = "github:hyprwm/aquamarine/dfe9601119730f8605fa3ff07ee7a365bd5eaa0f";
     hypridle.inputs.hyprlang.follows = "hyprland/hyprlang";
     hypridle.inputs.nixpkgs.follows = "hyprland/nixpkgs";
     hypridle.inputs.systems.follows = "hyprland/systems";
@@ -49,6 +50,12 @@
 
     nix-snapd.url = "github:nix-community/nix-snapd";
     nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
+
+    rose-pine-hyprcursor = {
+      url = "github:ndom91/rose-pine-hyprcursor";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprlang.follows = "hyprland/hyprlang";
+    };
   };
 
   outputs = {

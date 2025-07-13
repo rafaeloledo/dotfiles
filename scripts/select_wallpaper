@@ -3,8 +3,4 @@
 folder=~/wallpapers
 file="$(ls "$folder" | rofi -dmenu)"
 
-if [ "$XDG_SESSION_TYPE" == "x11" ];
-  feh --bg-scale "$folder"/"$file"
-then
-  swaybg -i "$folder"/"$file" & dunstify "Set wallaper to $file"
-fi
+swaybg -i "$folder"/"$file" & dunstify "Set wallaper to $file"

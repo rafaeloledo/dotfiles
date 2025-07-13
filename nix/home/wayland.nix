@@ -12,5 +12,7 @@
     hyprpicker
     wlogout
     hyprpaper
+
+    mako
   ];
 }

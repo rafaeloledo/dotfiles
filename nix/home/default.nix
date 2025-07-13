@@ -40,7 +40,7 @@ in
   home = {
     username = "rgnh55";
     homeDirectory = "/home/rgnh55";
-    stateVersion = "24.11";
+    stateVersion = "25.05";
   };
 
   home.file = builtins.listToAttrs (map (name: {

@@ -16,7 +16,7 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx STARSHIP_CONFIG ~/.config/starship/starship.toml
 
 # not working with nixos projects
-# set -gx ANDROID_HOME $HOME/Android/Sdk
+set -gx ANDROID_HOME $HOME/Android/Sdk
 # set -gx JAVA_HOME /usr/lib/jvm/default 2>/dev/null
 
 alias e "emacsclient -c -n"
