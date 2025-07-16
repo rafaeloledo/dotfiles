@@ -1,10 +1,11 @@
 return {
 	{
 		"folke/noice.nvim",
+    enabled = true,
 		event = "VeryLazy",
 		opts = {},
 		dependencies = {
-			"MunifTanjim/nui.nvim",
+		"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
 	},
@@ -60,6 +61,7 @@ return {
   {
     "tzachar/local-highlight.nvim",
     opts = {
+      animate = { enabled = false },
       file_types = {
         'python',
         'cpp',

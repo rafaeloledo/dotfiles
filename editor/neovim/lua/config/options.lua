@@ -60,3 +60,6 @@ vim.opt.completeopt = "menuone,noselect"
 vim.opt.guicursor = "a:block-blinkon0"
 
 vim.opt.wildmode = "list:longest"
+
+vim.opt.fileformat = "unix"
+vim.opt.fileformats = { "unix", "dos", "mac" }

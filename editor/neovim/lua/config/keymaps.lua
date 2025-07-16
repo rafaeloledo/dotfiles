@@ -1,6 +1,6 @@
 local keymap = vim.keymap
 
-keymap.set({ "n", "i" }, "<C-s>", "<cmd>w<CR>")
+keymap.set({ "n", "i" }, "<C-s>", "<cmd>w<CR><Esc>")
 
 keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 keymap.set("i", "<C-v>", "<C-r>+", { desc = "Paste from clipboard" })
