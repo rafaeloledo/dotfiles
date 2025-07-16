@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+
+dconf write /org/gnome/desktop/interface/clock-show-seconds true
+dconf write /org/gnome/desktop/interface/clock-show-weekday true
+
+dconf write /org/gnome/desktop/notifications/show-banners false
+
+dconf write /org/gnome/desktop/wm/keybindings/switch-input-source "['<Alt>Shift_L']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-input-source-backward "['']"
+
+dconf write /org/gnome/desktop/wm/keybindings/close "['<Super>Q']"
+
+dconf write /org/gnome/desktop/wm/keybindings/panel-run-dialog "['<Alt>F2']"
+
+dconf write /org/gnome/shell/keybindings/show-screenshot-ui "['<Shift><Super>s']"
+
+dconf write /org/gnome/shell/window-switcher/current-workspace-only true
+dconf write /org/gnome/shell/app-switcher/current-workspace-only true
+
+dconf write /org/gnome/shell/keybindings/switch-to-application-1 "['']"
+dconf write /org/gnome/shell/keybindings/switch-to-application-2 "['']"
+
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-left "['<Super>1']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-right "['<Super>2']"
+
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-left "['<Shift><Super>1']"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-right "['<Shift><Super>2']"
+
+dconf write /org/gnome/nautilus/preferences/default-folder-viewer "'list-view'"
+dconf write /org/gnome/nautilus/preferences/show-hidden-files true
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name "'Open Nautilus'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command "'nautilus'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding "'<Super>e'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name "'Open Wofi'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command "'wofi'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding "'<Super>R'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name "'Open Ghostty'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command "'ghostty'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding "'<Super>return'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name "'Open Chrome'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command "'google-chrome-stable'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding "'<Super>b'"
+
+dconf write /org/virt-manager/virt-manager/connections/autoconnect "['qemu:///system']"
+dconf write /org/virt-manager/virt-manager/connections/uris "['qemu:///system']"
+
+dconf write /org/gnome/desktop/input-sources/sources "[('xkb', 'us'), ('xkb', 'br')]"
+gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
+
+dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,maximize,close'"
+
+dconf write /org/gnome/desktop/interface/enable-animations false
+
+# power saving...
+
+dconf write /org/gnome/desktop/session/idle-delay "uint32 0"
+dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'"
+dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type "'nothing'"
+dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout "0"
+dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout "0"
+
+dconf write /org/gnome/desktop/sound/event-sounds false
+
+dconf write /org/gnome/mutter/experimental-features "['scale-monitor-framebuffer']"
+
+dconf write /org/gnome/desktop/wm/keybindings/switch-applications "['<Alt>Tab']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-applications-backward "['<Shift><Alt>Tab']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-windows "['']"
+dconf write /org/gnome/desktop/wm/keybindings/switch-windows-backward "['']"
+
+gsettings set org.gnome.mutter check-alive-timeout '0'

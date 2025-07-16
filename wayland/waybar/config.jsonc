@@ -3,10 +3,9 @@
   "layer": "top",
   "height": 16,
   "modules-left": [
-    "hyprland/workspaces",
+    "hyprland/workspaces"
   ],
   "modules-center": [
-    "custom/windows"
   ],
   "modules-right": [
     "clock",

@@ -2,16 +2,14 @@ local wezterm = require("wezterm")
 local mux = wezterm.mux
 local config = wezterm.config_builder()
 
-config.enable_wayland = false
+config.dpi = 385
 config.font_size = 14
 config.window_background_opacity = 1
 config.enable_scroll_bar = false
-config.initial_cols = 115
-config.initial_rows = 30
 config.default_cursor_style = "SteadyBar"
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.default_prog = { "D:\\dev\\scoop\\apps\\pwsh\\current\\pwsh.exe", "-nologo" }
+	config.default_prog = { "C:\\dev\\scoop\\apps\\pwsh\\current\\pwsh.exe", "-nologo" }
 end
 
 -- wezterm.on("gui-startup", function(cmd)

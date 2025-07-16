@@ -84,4 +84,13 @@ zoxide init fish | source
 #starship init fish | source
 
 # Added by LM Studio CLI (lms)
+
 set -gx PATH $PATH /home/rgnh55/.lmstudio/bin
+
+alias me "make emulators"
+alias mf "make flake"
+alias ms "make start"
+alias mi "make install"
+alias mw "make workers"
+
+alias ghb "gh browse"

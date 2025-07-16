@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  # cloudflare
   systemd.services.api_odara = {
     enable = false;
     wantedBy = [ "multi-user.target" ];
@@ -15,29 +14,28 @@
     };
   };
 
-  # services.displayManager.ly.enable = true;
-  services.displayManager.gdm.enable = true;
-
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # pulseaudio
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
   # services.pulseaudio.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  # keyd
+  services.postgresql = {
+    enable = false;
+    ensureDatabases = [ "postgres" "rgnh55" ];
+    enableTCPIP = true;
+    settings.port = 5432;
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all       all     trust
+      host  all      all     127.0.0.1/32   trust
+    '';
+  };
+
+
   services.keyd.enable = true;
   services.keyd.keyboards.default.settings = {
     main = {
       capslock = "leftcontrol";
-      # leftmeta = "leftalt";
-      # leftalt = "leftmeta";
     };
-    # alt = {
-    #   h = "left";
-    #   j = "down";
-    #   k = "up";
-    #   l = "right";
-    # };
   };
   environment.variables = {
     LD_LIBRARY_PATH = "/run/opengl-driver/lib:/run/opengl-driver-32/lib";
@@ -47,17 +45,4 @@
   services.udev.extraRules = ''
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
-
-  services.ollama = {
-    enable = false;
-    package = pkgs.ollama-rocm;
-  };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-  };
-
 }

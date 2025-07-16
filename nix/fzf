@@ -1,0 +1,6 @@
+home/inputrc:  # In bash only, enable "magic space" so that typing space
+home/gnome.nix:      "org/gnome/shell/window-switcher".current-workspace-only = true;
+home/gnome.nix:      "org/gnome/shell/app-switcher".current-workspace-only = true;
+system/default.nix:    ubuntu_font_family
+home/software.nix:    # jellyfin
+system/services.nix:  services.displayManager.ly.enable = true;
