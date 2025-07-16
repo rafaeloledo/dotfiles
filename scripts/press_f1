@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export YDOTOOL_SOCKET=/tmp/ydotools
+
+sleep 1
+sudo ydotool key alt+1

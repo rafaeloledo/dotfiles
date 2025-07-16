@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+flatpak run --command='bottles-cli' com.usebottles.bottles run -p MC -b pw

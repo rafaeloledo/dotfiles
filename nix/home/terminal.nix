@@ -37,16 +37,13 @@ let
   };
 
   programs = with pkgs; [
-    starship
     tmux
     eza
     bat
     fd
     ripgrep
     fzf
-    wezterm
     ghostty
-    starship
     htop
     yazi
     gh-dash
@@ -57,8 +54,7 @@ in
 
 {
   home.file = {
-    ".local/scripts".source =
-      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/scripts;
+    ".local/scripts".source = config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/scripts;
   };
 
   home.file = {
@@ -66,9 +62,6 @@ in
   };
 
   home.packages = programs;
-
-  programs.zsh.enable = true;
-  programs.zsh.dotDir = ".config/zshrc";
 
   programs.bash = {
     enable = true;
