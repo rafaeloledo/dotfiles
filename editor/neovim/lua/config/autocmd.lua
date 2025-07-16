@@ -27,9 +27,9 @@ if vim.fn.argc() == 1 then
   end, { desc = 'Patch Dir' })
 end
 
-vim.api.nvim_create_autocmd('BufRead', {
-  pattern = {'*.*'},
-  callback = function(data)
-    require('local-highlight').attach(data.buf)
-  end
-})
+-- vim.api.nvim_create_autocmd('BufRead', {
+--   pattern = {'*.*'},
+--   callback = function(data)
+--     require('local-highlight').attach(data.buf)
+--   end
+-- })

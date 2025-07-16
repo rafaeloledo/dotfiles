@@ -65,6 +65,10 @@ alias dbc "distrobox create"
 alias dbe "distrobox enter"
 alias dbrm "distrobox rm"
 
+alias collect-garbage "sudo nix-collect-garbage -d && nix-collect-garbage -d"
+
+alias cd z
+
 # exporting PATHs
 # set -gx PATH /home/rgnh55/.local/share/nvim/mason/bin $PATH 2>/dev/null
 set -gx PATH bin $PATH 2>/dev/null
@@ -84,4 +88,13 @@ zoxide init fish | source
 #starship init fish | source
 
 # Added by LM Studio CLI (lms)
+
 set -gx PATH $PATH /home/rgnh55/.lmstudio/bin
+
+alias me "make emulators"
+alias mf "make flake"
+alias ms "make start"
+alias mi "make install"
+alias mw "make workers"
+
+alias ghb "gh browse"

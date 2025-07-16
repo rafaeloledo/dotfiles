@@ -2,8 +2,7 @@
   inputs = {
     systems.url = "github:nix-systems/default-linux";
 
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hm.url = "github:nix-community/home-manager";
     hm.inputs.nixpkgs.follows = "nixpkgs";
@@ -25,9 +24,8 @@
     agenix.inputs.home-manager.follows = "hm";
     agenix.inputs.systems.follows = "systems";
 
-    hyprland.url = "github:hyprwm/hyprland/e15014e031589e1df2dc29a5ce94325676796ac4";
+    hyprland.url = "github:hyprwm/hyprland/main";
     hypridle.url = "github:hyprwm/hypridle";
-    hyprland.inputs.aquamarine.url = "github:hyprwm/aquamarine/dfe9601119730f8605fa3ff07ee7a365bd5eaa0f";
     hypridle.inputs.hyprlang.follows = "hyprland/hyprlang";
     hypridle.inputs.nixpkgs.follows = "hyprland/nixpkgs";
     hypridle.inputs.systems.follows = "hyprland/systems";
@@ -48,8 +46,8 @@
 
     nvf.url = "github:notashelf/nvf";
 
-    nix-snapd.url = "github:nix-community/nix-snapd";
-    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
+    # nix-snapd.url = "github:nix-community/nix-snapd";
+    # nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
 
     rose-pine-hyprcursor = {
       url = "github:ndom91/rose-pine-hyprcursor";
@@ -59,13 +57,14 @@
   };
 
   outputs = {
+    self,
     flake-parts,
     nixpkgs,
     hm,
     hyprland,
     nix-index-db,
     nur,
-    nix-snapd,
+    # nix-snapd,
     ...
   } @ inputs:
 
@@ -80,7 +79,7 @@
       modules = [
         { nixpkgs.config.allowUnfree = true; }
         inputs.nvf.homeManagerModules.default
-        nix-index-db.hmModules.nix-index
+        nix-index-db.homeModules.nix-index
         ./home
       ];
     };
@@ -88,7 +87,7 @@
     noConfig = {
       nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; outputs = self.outputs; };
         modules = [
           {
             nixpkgs.config.allowUnfree = true;
@@ -99,9 +98,9 @@
 
           ./system
 
-          nix-snapd.nixosModules.default {
-            services.snap.enable = true;
-          }
+          # nix-snapd.nixosModules.default {
+          #   services.snap.enable = true;
+          # }
         ];
       };
     };

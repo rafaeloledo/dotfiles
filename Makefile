@@ -42,47 +42,29 @@ clear/nvim:
 npm/prefix:
 	npm set prefix ~/.npm-global
 
-.PHONY: b s hb hs ub us kill
-
-b:
-	sudo nixos-rebuild build --flake nix/. --impure
-s:
-	sudo nixos-rebuild switch --flake nix/. --impure --option substitute false --offline
-se:
-	sudo nixos-rebuild switch --flake nix/. --impure --option substituters https://cache.nixos.org
-hb:
-	home-manager build --flake nix/.
-hs:
-	home-manager switch --flake nix/.
-hse:
-	home-manager switch --flake nix/. --option substituters https://cache.nixos.org --impure --show-trace
-ub:
-	sudo nixos-rebuild --upgrade build --flake nix/.
-us:
-	sudo nixos-rebuild --upgrade switch --flake nix/.
-uboot:
-	sudo nixos-rebuild --upgrade boot --flake nix/.
-nix/cleanu:
-	nix-collect-garbage -d
-nix/clean:
-	sudo nix-collect-garbage -d
-nix/update:
-	nix flake update
-
 .PHONY: archlinux archlinux/link
 
 archlinux/link:
 	ln -nfs ~/dotfiles/wayland/hypr ~/.config/hypr
 	ln -nfs ~/dotfiles/terminal/ghostty ~/.config/ghostty
 	ln -nfs ~/dotfiles/terminal/tmux ~/.config/tmux
+	ln -nfs ~/dotfiles/terminal/wezterm ~/.config/wezterm
 	ln -nfs ~/dotfiles/editor/nvim ~/.config/nvim
 	ln -nfs ~/dotfiles/shell/fish ~/.config/fish
 	ln -nfs ~/dotfiles/scripts ~/.local/scripts
 	ln -nfs ~/dotfiles/wallpapers/ ~/wallpapers
 	ln -nfs ~/dotfiles/wayland/waybar ~/.config/waybar
 	ln -nfs ~/dotfiles/rofi ~/.config/rofi
+	ln -nfs ~/dotfiles/environment.d/ ~/.config/environment.d
+	ln -nfs ~/dotfiles/editor/sublime-text ~/.config/sublime-text
+	ln -nfs ~/dotfiles/wayland/wofi ~/.config/wofi
 
 # needs admin privileges
 windows/setup:
-	mklink /D "C:\Users\rafae\.config\autohotkey" "D:\dev\dotfiles\win32\autohotkey"
-	mklink /D "C:\Users\rafae\.config\wezterm" "D:\dev\dotfiles\win32\wezterm"
+	mklink /D "C:\Users\rafae\.config\autohotkey" "C:\dev\dotfiles\win32\autohotkey"
+	mklink /D "C:\Users\rafae\.config\wezterm" "C:\dev\dotfiles\win32\wezterm"
+
+.PHONY: push
+
+push:
+	git add . && git commit --amend --no-edit && git push -f
