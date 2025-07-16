@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  # cloudflare
   systemd.services.api_odara = {
     enable = false;
     wantedBy = [ "multi-user.target" ];
@@ -15,49 +14,86 @@
     };
   };
 
-  # services.displayManager.ly.enable = true;
-  services.displayManager.gdm.enable = true;
-
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # pulseaudio
-  # services.pulseaudio.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-
-  # keyd
-  services.keyd.enable = true;
-  services.keyd.keyboards.default.settings = {
-    main = {
-      capslock = "leftcontrol";
-      # leftmeta = "leftalt";
-      # leftalt = "leftmeta";
+  services = {
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+        charger = {
+          governor = "performance";
+          turbo = "auto";
+        };
+      };
     };
-    # alt = {
-    #   h = "left";
-    #   j = "down";
-    #   k = "up";
-    #   l = "right";
-    # };
-  };
-  environment.variables = {
-    LD_LIBRARY_PATH = "/run/opengl-driver/lib:/run/opengl-driver-32/lib";
-    KEYD_HOME = "${pkgs.keyd}";
+
+    tlp.enable = false;
+
+    flatpak.enable = true;
+
+    udev.extraRules = ''
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+    '';
+
+    keyd = {
+      enable = true;
+
+      keyboards.default.settings = {
+        main = {
+          capslock = "leftcontrol";
+        };
+      };
+    };
+
+    lvm.enable = false;
+
+    postgresql = {
+      enable = false;
+      ensureDatabases = [ "postgres" "rgnh55" ];
+      enableTCPIP = true;
+      settings.port = 5432;
+      authentication = pkgs.lib.mkOverride 10 ''
+      local all       all     trust
+      host  all      all     127.0.0.1/32   trust
+      '';
+    };
+
+    gnome.gnome-keyring.enable = true;
+    power-profiles-daemon.enable = false;
+
+    # displayManager.cosmic-greeter.enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.cosmic.enable = true;
+    gnome.core-apps.enable = false;
+    gnome.core-developer-tools.enable = false;
+    gnome.games.enable = false;
   };
 
-  services.udev.extraRules = ''
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
-  '';
+  environment.gnome.excludePackages = with pkgs; [ gnome-tour gnome-user-docs ];
 
-  services.ollama = {
-    enable = false;
-    package = pkgs.ollama-rocm;
-  };
-
-  programs.steam = {
+  services.sunshine = {
     enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-  };
+    autoStart = true;
+    openFirewall = true;
 
+    settings = {
+      sunshine_name = "mynixos";
+      origin_web_ui_allowed = "lan";
+      output_name = 0;
+    };
+
+    applications = {
+      apps = [
+        {
+          name = "Desktop Full Screen";
+          prep-cmd = [];
+          undo-cmd = [];
+          detached = [];
+          image-path = null;
+        }
+      ];
+    };
+  };
 }

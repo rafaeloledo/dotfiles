@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ "$(hyprctl activewindow -j | jq -r ".class")" = "com.github.wwmm.easyeffects" ]; then
+  xdotool getactivewindow windowunmap
+  dunstify "closing window..."
+else
+  dunstify "killing window..."
+  hyprctl dispatch killactive ""
+fi

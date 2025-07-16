@@ -2,11 +2,11 @@ return {
 	{ "echasnovski/mini.statusline", opts = {} },
 	{ "echasnovski/mini.tabline", opts = {} },
 	-- { "echasnovski/mini.cursorword", opts = {} },
-	-- { "echasnovski/mini.indentscope", opts = {} },
+	{ "echasnovski/mini.indentscope", opts = {} },
 	{ "echasnovski/mini.diff", opts = {} },
 	{ "echasnovski/mini.move", opts = {} },
 	{ "echasnovski/mini.extra", opts = {} },
-	{ "echasnovski/mini.surround", opts = {} },
+	-- { "echasnovski/mini.surround", opts = {} },
 	{ "echasnovski/mini.ai", opts = {} },
 	{ "echasnovski/mini.pairs", opts = {} },
 	{ "echasnovski/mini.icons", opts = {} },
@@ -29,6 +29,7 @@ return {
 
 	{
 		"echasnovski/mini.files",
+    enabled = false,
 		keys = {
 			{
 				"<C-p>",

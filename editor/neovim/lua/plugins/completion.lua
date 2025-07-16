@@ -1,7 +1,7 @@
 if not vim.g.vscode then
 	local sources = {
 		default = { "lsp", "path", "snippets", "buffer", "copilot" },
-		per_filetype = { sql = { "dadbod" } },
+    per_filetype = { sql = { "dadbod" } },
 		providers = {
 			dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 			copilot = {
@@ -29,13 +29,19 @@ if not vim.g.vscode then
       opts = {
         keymap = {
           preset = "default",
-          ["<CR>"] = { "select_and_accept", 'fallback' },
+          ["<CR>"] = { "accept", 'fallback' },
         },
         appearance = {
           nerd_font_variant = "mono",
         },
         completion = {
-          documentation = { auto_show = false },
+          documentation = { auto_show = true },
+          list = {
+            selection = {
+              preselect = true,
+              -- auto_select = false,
+            }
+          },
         },
         cmdline = {
           keymap = {

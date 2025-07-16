@@ -22,11 +22,13 @@ while IFS= read -r window; do
   elif [[ "$window" == *"pavucontrol"* ]]; then
     result+=" Pavucontrol  "
   elif [[ "$window" == *"scrcpy"* ]]; then
-    result+=" Scrcpy "
+    result+=" Scrcpy  "
   elif [[ "$window" == *"Neovide"* ]]; then
-    result+=" Neovide "
+    result+=" Neovide  "
+  elif [[ "$window" == *"Perfect World"* ]]; then
+    result+="Perfect World  "
   else
-    result+="$window"
+    result+="$window "
   fi
 done <<< "$windows"
 

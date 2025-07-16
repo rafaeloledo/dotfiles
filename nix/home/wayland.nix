@@ -7,7 +7,6 @@
     grim
     slurp
     swaybg
-    anyrun
     wl-clipboard
     hyprpicker
     wlogout

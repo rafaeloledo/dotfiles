@@ -3,23 +3,23 @@ if not vim.g.vscode then
 return {
 	{
 		"zbirenbaum/copilot.lua",
-    enabled = false,
+    enabled = true,
 		dependencies = {},
 		cmd = "Copilot",
 		event = "InsertEnter",
 		opts = {
-			suggestion = {
-				auto_trigger = false,
-				keymap = {
-					accept = "<M-]>",
-					accept_word = false,
-					accept_line = false,
-					next = false,
-					prev = false,
-					dismiss = "<C-]>",
-				},
-			},
-			copilot_model = "gpt-4o-copilot",
+			-- suggestion = {
+			-- 	auto_trigger = false,
+			-- 	keymap = {
+			-- 		accept = "<M-]>",
+			-- 		accept_word = false,
+			-- 		accept_line = false,
+			-- 		next = false,
+			-- 		prev = false,
+			-- 		dismiss = "<C-]>",
+			-- 	},
+			-- },
+			-- copilot_model = "gpt-4o-copilot",
 		},
 	},
 

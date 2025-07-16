@@ -8,17 +8,17 @@ CapsLock::Ctrl
 #=::SendEvent "{Volume_Up}"
 #-::SendEvent "{Volume_Down}"
 #r::SendEvent "{Alt down}{Space down}{Space up}{Alt up}"
-#Enter::Run "D:\dev\scoop\apps\wezterm\current\wezterm-gui.exe"
-#o::Run "D:\dev\scoop\apps\obsidian\current\Obsidian.exe"
-#n::Run "D:\dev\scoop\apps\neovide\current\neovide.exe"
+#Enter::Run "C:\dev\scoop\apps\wezterm\current\wezterm-gui.exe"
+#o::Run "C:\dev\scoop\apps\obsidian\current\Obsidian.exe"
+#n::Run "C:\dev\scoop\apps\neovide\current\neovide.exe"
 #b::Run "chrome.exe"
 #m::Run "soundvolumeview.exe /Switch 3- Fifine Microphone"
-#q::RunWait "wscript D:\dev\dotfiles\win32\kill-process.vbs " WinGetPID("A")
-#a::RunWait "neovide D:\sync\anotacoes"
-#+c::RunWait "D:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off --no-audio-playback"
+#q::RunWait "wscript C:\dev\dotfiles\win32\kill-process.vbs " WinGetPID("A")
+#a::RunWait "neovide C:\sync\anotacoes"
+#+c::RunWait "C:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off --no-audio-playback"
 
 !r::Reload
-!c::RunWait "D:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off"
+!c::RunWait "C:\dev\scoop\apps\scrcpy\current\scrcpy-noconsole.vbs --disable-screensaver --turn-screen-off"
 !F1::SendEvent "{Media_Prev}"
 !F3::SendEvent "{Media_Next}"
 !F2::SendEvent "{Media_Play_Pause}"
@@ -75,13 +75,13 @@ WinActive("ahk_exe Code.exe")
     SendEvent "{Ctrl down}{c down}{c up}{Ctrl up}"
     RepoURL := A_Clipboard
     RegExMatch(RepoURL, "/([^/]+)(?:\.git)?$", &repoName)
-    RunWait "D:\dev\dotfiles\win32\clone_repo.vbs " RepoURL
-    RunWait "D:\dev\dotfiles\win32\open_repo.vbs " "D:\dev\repos\gh\" repoName[1]
+    RunWait "C:\dev\dotfiles\win32\clone_repo.vbs " RepoURL
+    RunWait "C:\dev\dotfiles\win32\open_repo.vbs " "C:\dev\repos\gh\" repoName[1]
 	}
 #HotIf
 
 #HotIf WinActive("ahk_exe ELEMENTCLIENT.exe") or
-WinActive("ahk_exe elementclient_64") or
+WinActive("ahk_exe elementclient_64.exe") or
 WinActive("Perfect World")
 	!3:: {
 	    loop {
@@ -132,8 +132,8 @@ WinActive("Perfect World")
 	    }
 	}
 
-	!1::MsgBox "3"
-	!2::SendEvent "{F2}"
-	!4::SendEvent "{F4}"
-	!C::SendEvent "{F12}"
+	!1::Send "{F1}"
+	!2::Send "{F2}"
+	!4::Send "{F4}"
+	!C::Send "{F12}"
 #HotIf

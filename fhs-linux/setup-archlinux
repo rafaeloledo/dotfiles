@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+paru -S obs-studio scrcpy
+
+paru -S virt-manager power-profiles-daemon libvirt
+
+paru -S noto-fonts-cjk noto-fonts noto-fonts-emoji noto-fonts-extra ttf-ubuntu-font-nerd ttf-fira-code-nerd ttf-jetbrains-mono-nerd ttf-hack-nerd ttf-roboto-mono ttf-roboto-mono-nerd
+
+timedatectl set-local-rtc 1
+
+paru -S fish
+
+chsh -s /usr/bin/fish rgnh55
+
+sudo timedatectl set-timezone America/Bahia
+
+paru -S grim slurp pamixer waybar swaybg wl-clipboard hyprpicker wlogout hyprpaper mako
+
+paru -S mariadb arduino-ide-bin neovim neovide visual-studio-code-bin gimp inkscape vlc playerctl
+
+paru -S jdk17-openjdk
+
+paru -S mission-center postman-bin discord lazygit papirus-icon-theme nodejs-ngrok fastfetch staruml plantuml qemu-full mtpfs android-file-transfer
+
+paru -S pavucontrol jq pnpm aws-cli zip maven graphviz
+
+paru -S android-studio ncdu flutter-bin dunst hyprshot viewnior ani-cli sublime-text-4 vial bc blender ddcutil brave-bin
+
+paru -S qmk gcc-arm-embedded distrobox rembg lutris vulkan-tools vulkan-loader tesseract pandoc jellyfin gparted antimicrox firefox hyprcursor
+
+paru -S github-cli
+
+paru -S keyd docker
+
+systemctl enable keyd --now
+systemctl enable docker --now
+
+paru -S zoxide eza bat ripgrep fzf
+
+paru -S wezterm ghostty
+
+paru -S hyprland xdg-desktop-portal-hyprland
+
+paru -S rofi-wayland

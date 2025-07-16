@@ -2,12 +2,15 @@
   "position": "top",
   "layer": "top",
   "height": 16,
+
   "modules-left": [
-    "hyprland/workspaces",
+    "hyprland/workspaces"
   ],
+
   "modules-center": [
-    "custom/windows"
+    "tray"
   ],
+
   "modules-right": [
     "clock",
     "pulseaudio"
@@ -28,6 +31,10 @@
       "default": " ",
       "sort-by-number": true
     }
+  },
+
+  "tray": {
+    "spacing": 10
   },
 
   "clock": {

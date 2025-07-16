@@ -7,7 +7,6 @@ let
     "dunst"
     "shell/fish"
     "wayland/hypr"
-    "xorg/picom"
     "rofi"
     "editor/nvim"
     "terminal/tmux"
@@ -28,10 +27,9 @@ in
   imports = [
     ./software.nix
     ./services.nix
-    inputs.nur.modules.homeManager.default
     ./gnome.nix
     ./terminal.nix
-  ];
+   ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w"

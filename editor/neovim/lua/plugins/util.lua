@@ -1,10 +1,5 @@
-local op = ""
-
-if vim.fn.has("win32") == 1 or vim.fn.has("win64") then
-  op = "D:\\sync\\anotacoes"
-else
-  op = "/home/rgnh55/sync/anotacoes"
-end
+-- local op = "/home/rgnh55/sync/anotacoes"
+local op = "C:\\sync\\anotacoes"
 
 return {
 	{ "xiyaowong/transparent.nvim" },
@@ -22,6 +17,7 @@ return {
 
 	{
 		"epwalsh/obsidian.nvim",
+    enabled = false,
 		version = "*",
 		ft = "markdown",
 		opts = {

@@ -1,1 +1,1 @@
-schtasks /create /sc ONLOGON /tn Syncthing /tr "powershell D:\\dev\\dotfiles\\win32\\test.ps1"
+schtasks /create /sc ONLOGON /tn Syncthing /tr "powershell C:\\dotfiles\\win32\\wrappedsyncthing.ps1"

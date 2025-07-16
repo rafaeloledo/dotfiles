@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+read_value=$(rofi -dmenu -p "Brightness (0-100):")
+
+# Exit if user cancels or input is empty
+[ -z "$read_value" ] && exit
+
+ddcutil setvcp 10 "$read_value"
