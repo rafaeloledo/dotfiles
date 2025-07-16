@@ -29,13 +29,19 @@ if not vim.g.vscode then
       opts = {
         keymap = {
           preset = "default",
-          ["<CR>"] = { "select_and_accept", 'fallback' },
+          ["<CR>"] = { "accept", 'fallback' },
         },
         appearance = {
           nerd_font_variant = "mono",
         },
         completion = {
           documentation = { auto_show = false },
+          list = {
+            selection = {
+              preselect = false,
+              -- auto_select = false,
+            }
+          },
         },
         cmdline = {
           keymap = {
