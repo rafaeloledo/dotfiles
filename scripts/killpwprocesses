@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+pkill -9 cefsimple.exe
+pkill -9 CrGpuMain
+pkill -9 elementclient_6

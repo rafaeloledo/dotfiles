@@ -7,7 +7,6 @@ let
     "dunst"
     "shell/fish"
     "wayland/hypr"
-    "xorg/picom"
     "rofi"
     "editor/nvim"
     "terminal/tmux"
@@ -31,6 +30,7 @@ in
     inputs.nur.modules.homeManager.default
     ./gnome.nix
     ./terminal.nix
+    ./inkdrop.nix
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

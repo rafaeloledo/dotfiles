@@ -20,7 +20,7 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 
-vim.cmd("colorscheme solarized-osaka")
+vim.cmd("colorscheme gruvbox")
 
 -- Better UI
 vim.opt.termguicolors = true
@@ -60,3 +60,6 @@ vim.opt.completeopt = "menuone,noselect"
 vim.opt.guicursor = "a:block-blinkon0"
 
 vim.opt.wildmode = "list:longest"
+
+vim.opt.fileformat = "unix"
+vim.opt.fileformats = { "unix", "dos", "mac" }
