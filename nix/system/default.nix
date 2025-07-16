@@ -11,18 +11,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings = {
-    substituters = [
-      "https://hyprland.cachix.org"
-    ];
-    trusted-substituters = [
-      "https://hyprland.cachix.org"
-    ];
-    trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
-  };
-
   swapDevices = [ ];
 
   # Real Boot
@@ -30,11 +18,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   security.polkit.enable = true;
-
-  # VM
-  # boot.loader.grub.enable = true;
-  # boot.loader.grub.device = "/dev/sda";
-  # boot.loader.grub.useOSProber = true;
 
   services.lvm.enable = false;
   hardware.graphics.enable32Bit = true;
@@ -118,7 +101,6 @@
     wget
     libtool
     spice-vdagent
-		blueman
 		cloudflared
     vim
     networkmanagerapplet
@@ -166,10 +148,7 @@
     nat.enable = true;
   };
 
-  fonts.packages =
-    # with pkgs-unstable;
-    with pkgs;
-    [
+  fonts.packages = with pkgs; [
     roboto-mono
     noto-fonts-cjk-sans
     noto-fonts
@@ -180,8 +159,6 @@
     fira-code
     nerd-fonts.hack
   ];
-
-  # services.xserver.windowManager.i3.enable = true;
 
   users.groups.docker = {};
 	virtualisation.docker = {
