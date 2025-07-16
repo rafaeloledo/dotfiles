@@ -1,34 +1,29 @@
 function fish_prompt -d "Write out the prompt"
-    # This shows up as USER@HOST /home/user/ >, with the directory colored
-    # $USER and $hostname are set by fish, so you can just use them
-    # instead of using `whoami` and `hostname`
     set dir (prompt_pwd)
     set parts (string split "/" $dir)
     set trunc_dir (string join "" $parts[-1])
     set fstring (string join " " $trunc_dir)
-
     set git_branch (git branch --show-current 2>/dev/null)
     set is_nix_shell (echo $NIX_SHELL)
     set is_tmux_session (echo $TMUX)
+    set hour (date +"%H:%M")
+    set current_workspace "workspace $(hyprctl activeworkspace -j | jq '.id')"
+    set current_tab "tab $WEZTERM_PANE"
 
+    # Build prompt parts conditionally with colors
+    set prompt_parts (set_color cyan)$hour(set_color normal)
     if test -n "$git_branch"
-        set branch_string "  $git_branch"
-    else
-        set branch_string ""
+        set -a prompt_parts (set_color yellow)"$git_branch"(set_color normal)
     end
-
     if test -n "$is_nix_shell"
-        set nix_string "󱄅"
-    else
-        set nix_string ""
+        set -a prompt_parts (set_color blue)"󱄅"(set_color normal)
     end
-
     if test -n "$is_tmux_session"
-        set tmux_string "(tmux)"
-    else
-        set tmux_string ""
+        set -a prompt_parts (set_color magenta)"(tmux)"(set_color normal)
     end
-
-    printf '%s%s%s %s %s %s\n; ' \
-        (set_color $fish_color_cwd) "$fstring" (set_color normal) "$branch_string" "$nix_string" "$tmux_string"
+    set -a prompt_parts (set_color green)"$current_workspace"(set_color normal)
+    set -a prompt_parts (set_color brwhite)"$fstring"(set_color normal)
+    set -a prompt_parts "$current_tab"
+    printf '%s\n' (string join " " $prompt_parts)
+    printf '%s ' (set_color red)';'(set_color normal)
 end

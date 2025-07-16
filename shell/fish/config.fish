@@ -16,7 +16,7 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx STARSHIP_CONFIG ~/.config/starship/starship.toml
 
 # not working with nixos projects
-set -gx ANDROID_HOME $HOME/Android/Sdk
+# set -gx ANDROID_HOME $HOME/Android/Sdk
 # set -gx JAVA_HOME /usr/lib/jvm/default 2>/dev/null
 
 alias e "emacsclient -c -n"
@@ -65,6 +65,10 @@ alias dbc "distrobox create"
 alias dbe "distrobox enter"
 alias dbrm "distrobox rm"
 
+alias collect-garbage "sudo nix-collect-garbage -d && nix-collect-garbage -d"
+
+alias cd z
+
 # exporting PATHs
 # set -gx PATH /home/rgnh55/.local/share/nvim/mason/bin $PATH 2>/dev/null
 set -gx PATH bin $PATH 2>/dev/null
@@ -74,8 +78,8 @@ set -gx PATH /usr/local/bin $PATH 2>/dev/null
 set -gx PATH ~/.config/emacs/bin $PATH 2>/dev/null
 set -gx PATH ~/.local/scripts $PATH 2>/dev/null
 set -gx PATH ~/.cargo/bin $PATH 2>/dev/null
-set -gx PATH $ANDROID_HOME/emulator $PATH 2>/dev/null
-set -gx PATH $ANDROID_HOME/platform-tools $PATH 2>/dev/null
+# set -gx PATH $ANDROID_HOME/emulator $PATH 2>/dev/null
+# set -gx PATH $ANDROID_HOME/platform-tools $PATH 2>/dev/null
 set -gx PATH ~/.nix-profile/bin $PATH 2>/dev/null
 set -gx PATH ~/.npm-global/bin $PATH 2>/dev/null
 set -x PATH ~/go/bin $PATH 2>/dev/null
@@ -84,4 +88,13 @@ zoxide init fish | source
 #starship init fish | source
 
 # Added by LM Studio CLI (lms)
+
 set -gx PATH $PATH /home/rgnh55/.lmstudio/bin
+
+alias me "make emulators"
+alias mf "make flake"
+alias ms "make start"
+alias mi "make install"
+alias mw "make workers"
+
+alias ghb "gh browse"
