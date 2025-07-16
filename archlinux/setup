@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# paru -S obs-studio scrcpy
+
+# paru -S virt-manager power-profiles-daemon libvirt
+#
+# paru -S noto-fonts-cjk noto-fonts noto-fonts-emoji noto-fonts-extra ttf-ubuntu-font-nerd ttf-fira-code-nerd ttf-jetbrains-mono-nerd ttf-hack-nerd ttf-roboto-mono ttf-roboto-mono-nerd
+#
+# timedatectl set-local-rtc 1
+#
+# sudo timedatectl set-timezone America/Bahia
+#
+# systemctl enable keyd --now
+# systemctl enable docker --now
+
+# paru -S grim slurp pamixer waybar swaybg wl-clipboard hyprpicker wlogout hyprpaper mako
+
+# paru -S mariadb arduino-ide neovim neovide visual-studio-code-bin gimp inkscape vlc playerctl
+
+# paru -S mission-center postman discord lazygit papirus-icon-theme ngrok fastfetch staruml plantuml qemu-full mtpfs android-file-transfer android-udev
+
+# paru -S pavucontrol jq pnpm aws-cli zip maven graphviz
+
+# paru -S android-studio ncdu flutter dunst hyprshot viewnior ani-cli sublime-text-4 vial bc blender ddcutil brave
+
+paru -S qmk gcc-arm-embedded distrobox rembg lutris vulkan-tools vulkan-loader tesseract pandoc jellyfin gparted antimicrox mupdf firefox hyprcursor

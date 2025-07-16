@@ -7,7 +7,6 @@ let
     "dunst"
     "shell/fish"
     "wayland/hypr"
-    "xorg/picom"
     "rofi"
     "editor/nvim"
     "terminal/tmux"

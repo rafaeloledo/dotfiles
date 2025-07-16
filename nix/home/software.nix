@@ -45,7 +45,6 @@
     android-tools # android
     android-studio # android IDE
 
-    libvirt # dep for virt-manager
     jq # json processing
     pavucontrol # GUI audio manager
     nodePackages.pnpm # package manager
@@ -135,11 +134,6 @@
       autoconnect = ["qemu:///system"];
       uris = ["qemu:///system"];
     };
-  };
-
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacs-gtk;
   };
 
   home.file = {

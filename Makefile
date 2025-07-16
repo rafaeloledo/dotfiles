@@ -46,26 +46,37 @@ npm/prefix:
 
 b:
 	sudo nixos-rebuild build --flake nix/. --impure
+
 s:
 	sudo nixos-rebuild switch --flake nix/. --impure --option substitute false --offline
+
 se:
 	sudo nixos-rebuild switch --flake nix/. --impure --option substituters https://cache.nixos.org
+
 hb:
 	home-manager build --flake nix/.
+
 hs:
 	home-manager switch --flake nix/.
+
 hse:
 	home-manager switch --flake nix/. --option substituters https://cache.nixos.org --impure --show-trace
+
 ub:
 	sudo nixos-rebuild --upgrade build --flake nix/.
+
 us:
 	sudo nixos-rebuild --upgrade switch --flake nix/.
+
 uboot:
 	sudo nixos-rebuild --upgrade boot --flake nix/.
+
 nix/cleanu:
 	nix-collect-garbage -d
+
 nix/clean:
 	sudo nix-collect-garbage -d
+
 nix/update:
 	nix flake update
 
@@ -81,6 +92,9 @@ archlinux/link:
 	ln -nfs ~/dotfiles/wallpapers/ ~/wallpapers
 	ln -nfs ~/dotfiles/wayland/waybar ~/.config/waybar
 	ln -nfs ~/dotfiles/rofi ~/.config/rofi
+	ln -nfs ~/dotfiles/environment.d/ ~/.config/environment.d
+	ln -nfs ~/dotfiles/editor/sublime-text ~/.config/sublime-text
+	ln -nfs ~/dotfiles/wayland/wofi ~/.config/wofi
 
 # needs admin privileges
 windows/setup:
