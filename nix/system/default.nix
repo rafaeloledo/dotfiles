@@ -5,23 +5,11 @@
     ./hardware.nix
 		./services.nix
     ./libinput.nix
-    /home/rgnh55/disk.nix
+    /etc/nixos/disk.nix
     ./serve.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
-
-  nix.settings = {
-    substituters = [
-      "https://hyprland.cachix.org"
-    ];
-    trusted-substituters = [
-      "https://hyprland.cachix.org"
-    ];
-    trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
-  };
 
   swapDevices = [ ];
 
@@ -30,11 +18,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   security.polkit.enable = true;
-
-  # VM
-  # boot.loader.grub.enable = true;
-  # boot.loader.grub.device = "/dev/sda";
-  # boot.loader.grub.useOSProber = true;
 
   services.lvm.enable = false;
   hardware.graphics.enable32Bit = true;
@@ -107,6 +90,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    hyprpolkitagent
+
     i7z
     unzip
     killall
@@ -118,7 +103,6 @@
     wget
     libtool
     spice-vdagent
-		blueman
 		cloudflared
     vim
     networkmanagerapplet
@@ -166,10 +150,7 @@
     nat.enable = true;
   };
 
-  fonts.packages =
-    # with pkgs-unstable;
-    with pkgs;
-    [
+  fonts.packages = with pkgs; [
     roboto-mono
     noto-fonts-cjk-sans
     noto-fonts
@@ -181,26 +162,14 @@
     nerd-fonts.hack
   ];
 
-  # services.xserver.windowManager.i3.enable = true;
-
   users.groups.docker = {};
-	virtualisation.docker = {
-		enable = true;
-		daemon.settings = {
-			data-root = "~/docker/img";
-		};
-	};
 
-  services.postgresql = {
-    enable = true;
-    ensureDatabases = [ "postgres" "rgnh55" ];
-    enableTCPIP = true;
-    settings.port = 5432;
-    authentication = pkgs.lib.mkOverride 10 ''
-      local all       all     trust
-      host  all      all     127.0.0.1/32   trust
-    '';
-  };
+	# virtualisation.docker = {
+	# 	enable = true;
+	# 	daemon.settings = {
+	# 		data-root = "~/docker/img";
+	# 	};
+	# };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
