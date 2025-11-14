@@ -26,6 +26,7 @@
   };
 
   services.xserver.videoDrivers = [
+    "amdgpu"
     "modesetting"
     "nvidia"
   ];

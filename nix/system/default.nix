@@ -96,7 +96,7 @@
   environment.sessionVariables = rec {
     GTK_SCALE = "1";
     # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.nvidiad/nvidia_icd.x86_64.json";
-    LIBVA_DRIVER_NAME = "iHD";
+    # LIBVA_DRIVER_NAME = "iHD";
     NIXOS_OZONE_WL = "1";
   };
 

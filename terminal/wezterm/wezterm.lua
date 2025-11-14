@@ -27,8 +27,6 @@ config.keys = {
   { key = 'E', mods = 'CTRL|SHIFT', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
   { key = 'O', mods = 'CTRL|SHIFT', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
   { key = 'R', mods = 'CTRL|SHIFT', action = wezterm.action.ReloadConfiguration },
-
-  { key = 'q', mods = 'CTRL', action = wezterm.action.QuitApplication },
 }
 
 return config

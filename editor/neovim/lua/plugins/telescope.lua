@@ -58,7 +58,14 @@ return {
 				})
 			end)
 
+			vim.keymap.set("n", "<leader><space>", function()
+				builtin.find_files({
+					file_ignore_patterns = ignore_patterns,
+				})
+			end)
+
 			vim.keymap.set("n", ";r", builtin.live_grep)
+			vim.keymap.set("n", "<leader>r", builtin.live_grep)
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 			vim.keymap.set("n", "<space>sw", builtin.grep_string)
 			vim.keymap.set("n", ";;", builtin.resume)

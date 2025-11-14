@@ -6,7 +6,10 @@ keymap.set("n", ">", ">>")
 keymap.set("n", "<", "<<")
 keymap.set("n", "=ap", "ma=ap'a")
 
----
+keymap.set("n", "<C-_>", function()
+  prine("You pressed Ctrl-/")
+end, { noremap = true, silent = true })
+
 
 keymap.set({ "n", "i" }, "<C-s>", "<cmd>w<CR><Esc>")
 keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
@@ -28,14 +31,17 @@ keymap.set("n", "sl", "<C-w>l")
 keymap.set("n", "sv", "<C-w>v")
 keymap.set("n", "ss", "<C-w>s")
 
----
+keymap.set("n", "<M-j>", "<cmd>cnext<cr>")
+keymap.set("n", "<M-k>", "<cmd>cprevious<cr>")
+
+
 
 keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 keymap.set("t", "<M-q>", "<C-\\><C-n>")
 keymap.set("n", "-", "<cmd>Oil<CR>")
-keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>")
+-- keymap.set("n", "<leader>fe", "<cmd>Neotree toggle<CR>")
 
----
+
 
 keymap.set("n", "<leader>o", function()
   OpenNautilus()
@@ -49,6 +55,8 @@ function OpenNautilus(path)
   })
 end
 
+
+
 keymap.set("n", "<leader>qs", function()
   require("persistence").load()
 end)
@@ -61,6 +69,8 @@ keymap.set("n", "<leader>ql", function()
   require("persistence").load({ last = true })
 end)
 
-keymap.set("n", "<leader>f", function()
+
+
+keymap.set("n", "<leader>cf", function()
   require("conform").format()
 end)

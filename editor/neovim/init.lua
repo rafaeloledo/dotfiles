@@ -1,7 +1,9 @@
 require("config.lazy")
+
 require("config.options")
 require("config.autocmd")
 require("config.keymaps")
+
 require("config.neovide")
 
 vim.g.netrw_banner = 0

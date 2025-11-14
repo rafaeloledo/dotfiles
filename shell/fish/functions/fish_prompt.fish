@@ -7,7 +7,7 @@ function fish_prompt -d "Write out the prompt"
   set is_nix_shell (echo $NIX_SHELL)
   set is_tmux_session (echo $TMUX)
   set hour (date +"%H:%M")
-  set current_workspace "$(hyprctl activeworkspace -j | jq '.id')"
+  # set current_workspace "$(hyprctl activeworkspace -j | jq '.id')"
 
   set current_tab "$WEZTERM_PANE"
 

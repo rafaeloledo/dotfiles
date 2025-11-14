@@ -43,18 +43,18 @@ if not vim.g.vscode then
             }
           },
         },
-        cmdline = {
-          keymap = {
-            ["<Tab>"] = { "show", "accept" },
-          },
-          completion = {
-            menu = {
-              auto_show = function(ctx)
-                return vim.fn.getcmdtype() == ":"
-              end,
-            },
-          },
-        },
+        -- cmdline = {
+        --   keymap = {
+        --     ["<Tab>"] = { "show", "accept" },
+        --   },
+        --   completion = {
+        --     menu = {
+        --       auto_show = function(ctx)
+        --         return vim.fn.getcmdtype() == ":"
+        --       end,
+        --     },
+        --   },
+        -- },
         sources = sources,
         fuzzy = { implementation = "prefer_rust_with_warning" },
       },

@@ -10,6 +10,7 @@
 
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ahci" "nvme" "uas" "usbhid" "sd_mod" "vmd" "i2c_dev" "usb_storage"
+    "amdgpu"
     "nvidia_drm" "nvidia_modeset" "nvidia" "nvidia_uvm"
   ];
 
@@ -30,8 +31,11 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  hardware.amdgpu.initrd.enable = true;
+
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       intel-media-driver
       vaapiVdpau
