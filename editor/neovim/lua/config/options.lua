@@ -24,7 +24,7 @@ vim.o.expandtab = true
 
 -- vim.cmd("colorscheme solarized-osaka")
 vim.cmd("colorscheme vscode")
-vim.cmd("TransparentToggle") -- override default transprency from vscode theme
+vim.cmd("TransparentEnable") -- override default transprency from vscode theme
 -- vim.cmd("source " .. vim.fn.stdpath("config") .. "/lua/config/wez.vim")
 
 -- Better UI

@@ -9,18 +9,22 @@
   home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
+
+    ytmdesktop whatsapp-electron telegram-desktop
+
+    code-cursor tabnine
+    neovim neovide vscode-fhs arduino-ide
+
     interception-tools
     hyprpolkitagent
     deskreen
     windsurf
-    code-cursor
     blender
     hyprcursor
     wezterm
     exiftool
     gnome-calculator # GUI calculator
     btop
-    neovim neovide vscode-fhs arduino-ide
     inkscape-with-extensions
     vlc # player
     easyeffects # audio post processing with CPU
