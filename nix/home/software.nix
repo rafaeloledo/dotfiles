@@ -9,8 +9,8 @@
   home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
-    hplip
-    cups
+    # hplip
+    # cups
     i2c-tools
     # zenmonitor
     obs-studio
