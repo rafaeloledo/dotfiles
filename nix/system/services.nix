@@ -63,8 +63,8 @@
     gnome.gnome-keyring.enable = true;
     power-profiles-daemon.enable = false;
 
-    # displayManager.cosmic-greeter.enable = true;
-    displayManager.gdm.enable = true;
+    displayManager.cosmic-greeter.enable = true;
+    # displayManager.gdm.enable = true;
     desktopManager.cosmic.enable = true;
     gnome.core-apps.enable = false;
     gnome.core-developer-tools.enable = false;
@@ -74,7 +74,7 @@
   environment.gnome.excludePackages = with pkgs; [ gnome-tour gnome-user-docs ];
 
   services.sunshine = {
-    enable = true;
+    # enable = true;
     autoStart = true;
     openFirewall = true;
 

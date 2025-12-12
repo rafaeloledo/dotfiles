@@ -21,7 +21,7 @@ alias lt "eza --tree"
 alias cls clear
 alias cat "bat -p"
 
-alias v "nvim ."
+alias v "nvim"
 
 alias t tmux
 alias ta "tmux a"
@@ -39,16 +39,12 @@ alias gcl "git clone"
 alias gco "git checkout"
 alias gbr "git branch"
 alias gd "git diff"
-alias gad "git add ."
+alias gaa "git add ."
 alias gf "git fetch"
 alias gs 'git stash'
 alias grm "git rm"
 
 alias db "distrobox"
-alias dbl "distrobox list"
-alias dbc "distrobox create"
-alias dbe "distrobox enter"
-alias dbrm "distrobox rm"
 
 alias cd z
 

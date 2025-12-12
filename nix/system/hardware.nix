@@ -3,7 +3,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./nitro5_nvidia.nix
+    # ./nitro5_nvidia.nix
   ];
 
   hardware.uinput.enable = true;
@@ -11,7 +11,7 @@
   boot.initrd.availableKernelModules = [
     "xhci_pci" "ahci" "nvme" "uas" "usbhid" "sd_mod" "vmd" "i2c_dev" "usb_storage"
     "amdgpu"
-    "nvidia_drm" "nvidia_modeset" "nvidia" "nvidia_uvm"
+    # "nvidia_drm" "nvidia_modeset" "nvidia" "nvidia_uvm"
   ];
 
   boot.kernelModules = [

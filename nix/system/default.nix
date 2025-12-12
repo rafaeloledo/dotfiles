@@ -48,7 +48,7 @@
       "audio"
     ];
     packages = with pkgs; [
-      obs-studio
+      # obs-studio
       scrcpy
     ];
   };
