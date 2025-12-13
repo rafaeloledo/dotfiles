@@ -3,17 +3,10 @@
 let
   bashAliases = {
     g = "git";
-    ll = "eza -lga --icons";
     l = "eza -lga --icons";
-    lt = "eza --tree";
     cls = "clear";
-    phone = "scrcpy --disabel-screensaver --turn-screen-off --no-audio-playback -f";
-    nf = "neofetch";
     v = "nvim";
-    vd = "neovide";
     t = "tmux";
-    ta = "tmux a";
-    td = "tmux detach";
     cat = "bat -p";
     gci = "git commit";
     gst = "git status";
@@ -21,18 +14,7 @@ let
     gpl = "git pull";
     gl = "git log";
     gcl = "git clone";
-    gc = "git checkout -b";
-    gco = "git checkout";
     gbr = "git branch";
-    gd = "git diff";
-    gad = "git add .";
-    gf = "git fetch";
-    grm = "git rm";
-    lg = "lazygit";
-    e = "emacsclient -c -n";
-    view = "viewnior";
-    naut = "nautilus";
-    anime = "ani-cli";
     ".." = "cd ..";
   };
 

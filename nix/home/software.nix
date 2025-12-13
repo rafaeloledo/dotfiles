@@ -9,6 +9,7 @@
   home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
+    yt-dlp
     # hplip
     # cups
     i2c-tools
