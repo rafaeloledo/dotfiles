@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+yay -S obs-studio scrcpy
+
+yay -S virt-manager power-profiles-daemon libvirt
+
+yay -S noto-fonts-cjk noto-fonts noto-fonts-emoji noto-fonts-extra ttf-ubuntu-font-nerd ttf-fira-code-nerd ttf-jetbrains-mono-nerd ttf-hack-nerd ttf-roboto-mono ttf-roboto-mono-nerd
+
+timedatectl set-local-rtc 1
+
+yay -S fish
+
+chsh -s /usr/bin/fish rgnh55
+
+sudo timedatectl set-timezone America/Bahia
+
+yay -S grim slurp pamixer waybar swaybg wl-clipboard hyprpicker wlogout hyprpaper mako
+
+yay -S mariadb arduino-ide-bin neovim neovide visual-studio-code-bin gimp inkscape vlc playerctl
+
+yay -S jdk17-openjdk
+
+yay -S mission-center postman-bin discord lazygit papirus-icon-theme nodejs-ngrok fastfetch staruml plantuml qemu-full mtpfs android-file-transfer
+
+yay -S pavucontrol jq pnpm aws-cli zip maven graphviz
+
+yay -S android-studio ncdu flutter-bin dunst hyprshot viewnior ani-cli sublime-text-4 vial bc blender ddcutil brave-bin
+
+yay -S qmk gcc-arm-embedded distrobox rembg lutris vulkan-tools vulkan-loader tesseract pandoc jellyfin gparted antimicrox firefox hyprcursor
+
+yay -S github-cli
+
+yay -S keyd docker
+
+systemctl enable keyd --now
+systemctl enable docker --now
+
+yay -S zoxide eza bat ripgrep fzf
+
+yay -S wezterm ghostty
+
+yay -S hyprland xdg-desktop-portal-hyprland
+
+yay -S rofi-wayland
