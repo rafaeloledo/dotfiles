@@ -45,11 +45,13 @@ npm/prefix:
 .PHONY: archlinux archlinux/link
 
 archlinux/link:
+	rm -rf ~/.config/hypr
 	ln -nfs ~/dotfiles/wayland/hypr ~/.config/hypr
 	ln -nfs ~/dotfiles/terminal/ghostty ~/.config/ghostty
 	ln -nfs ~/dotfiles/terminal/tmux ~/.config/tmux
 	ln -nfs ~/dotfiles/terminal/wezterm ~/.config/wezterm
 	ln -nfs ~/dotfiles/editor/nvim ~/.config/nvim
+	rm -rf ~/.config/fish
 	ln -nfs ~/dotfiles/shell/fish ~/.config/fish
 	ln -nfs ~/dotfiles/scripts ~/.local/scripts
 	ln -nfs ~/dotfiles/wallpapers/ ~/wallpapers
