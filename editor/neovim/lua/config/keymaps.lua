@@ -60,3 +60,11 @@ end)
 set("n", "<leader>cf", function()
   require("conform").format()
 end)
+
+-- staged current buffer file and print message
+set("n", "<leader>ga", '<cmd>Git add % | echo "file added"<CR>')
+
+-- prompt to commit staged changes
+set("n", "<leader>gc", ':Git commit -m ""<left>')
+
+set("n", "<leader>gl", ':Git log --graph<CR>')
