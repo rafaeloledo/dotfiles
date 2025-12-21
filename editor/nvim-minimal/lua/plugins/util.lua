@@ -4,7 +4,7 @@ local op = "/home/rgnh55/sync/notes"
 return {
 	{ "xiyaowong/transparent.nvim" },
 	{ "nvim-lua/plenary.nvim" },
-	{ "mistricky/codesnap.nvim", build = "make build_generator" },
+	-- { "mistricky/codesnap.nvim", build = "make build_generator" },
 	{ "mbbill/undotree" },
 
 	{

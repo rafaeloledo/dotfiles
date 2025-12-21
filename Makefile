@@ -63,8 +63,7 @@ archlinux/link:
 
 # needs admin privileges
 windows/setup:
-	mklink /D "C:\Users\rafae\.config\autohotkey" "C:\dev\dotfiles\win32\autohotkey"
-	mklink /D "C:\Users\rafae\.config\wezterm" "C:\dev\dotfiles\win32\wezterm"
+	mklink /D "C:\Users\rafae\AppData\Local\nvim" "C:\dotfiles\editor\neovim"
 
 .PHONY: push
 

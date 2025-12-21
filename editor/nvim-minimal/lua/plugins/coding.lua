@@ -17,7 +17,8 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs",
+		lazy = false,
+		-- main = "nvim-treesitter.configs",
 		opts = {
 			ensure_installed = ensure_installed,
 			auto_install = true,
@@ -42,11 +43,5 @@ return {
 				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
 			},
 		},
-	},
-
-	{
-		"folke/persistence.nvim",
-		event = "BufReadPre",
-		opts = {},
 	},
 }

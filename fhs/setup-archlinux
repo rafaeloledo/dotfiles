@@ -30,10 +30,7 @@ yay -S qmk gcc-arm-embedded distrobox rembg lutris vulkan-tools vulkan-loader te
 
 yay -S github-cli
 
-yay -S keyd docker
-
-systemctl enable keyd --now
-systemctl enable docker --now
+yay -S keyd docker synthing
 
 yay -S zoxide eza bat ripgrep fzf
 
@@ -42,3 +39,7 @@ yay -S wezterm ghostty
 yay -S hyprland xdg-desktop-portal-hyprland
 
 yay -S rofi-wayland
+
+sudo systemctl enable keyd --now
+sudo systemctl enable docker --now
+systemctl enable --user syncthing --now

@@ -1,3 +1,3 @@
 @echo off
 
-code C:\\sync\\anotacoes
+code C:\\sync\\notes
