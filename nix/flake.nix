@@ -33,8 +33,6 @@
     hyprland-hyprspace.url = "github:KZDKM/Hyprspace";
     hyprland-hyprspace.inputs.hyprland.follows = "hyprland";
 
-    waybar.url = "github:Alexays/Waybar";
-
     xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
     rose-pine-hyprcursor = {

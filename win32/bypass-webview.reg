@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\8\1694661260]
+"EnabledState"=dword:00000001
+"EnabledStateOptions"=dword:00000000
+"Variant"=dword:00000000
+"VariantPayload"=dword:00000000
+"VariantPayloadKind"=dword:00000000

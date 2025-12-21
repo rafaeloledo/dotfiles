@@ -5,3 +5,5 @@ confirm-close-surface = false
 background-opacity = 0.92
 gtk-wide-tabs = false
 gtk-custom-css = ~/.config/ghostty/custom.css
+app-notifications = false
+desktop-notifications = false

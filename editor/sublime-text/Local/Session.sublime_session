@@ -8,16 +8,16 @@
 	"last_version": 4200,
 	"last_window_id": 1,
 	"log_indexing": false,
-	"next_update_check": 1752812155,
+	"next_update_check": 1777360544,
 	"settings":
 	{
 		"new_window_full_screen": false,
-		"new_window_height": 859.0,
-		"new_window_maximized": false,
+		"new_window_height": 1440.0,
+		"new_window_maximized": true,
 		"new_window_position":
 		[
-			26.0,
-			69.0
+			0.0,
+			0.0
 		],
 		"new_window_settings":
 		{
@@ -58,6 +58,7 @@
 			},
 			"file_history":
 			[
+				"/home/rgnh55/sync/notes"
 			],
 			"find":
 			{
@@ -150,7 +151,7 @@
 			{
 			}
 		},
-		"new_window_width": 1468.0
+		"new_window_width": 2560.0
 	},
 	"windows":
 	[
@@ -164,33 +165,35 @@
 			"buffers":
 			[
 				{
-					"contents": "",
+					"contents": "C\nB\nB\nC\nC\nB\nC\nB\t\nB\nC\nC\nC\nC\nC\nB\nB\nA\nB\nB\nB",
+					"file": "/home/rgnh55/sync/notes",
+					"file_size": -1,
+					"file_write_time": -1,
 					"settings":
 					{
-						"buffer_size": 0,
-						"line_ending": "Unix"
+						"buffer_size": 40,
+						"line_ending": "Unix",
+						"unsaved": true
 					},
 					"undo_stack":
 					[
 						[
-							5,
+							2,
+							1,
+							"",
+							null,
+							"AQAAAAAAAAAAAAAAJwAAAAAAAAAAAAAA",
+							"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8"
+						],
+						[
+							9,
 							1,
 							"insert",
 							{
-								"characters": "radasjdasijdsaji"
+								"characters": "\t"
 							},
-							"EAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAAAAAAAAAAAMAAAAAAAAABAAAAAAAAAAAAAAABAAAAAAAAAAFAAAAAAAAAAAAAAAFAAAAAAAAAAYAAAAAAAAAAAAAAAYAAAAAAAAABwAAAAAAAAAAAAAABwAAAAAAAAAIAAAAAAAAAAAAAAAIAAAAAAAAAAkAAAAAAAAAAAAAAAkAAAAAAAAACgAAAAAAAAAAAAAACgAAAAAAAAALAAAAAAAAAAAAAAALAAAAAAAAAAwAAAAAAAAAAAAAAAwAAAAAAAAADQAAAAAAAAAAAAAADQAAAAAAAAAOAAAAAAAAAAAAAAAOAAAAAAAAAA8AAAAAAAAAAAAAAA8AAAAAAAAAEAAAAAAAAAAAAAAA",
-							"AQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/"
-						],
-						[
-							6,
-							3,
-							"delete_word",
-							{
-								"forward": false
-							},
-							"AQAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAcmFkYXNqZGFzaWpkc2FqaQ",
-							"AQAAAAAAAAABAAAAEAAAAAAAAAAQAAAAAAAAAAAAAAAAAPC/"
+							"AQAAAA8AAAAAAAAAEAAAAAAAAAAAAAAA",
+							"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAPAAAAAAAAAA8AAAAAAAAAAAAAAAAA8L8"
 						]
 					]
 				}
@@ -267,28 +270,28 @@
 					[
 						{
 							"buffer": 0,
+							"file": "/home/rgnh55/sync/notes",
 							"selected": true,
 							"semi_transient": false,
 							"settings":
 							{
-								"buffer_size": 0,
+								"buffer_size": 40,
 								"regions":
 								{
 								},
 								"selection":
 								[
 									[
-										0,
-										0
+										16,
+										16
 									]
 								],
 								"settings":
 								{
-									"auto_name": "",
 									"syntax": "Packages/Text/Plain text.tmLanguage"
 								},
 								"translation.x": 0.0,
-								"translation.y": 0.0,
+								"translation.y": 864.0,
 								"zoom_level": 1.0
 							},
 							"stack_index": 0,
@@ -337,7 +340,7 @@
 				]
 			},
 			"pinned_build_system": "",
-			"position": "0,0,0,0,0,26,23,1494,882,2560,1440,0",
+			"position": "0,1,0,0,0,0,0,2528,1408,4480,1440,0",
 			"project": "",
 			"replace":
 			{

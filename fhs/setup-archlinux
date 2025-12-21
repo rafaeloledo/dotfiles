@@ -1,44 +1,33 @@
 #!/usr/bin/env bash
 
-yay -S obs-studio scrcpy pipewire-pulse less
+yay -S --needed --noconfirm \
+  android-file-transfer android-studio ani-cli antimicrox arduino-ide-bin \
+  arm-none-eabi-gcc aws-cli bat bc blender brave-bin discord distrobox docker \
+  dunst eza fastfetch firefox fish flatpak fzf gimp github-cli gparted graphviz \
+  grim hyprcursor hyprland hyprpaper hyprpicker hyprshot inkscape jdk17-openjdk \
+  jq keyd lazygit less libvirt lutris mako mariadb maven mission-center mtpfs \
+  ncdu neovide neovim nix nodejs-ngrok noto-fonts noto-fonts-cjk noto-fonts-emoji \
+  noto-fonts-extra obs-studio pamixer pandoc-cli papirus-icon-theme patch pavucontrol \
+  pkgconf plantuml playerctl pnpm power-profiles-daemon pulseaudio-bluetooth qemu-full qmk rembg \
+  ripgrep rofi-wayland rust scrcpy steam sublime-text-4 swaybg syncthing \
+  tesseract tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd \
+  ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd \
+  viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools \
+  quickshell wezterm wlogout wl-clipboard zip zoxide
 
-yay -S virt-manager power-profiles-daemon libvirt
+# Problematic/optional AUR packages. Install manually when needed.
+# yay -S --needed eden-git eh-vial-appimage
 
-yay -S noto-fonts-cjk noto-fonts noto-fonts-emoji noto-fonts-extra ttf-ubuntu-font-nerd ttf-fira-code-nerd ttf-jetbrains-mono-nerd ttf-hack-nerd ttf-roboto-mono ttf-roboto-mono-nerd
-
-timedatectl set-local-rtc 1
-
-yay -S fish
-
-chsh -s /usr/bin/fish rgnh55
+sudo systemctl enable keyd --now
+sudo systemctl enable docker --now
+systemctl enable --user syncthing --now
 
 sudo timedatectl set-timezone America/Bahia
+sudo timedatectl set-local-rtc 1
+sudo chsh -s /usr/bin/fish rgnh55
 
-yay -S grim slurp pamixer waybar swaybg wl-clipboard hyprpicker wlogout hyprpaper mako
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install -y flathub com.github.wwmm.easyeffects
 
-yay -S mariadb arduino-ide-bin neovim neovide visual-studio-code-bin gimp inkscape vlc playerctl
-
-yay -S jdk17-openjdk
-
-yay -S mission-center postman-bin discord lazygit papirus-icon-theme nodejs-ngrok fastfetch staruml plantuml qemu-full mtpfs android-file-transfer
-
-yay -S pavucontrol jq pnpm aws-cli zip maven graphviz
-
-yay -S android-studio ncdu flutter-bin dunst hyprshot viewnior ani-cli sublime-text-4 vial bc blender ddcutil brave-bin
-
-yay -S qmk gcc-arm-embedded distrobox rembg lutris vulkan-tools vulkan-loader tesseract pandoc jellyfin gparted antimicrox firefox hyprcursor
-
-yay -S github-cli
-
-yay -S keyd docker
-
-systemctl enable keyd --now
-systemctl enable docker --now
-
-yay -S zoxide eza bat ripgrep fzf
-
-yay -S wezterm ghostty
-
-yay -S hyprland xdg-desktop-portal-hyprland
-
-yay -S rofi-wayland
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+nix-channel --update

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if pgrep -x qs >/dev/null 2>&1; then
+  pkill -x qs
+elif pgrep -x quickshell >/dev/null 2>&1; then
+  pkill -x quickshell
+else
+  if command -v qs >/dev/null 2>&1; then
+    qs -d -v >/tmp/quickshell.log 2>&1
+  elif command -v quickshell >/dev/null 2>&1; then
+    quickshell -d -v >/tmp/quickshell.log 2>&1
+  else
+    echo "quickshell is not installed. Install it with: yay -S quickshell" >&2
+    exit 127
+  fi
+fi

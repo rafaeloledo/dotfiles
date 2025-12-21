@@ -1,33 +1,47 @@
-.PHONY: setup clear keyd config_files wall_and_scripts doom anotacoes vim-misc firefox shell
+.PHONY: install clean keyd keyd/service vim/setup firefox clear/nvim npm/prefix archlinux archlinux/link push
 
 MAKEFLAGS += -s
 
+DOTFILES := $(HOME)/dotfiles
+CONFIG_HOME := $(HOME)/.config
+LOCAL_BIN := $(HOME)/.local/scripts
+BACKUP_SUFFIX := backup.$(shell date +%Y%m%d%H%M%S)
+
+define link_path
+	@mkdir -p "$(dir $(2))"
+	@if [ -e "$(2)" ] && [ ! -L "$(2)" ]; then \
+		mv "$(2)" "$(2).$(BACKUP_SUFFIX)"; \
+	fi
+	@ln -nfs "$(1)" "$(2)"
+endef
+
 install:
-	@$(MAKE) config
-	@$(MAKE) wall_and_scripts
+	@$(MAKE) archlinux/link
 	@$(MAKE) keyd
 
 clean:
 	@echo "Cleaning config..."
-	@rm ~/.local/scripts ~/wallpapers ~/.config/doom ~/.config/hypr \
-	~/.config/i3 ~/.config/yazi ~/.config/picom ~/.config/tmux \
-	~/.config/wezterm ~/.config/waybar ~/.config/zshrc ~/.config/ansible ~/.config/fish \
-	~/.config/rofi ~/.config/.gitconfig ~/.config/dunst ~/.config/keyd ~/.config/gtk-3.0 ~/.config/ghostty
+	@rm -f "$(LOCAL_BIN)" "$(HOME)/wallpapers" \
+		"$(CONFIG_HOME)/doom" "$(CONFIG_HOME)/hypr" "$(CONFIG_HOME)/yazi" \
+		"$(CONFIG_HOME)/tmux" "$(CONFIG_HOME)/wezterm" \
+		"$(CONFIG_HOME)/quickshell" \
+		"$(CONFIG_HOME)/fish" "$(CONFIG_HOME)/rofi" "$(CONFIG_HOME)/dunst" \
+		"$(CONFIG_HOME)/gtk-3.0" "$(CONFIG_HOME)/ghostty" "$(CONFIG_HOME)/lazygit" \
+		"$(CONFIG_HOME)/environment.d" "$(CONFIG_HOME)/sublime-text" "$(CONFIG_HOME)/wofi" \
+		"$(CONFIG_HOME)/nvim" "$(HOME)/.gitconfig"
 
 keyd:
 	@echo "Setting up keyd..."
-	@sudo ln -nfs ~/dotfiles/keyd/default.conf /etc/keyd/default.conf
+	@sudo mkdir -p /etc/keyd
+	@sudo ln -nfs "$(DOTFILES)/keyd/default.conf" /etc/keyd/default.conf
 
 keyd/service:
 	sudo systemctl enable keyd --now
 
 NOTES_DIR := $(HOME)/sync
 
-vim/vanilla:
-	ln -nfs ~/dotfiles/editor/vim ~/.config/nvim
-
-vim/default:
-	ln -nfs ~/dotfiles/editor/lazyvim ~/.config/nvim
+vim/setup:
+	$(call link_path,$(DOTFILES)/editor/nvim,$(CONFIG_HOME)/nvim)
 
 firefox:
 	@echo "Append this file config to the current default profile"
@@ -42,29 +56,29 @@ clear/nvim:
 npm/prefix:
 	npm set prefix ~/.npm-global
 
-.PHONY: archlinux archlinux/link
-
 archlinux/link:
-	rm -rf ~/.config/hypr
-	ln -nfs ~/dotfiles/wayland/hypr ~/.config/hypr
-	ln -nfs ~/dotfiles/terminal/ghostty ~/.config/ghostty
-	ln -nfs ~/dotfiles/terminal/tmux ~/.config/tmux
-	ln -nfs ~/dotfiles/terminal/wezterm ~/.config/wezterm
-	ln -nfs ~/dotfiles/editor/nvim ~/.config/nvim
-	rm -rf ~/.config/fish
-	ln -nfs ~/dotfiles/shell/fish ~/.config/fish
-	ln -nfs ~/dotfiles/scripts ~/.local/scripts
-	ln -nfs ~/dotfiles/wallpapers/ ~/wallpapers
-	ln -nfs ~/dotfiles/wayland/waybar ~/.config/waybar
-	ln -nfs ~/dotfiles/rofi ~/.config/rofi
-	ln -nfs ~/dotfiles/environment.d/ ~/.config/environment.d
-	ln -nfs ~/dotfiles/editor/sublime-text ~/.config/sublime-text
-	ln -nfs ~/dotfiles/wayland/wofi ~/.config/wofi
+	$(call link_path,$(DOTFILES)/wayland/hypr,$(CONFIG_HOME)/hypr)
+	$(call link_path,$(DOTFILES)/terminal/ghostty,$(CONFIG_HOME)/ghostty)
+	$(call link_path,$(DOTFILES)/terminal/tmux,$(CONFIG_HOME)/tmux)
+	$(call link_path,$(DOTFILES)/terminal/wezterm,$(CONFIG_HOME)/wezterm)
+	$(call link_path,$(DOTFILES)/terminal/yazi,$(CONFIG_HOME)/yazi)
+	$(call link_path,$(DOTFILES)/terminal/lazygit,$(CONFIG_HOME)/lazygit)
+	$(call link_path,$(DOTFILES)/editor/nvim,$(CONFIG_HOME)/nvim)
+	$(call link_path,$(DOTFILES)/shell/fish,$(CONFIG_HOME)/fish)
+	$(call link_path,$(DOTFILES)/scripts,$(LOCAL_BIN))
+	$(call link_path,$(DOTFILES)/wallpapers,$(HOME)/wallpapers)
+	$(call link_path,$(DOTFILES)/wayland/quickshell,$(CONFIG_HOME)/quickshell)
+	$(call link_path,$(DOTFILES)/wayland/wofi,$(CONFIG_HOME)/wofi)
+	$(call link_path,$(DOTFILES)/rofi,$(CONFIG_HOME)/rofi)
+	$(call link_path,$(DOTFILES)/dunst,$(CONFIG_HOME)/dunst)
+	$(call link_path,$(DOTFILES)/gtk-3.0,$(CONFIG_HOME)/gtk-3.0)
+	$(call link_path,$(DOTFILES)/environment.d,$(CONFIG_HOME)/environment.d)
+	$(call link_path,$(DOTFILES)/editor/sublime-text,$(CONFIG_HOME)/sublime-text)
+	$(call link_path,$(DOTFILES)/.gitconfig,$(HOME)/.gitconfig)
 
 # needs admin privileges
 windows/setup:
-	mklink /D "C:\Users\rafae\.config\autohotkey" "C:\dev\dotfiles\win32\autohotkey"
-	mklink /D "C:\Users\rafae\.config\wezterm" "C:\dev\dotfiles\win32\wezterm"
+	mklink /D "C:\Users\rafae\AppData\Local\nvim" "C:\dotfiles\editor\nvim"
 
 .PHONY: push
 

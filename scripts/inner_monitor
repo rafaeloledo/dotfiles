@@ -14,7 +14,7 @@ function enable() {
     xrandr --output eDP-1-1 --mode 1920x1080 --rate 144.15 --dpi 100
   else
     hyprctl keyword monitor eDP-1, 1920x1080, 0x0, 1
-    hyprctl keyword input:sensitivity 0
+    hyprctl keyword input:sensitivity -0.9
   fi
 }
 

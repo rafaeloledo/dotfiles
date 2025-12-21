@@ -8,9 +8,7 @@ let
     "shell/fish"
     "wayland/hypr"
     "rofi"
-    "editor/nvim"
     "terminal/tmux"
-    "wayland/waybar"
     "terminal/yazi"
     "terminal/ghostty"
     "terminal/lazygit"
@@ -41,12 +39,14 @@ in
     stateVersion = "25.05";
   };
 
-  home.file = builtins.listToAttrs (map (name: {
+  home.file = (builtins.listToAttrs (map (name: {
     name = ".config/${builtins.baseNameOf name}";
     value = {
       source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/${name}";
     };
-  }) dotfiles);
+  }) dotfiles)) // {
+    ".config/nvim".source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/editor/nvim";
+  };
 
   manual = {
     html.enable = false;
