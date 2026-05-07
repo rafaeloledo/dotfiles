@@ -1,0 +1,72 @@
+# Atuin config for Nushell on Windows.
+# Integration is loaded from:
+# C:\Users\rafael\AppData\Roaming\nushell\atuin-init.nu
+
+auto_sync = true
+sync_frequency = "10m"
+sync_address = "https://api.atuin.sh"
+update_check = false
+
+search_mode = "fuzzy"
+filter_mode = "global"
+filter_mode_shell_up_key_binding = "directory"
+search_mode_shell_up_key_binding = "prefix"
+
+style = "compact"
+inline_height = 20
+inline_height_shell_up_key_binding = 12
+invert = false
+show_preview = true
+max_preview_height = 4
+show_help = true
+show_tabs = true
+auto_hide_height = 8
+
+enter_accept = true
+exit_mode = "return-original"
+word_jump_mode = "emacs"
+keymap_mode = "emacs"
+ctrl_n_shortcuts = false
+show_numeric_shortcuts = true
+
+history_format = "{time}\t{command}\t{duration}"
+strip_trailing_whitespace = true
+secrets_filter = true
+
+history_filter = [
+  "^atuin login",
+  "^atuin register",
+  "^atuin key",
+  "^.*--password",
+  "^.*--token",
+]
+
+[sync]
+records = true
+
+[stats]
+common_subcommands = [
+  "cargo",
+  "docker",
+  "dotnet",
+  "git",
+  "go",
+  "kubectl",
+  "nix",
+  "npm",
+  "pnpm",
+  "tmux",
+  "yarn",
+]
+common_prefix = ["sudo"]
+ignored_commands = ["cd", "ls", "ll", "l", "clear", "cls"]
+
+[keys]
+scroll_exits = true
+exit_past_line_start = true
+accept_past_line_end = true
+accept_past_line_start = false
+accept_with_backspace = false
+
+[ui]
+columns = ["duration", "time", "command"]
