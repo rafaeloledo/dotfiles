@@ -6,6 +6,16 @@
   "manage_rules": [
     { "kind": "Exe", "id": "claude.exe", "matching_strategy": "Equals" }
   ],
+  "ignore_rules": [
+    { "kind": "Exe", "id": "RiotClientServices.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "RiotClientUx.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "RiotClientCrashHandler.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "LeagueClient.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "LeagueClientUx.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "League of Legends.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "VALORANT.exe", "matching_strategy": "Equals" },
+    { "kind": "Exe", "id": "VALORANT-Win64-Shipping.exe", "matching_strategy": "Equals" }
+  ],
   "default_workspace_padding": 4,
   "default_container_padding": 4,
   "border": true,
