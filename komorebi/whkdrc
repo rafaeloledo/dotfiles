@@ -4,9 +4,9 @@
 .shell powershell
 
 # App / system shortcuts
-alt + q                : wt.exe                                 # terminal (was: ghostty)
+alt + q                : alacritty                              # terminal (was: ghostty)
 alt + e                : explorer.exe                           # file manager (was: dolphin)
-alt + r                : powershell -c "Start-Process -FilePath (Get-Command wt).Source"  # launcher placeholder; replace with flow-launcher / powertoys-run
+alt + r                : powershell -c "(New-Object -ComObject WScript.Shell).SendKeys('% ')"  # PowerToys Run (sends its default alt+space hotkey)
 alt + b                : start chrome
 alt + n                : start "" "obsidian://"
 alt + m                : komorebic stop                         # exit-ish (was: hyprshutdown)
