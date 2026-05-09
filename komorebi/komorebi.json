@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/master/schema.json",
+  "app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.json",
+  "window_hiding_behaviour": "Cloak",
+  "cross_monitor_move_behaviour": "Insert",
+  "default_workspace_padding": 4,
+  "default_container_padding": 4,
+  "border": true,
+  "border_width": 2,
+  "border_offset": -1,
+  "border_style": "Rounded",
+  "border_colours": {
+    "single": "#33ccff",
+    "stack": "#00ff99",
+    "monocle": "#ff7f50",
+    "unfocused": "#595959"
+  },
+  "stackbar": {
+    "height": 30,
+    "mode": "OnStack",
+    "tabs": {
+      "width": 200,
+      "focused_text": "#FFFFFF",
+      "unfocused_text": "#B0B0B0",
+      "background": "#1a1a1a"
+    }
+  },
+  "animation": {
+    "enabled": true,
+    "duration": 250,
+    "style": "EaseOutQuint",
+    "fps": 60
+  },
+  "transparency": false,
+  "monitors": [
+    {
+      "workspaces": [
+        { "name": "1", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "2", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "3", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "4", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "5", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "6", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "7", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "8", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "9", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
+        { "name": "10", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 }
+      ]
+    }
+  ]
+}
