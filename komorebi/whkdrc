@@ -6,7 +6,7 @@
 # App / system shortcuts
 alt + q                : alacritty                              # terminal (was: ghostty)
 alt + e                : explorer.exe                           # file manager (was: dolphin)
-alt + r                : powershell -c "Start-Process -FilePath (Get-Command wt).Source"  # launcher placeholder; replace with flow-launcher / powertoys-run
+# alt + r              : <launcher>                              # launcher placeholder; replace with flow-launcher / powertoys-run
 alt + b                : start chrome
 alt + n                : start "" "obsidian://"
 alt + m                : komorebic stop                         # exit-ish (was: hyprshutdown)
