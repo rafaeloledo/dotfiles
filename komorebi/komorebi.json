@@ -18,7 +18,7 @@
     { "kind": "Exe", "id": "VALORANT.exe", "matching_strategy": "Equals" },
     { "kind": "Exe", "id": "VALORANT-Win64-Shipping.exe", "matching_strategy": "Equals" }
   ],
-  "default_workspace_padding": 4,
+  "default_workspace_padding": 1,
   "default_container_padding": 4,
   "border": true,
   "border_width": 2,
@@ -50,16 +50,16 @@
   "monitors": [
     {
       "workspaces": [
-        { "name": "1", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "2", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "3", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "4", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "5", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "6", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "7", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "8", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "9", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 },
-        { "name": "10", "layout": "BSP", "container_padding": 4, "workspace_padding": 14 }
+        { "name": "1", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "2", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "3", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "4", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "5", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "6", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "7", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "8", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "9", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 },
+        { "name": "10", "layout": "BSP", "container_padding": 4, "workspace_padding": 1 }
       ]
     }
   ]
