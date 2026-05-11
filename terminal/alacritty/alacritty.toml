@@ -1,0 +1,44 @@
+# Alacritty configuration converted from:
+# C:\Users\rafael\.config\wezterm\wezterm.lua.bak
+#
+# Notes:
+# - Alacritty does not provide native tabs or pane splits like WezTerm, so
+#   Ctrl+Shift+T/E/O cannot be mapped equivalently here.
+# - Alacritty reloads this file automatically when general.live_config_reload is true.
+# - Ctrl+Shift+R from WezTerm has no portable Alacritty action in 0.17.0.
+
+[general]
+live_config_reload = true
+
+[terminal.shell]
+program = "C:\\scoop\\shims\\nu.exe"
+
+[font]
+size = 12.0
+normal = { family = "Hack Nerd Font" }
+bold = { family = "Hack Nerd Font" }
+italic = { family = "Hack Nerd Font" }
+bold_italic = { family = "Hack Nerd Font" }
+[window]
+dimensions = { columns = 140, lines = 38 }
+position = { x = 400, y = 220 }
+opacity = 1.0
+padding = { x = 0, y = 0 }
+decorations = "Full"
+startup_mode = "Windowed"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[cursor]
+style = { shape = "Beam", blinking = "Never" }
+unfocused_hollow = true
+
+[mouse]
+hide_when_typing = false
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

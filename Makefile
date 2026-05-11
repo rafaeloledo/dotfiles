@@ -23,7 +23,8 @@ clean:
 	@echo "Cleaning config..."
 	@rm -f "$(LOCAL_BIN)" "$(HOME)/wallpapers" \
 		"$(CONFIG_HOME)/doom" "$(CONFIG_HOME)/hypr" "$(CONFIG_HOME)/yazi" \
-		"$(CONFIG_HOME)/tmux" "$(CONFIG_HOME)/wezterm" \
+		"$(CONFIG_HOME)/tmux" "$(CONFIG_HOME)/wezterm" "$(CONFIG_HOME)/zellij" \
+		"$(CONFIG_HOME)/alacritty" \
 		"$(CONFIG_HOME)/quickshell" \
 		"$(CONFIG_HOME)/fish" "$(CONFIG_HOME)/rofi" "$(CONFIG_HOME)/dunst" \
 		"$(CONFIG_HOME)/gtk-3.0" "$(CONFIG_HOME)/ghostty" "$(CONFIG_HOME)/lazygit" \
@@ -59,8 +60,10 @@ npm/prefix:
 archlinux/link:
 	$(call link_path,$(DOTFILES)/wayland/hypr,$(CONFIG_HOME)/hypr)
 	$(call link_path,$(DOTFILES)/terminal/ghostty,$(CONFIG_HOME)/ghostty)
+	$(call link_path,$(DOTFILES)/terminal/alacritty,$(CONFIG_HOME)/alacritty)
 	$(call link_path,$(DOTFILES)/terminal/tmux,$(CONFIG_HOME)/tmux)
 	$(call link_path,$(DOTFILES)/terminal/wezterm,$(CONFIG_HOME)/wezterm)
+	$(call link_path,$(DOTFILES)/terminal/zellij,$(CONFIG_HOME)/zellij)
 	$(call link_path,$(DOTFILES)/terminal/yazi,$(CONFIG_HOME)/yazi)
 	$(call link_path,$(DOTFILES)/terminal/lazygit,$(CONFIG_HOME)/lazygit)
 	$(call link_path,$(DOTFILES)/editor/nvim,$(CONFIG_HOME)/nvim)
@@ -78,7 +81,7 @@ archlinux/link:
 
 # needs admin privileges
 windows/setup:
-	mklink /D "C:\Users\rafae\AppData\Local\nvim" "C:\dotfiles\editor\nvim"
+	powershell -NoProfile -ExecutionPolicy Bypass -Command "New-Item -ItemType Directory -Force -Path $$env:USERPROFILE\.config | Out-Null; if (-not (Test-Path $$env:USERPROFILE\.config\nvim)) { New-Item -ItemType Junction -Path $$env:USERPROFILE\.config\nvim -Target $$PWD\editor\nvim | Out-Null }; if (-not (Test-Path $$env:LOCALAPPDATA\nvim)) { New-Item -ItemType Junction -Path $$env:LOCALAPPDATA\nvim -Target $$PWD\editor\nvim | Out-Null }"
 
 .PHONY: push
 

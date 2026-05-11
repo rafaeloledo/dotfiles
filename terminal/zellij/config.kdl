@@ -1,0 +1,123 @@
+keybinds clear-defaults=true {
+    locked {
+        bind "Ctrl a" { SwitchToMode "Tmux"; }
+    }
+
+    tmux {
+        bind "Ctrl c" { NewTab; SwitchToMode "Locked"; }
+        bind "t" { NewTab; SwitchToMode "Locked"; }
+        bind "Ctrl p" { GoToPreviousTab; SwitchToMode "Locked"; }
+        bind "Ctrl n" { GoToNextTab; SwitchToMode "Locked"; }
+        bind "Ctrl a" { ToggleTab; SwitchToMode "Locked"; }
+        bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
+        bind "\"" { LaunchOrFocusPlugin "session-manager" { floating true; move_to_focused_tab true; }; SwitchToMode "Locked"; }
+        bind "Ctrl s" { LaunchOrFocusPlugin "session-manager" { floating true; move_to_focused_tab true; }; SwitchToMode "Locked"; }
+        bind "Ctrl d" { Detach; }
+        bind ":" { LaunchOrFocusPlugin "configuration" { floating true; move_to_focused_tab true; }; SwitchToMode "Locked"; }
+
+        bind "c" { CloseFocus; SwitchToMode "Locked"; }
+        bind "x" { MovePane "Down"; SwitchToMode "Locked"; }
+        bind "v" { NewPane "Right"; SwitchToMode "Locked"; }
+        bind "s" { NewPane "Down"; SwitchToMode "Locked"; }
+        bind "*" { ToggleActiveSyncTab; SwitchToMode "Locked"; }
+
+        bind "h" { MoveFocus "Left"; SwitchToMode "Locked"; }
+        bind "j" { MoveFocus "Down"; SwitchToMode "Locked"; }
+        bind "k" { MoveFocus "Up"; SwitchToMode "Locked"; }
+        bind "l" { MoveFocus "Right"; SwitchToMode "Locked"; }
+        bind "Left" { MoveTab "Left"; SwitchToMode "Locked"; }
+        bind "Right" { MoveTab "Right"; SwitchToMode "Locked"; }
+
+        bind "," { Resize "Increase Left"; SwitchToMode "Locked"; }
+        bind "." { Resize "Increase Right"; SwitchToMode "Locked"; }
+        bind "-" { Resize "Increase Down"; SwitchToMode "Locked"; }
+        bind "=" { Resize "Increase Up"; SwitchToMode "Locked"; }
+
+        bind "[" { SwitchToMode "Scroll"; }
+    }
+
+    scroll {
+        bind "Ctrl c" "Esc" { ScrollToBottom; SwitchToMode "Locked"; }
+        bind "j" "Down" { ScrollDown; }
+        bind "k" "Up" { ScrollUp; }
+        bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
+        bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "f" { SwitchToMode "EnterSearch"; SearchInput 0; }
+    }
+
+    search {
+        bind "Ctrl c" "Esc" { ScrollToBottom; SwitchToMode "Locked"; }
+        bind "n" { Search "down"; }
+        bind "p" { Search "up"; }
+        bind "c" { SearchToggleOption "CaseSensitivity"; }
+        bind "w" { SearchToggleOption "Wrap"; }
+        bind "o" { SearchToggleOption "WholeWord"; }
+        bind "j" "Down" { ScrollDown; }
+        bind "k" "Up" { ScrollUp; }
+    }
+
+    entersearch {
+        bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
+        bind "Enter" { SwitchToMode "Search"; }
+    }
+
+    renametab {
+        bind "Ctrl c" { SwitchToMode "Locked"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "Locked"; }
+    }
+
+    shared_except "locked" "tmux" "renametab" "entersearch" {
+        bind "Ctrl a" { SwitchToMode "Tmux"; }
+    }
+}
+
+plugins {
+    tab-bar location="zellij:tab-bar"
+    status-bar location="zellij:status-bar"
+    compact-bar location="zellij:compact-bar"
+    session-manager location="zellij:session-manager"
+    configuration location="zellij:configuration"
+    plugin-manager location="zellij:plugin-manager"
+    about location="zellij:about"
+}
+
+load_plugins {
+    "zellij:link"
+}
+
+themes {
+    tmux {
+        fg 255 255 255
+        bg 0 0 0
+        black 8 8 8
+        red 220 50 47
+        green 133 153 0
+        yellow 181 137 0
+        blue 38 139 210
+        magenta 211 54 130
+        cyan 42 161 152
+        white 255 255 255
+        orange 203 75 22
+    }
+}
+
+default_mode "locked"
+session_name "dev"
+attach_to_session true
+default_shell "nu"
+theme "tmux"
+default_layout "compact"
+layout_dir "C:/dotfiles/terminal/zellij/layouts"
+mouse_mode true
+pane_frames false
+scroll_buffer_size 64096
+copy_clipboard "system"
+copy_on_select true
+show_startup_tips false
+default_cwd "C:/"
+
+web_client {
+    font "monospace"
+}

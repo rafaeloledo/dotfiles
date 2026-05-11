@@ -4,7 +4,7 @@
 .shell powershell
 
 # App / system shortcuts
-alt + q                : alacritty                              # terminal (was: ghostty)
+alt + q                : C:\scoop\apps\alacritty\current\alacritty.exe   # terminal (was: ghostty) — bypass scoop shim so WT doesn't host it
 alt + e                : explorer.exe                           # file manager (was: dolphin)
 alt + r                : powershell -c "(New-Object -ComObject WScript.Shell).SendKeys('% ')"  # PowerToys Run (sends its default alt+space hotkey)
 alt + b                : start chrome
@@ -30,11 +30,12 @@ alt + j                : komorebic focus down
 alt + k                : komorebic focus up
 alt + l                : komorebic focus right
 
-# Move window (shift + hjkl)
-alt + shift + h        : komorebic move left
-alt + shift + j        : komorebic move down
-alt + shift + k        : komorebic move up
-alt + shift + l        : komorebic move right
+# Move window (ctrl + hjkl)
+alt + ctrl + h         : komorebic move left
+alt + ctrl + j         : komorebic move down
+alt + ctrl + k         : komorebic move up
+alt + ctrl + l         : komorebic move right
+alt + ctrl + m         : komorebic move-to-monitor 1
 
 # Workspaces 1-10
 alt + 1                : komorebic focus-workspace 0
@@ -49,16 +50,16 @@ alt + 9                : komorebic focus-workspace 8
 alt + 0                : komorebic focus-workspace 9
 
 # Move window to workspace
-alt + shift + 1        : komorebic move-to-workspace 0
-alt + shift + 2        : komorebic move-to-workspace 1
-alt + shift + 3        : komorebic move-to-workspace 2
-alt + shift + 4        : komorebic move-to-workspace 3
-alt + shift + 5        : komorebic move-to-workspace 4
-alt + shift + 6        : komorebic move-to-workspace 5
-alt + shift + 7        : komorebic move-to-workspace 6
-alt + shift + 8        : komorebic move-to-workspace 7
-alt + shift + 9        : komorebic move-to-workspace 8
-alt + shift + 0        : komorebic move-to-workspace 9
+alt + ctrl + 1         : komorebic move-to-workspace 0
+alt + ctrl + 2         : komorebic move-to-workspace 1
+alt + ctrl + 3         : komorebic move-to-workspace 2
+alt + ctrl + 4         : komorebic move-to-workspace 3
+alt + ctrl + 5         : komorebic move-to-workspace 4
+alt + ctrl + 6         : komorebic move-to-workspace 5
+alt + ctrl + 7         : komorebic move-to-workspace 6
+alt + ctrl + 8         : komorebic move-to-workspace 7
+alt + ctrl + 9         : komorebic move-to-workspace 8
+alt + ctrl + 0         : komorebic move-to-workspace 9
 
 # Cycle workspaces (was: bracketleft/right, page_up/down)
 alt + oem_4            : komorebic cycle-workspace previous     # [
@@ -67,7 +68,7 @@ alt + prior            : komorebic cycle-workspace previous     # PageUp
 alt + next             : komorebic cycle-workspace next         # PageDown
 
 # Reload
-alt + shift + r        : komorebic reload-configuration
+alt + ctrl + r         : komorebic reload-configuration
 
 # Print screen — uses Windows native (Win+Shift+S already opens Snip & Sketch)
 # print                : powershell -c "Start-Process ms-screenclip:"

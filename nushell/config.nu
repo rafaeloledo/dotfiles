@@ -30,7 +30,15 @@ alias cls = clear
 alias cat = bat -p
 alias v = nvim
 
-alias t = tmux
+def ccrc [] {
+  cd 'C:\'
+  claude --remote-control --permission-mode acceptEdits 'C:\'
+}
+
+alias cc = ccrc
+
+# alias t = tmux
+alias t = zellij attach -c main
 alias ta = tmux a
 alias td = tmux detach
 
