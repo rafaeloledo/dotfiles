@@ -1,0 +1,162 @@
+@define-color bg0   #000000;
+@define-color bg1   #0a0a0a;
+@define-color bg2   #1a1a1a;
+@define-color fg0   #ffffff;
+@define-color fg1   #aaaaaa;
+@define-color gold  #c8a86a;
+@define-color cyan  #4fc8c8;
+@define-color red   #c04848;
+
+* {
+    font-family: "JetBrains Mono Nerd Font", "JetBrains Mono", monospace;
+    font-size:   13px;
+    all:         unset;
+}
+
+.volume-window {
+    background: transparent;
+}
+
+.volume-box {
+    background:    @bg1;
+    border-top:    2px solid @gold;
+    border-left:   1px solid @bg2;
+    border-right:  1px solid @bg2;
+    border-bottom: 1px solid @bg2;
+    padding:       14px 16px 16px;
+    min-width:     300px;
+}
+
+/* ── header ─────────────────────────────────────────── */
+
+.header-label {
+    color:          @fg1;
+    font-size:      10px;
+    letter-spacing: 3px;
+    margin-bottom:  10px;
+}
+
+/* ── divider ─────────────────────────────────────────── */
+
+.divider {
+    background: @bg2;
+    min-height: 1px;
+    margin:     10px 0;
+}
+
+/* ── section label ───────────────────────────────────── */
+
+.section-label {
+    color:          @gold;
+    font-size:      10px;
+    letter-spacing: 2px;
+    margin-bottom:  6px;
+}
+
+/* ── section body ────────────────────────────────────── */
+
+.section-body {
+    margin-bottom: 2px;
+}
+
+/* ── device row ──────────────────────────────────────── */
+
+.device-row {
+    min-height: 26px;
+}
+
+.device-select {
+    background:  transparent;
+    padding:     4px 6px;
+    transition:  background 150ms ease;
+}
+
+.device-select:hover {
+    background: rgba(79, 200, 200, 0.06);
+}
+
+.device-select.active label {
+    color: @fg0;
+}
+
+.device-select label {
+    color: @fg1;
+}
+
+.dot {
+    font-size:  11px;
+    min-width:  14px;
+    color:      @fg1;
+}
+
+.device-select.active .dot {
+    color: @gold;
+}
+
+.device-name {
+    font-size: 12px;
+}
+
+.device-icon {
+    color:      @fg1;
+    min-width:  16px;
+    margin:     0 4px;
+}
+
+.app-icon {
+    min-width: 16px;
+    margin:    0 4px;
+}
+
+/* ── mute button ─────────────────────────────────────── */
+
+.mute-btn {
+    background:  transparent;
+    padding:     4px 6px;
+    color:       @fg1;
+    transition:  all 150ms ease;
+}
+
+.mute-btn:hover {
+    color:      @cyan;
+    background: rgba(79, 200, 200, 0.06);
+}
+
+.mute-btn.muted {
+    color: @red;
+}
+
+/* ── slider ──────────────────────────────────────────── */
+
+.slider-row {
+    padding: 0 4px;
+}
+
+.vol-slider trough {
+    background: @bg2;
+    min-height: 2px;
+}
+
+.vol-slider trough highlight {
+    background: @gold;
+}
+
+.vol-slider slider {
+    background:  @fg0;
+    min-width:   8px;
+    min-height:  8px;
+    margin:      -3px 0;
+    transition:  background 150ms ease;
+}
+
+.vol-slider slider:hover,
+.vol-slider slider:active {
+    background: @cyan;
+}
+
+.vol-pct {
+    color:      @fg1;
+    font-size:  11px;
+    min-width:  36px;
+    halign:     right;
+}

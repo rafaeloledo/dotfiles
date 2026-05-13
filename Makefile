@@ -81,7 +81,7 @@ archlinux/link:
 
 # needs admin privileges
 windows/setup:
-	powershell -NoProfile -ExecutionPolicy Bypass -Command "New-Item -ItemType Directory -Force -Path $$env:USERPROFILE\.config | Out-Null; if (-not (Test-Path $$env:USERPROFILE\.config\nvim)) { New-Item -ItemType Junction -Path $$env:USERPROFILE\.config\nvim -Target $$PWD\editor\nvim | Out-Null }; if (-not (Test-Path $$env:LOCALAPPDATA\nvim)) { New-Item -ItemType Junction -Path $$env:LOCALAPPDATA\nvim -Target $$PWD\editor\nvim | Out-Null }"
+	powershell -NoProfile -ExecutionPolicy Bypass -Command "New-Item -ItemType Directory -Force -Path $$env:USERPROFILE\.config | Out-Null; if (-not (Test-Path $$env:USERPROFILE\.config\nvim)) { New-Item -ItemType Junction -Path $$env:USERPROFILE\.config\nvim -Target $$PWD\editor\nvim | Out-Null }; if (-not (Test-Path $$env:LOCALAPPDATA\nvim)) { New-Item -ItemType Junction -Path $$env:LOCALAPPDATA\nvim -Target $$PWD\editor\nvim | Out-Null }; if (-not (Test-Path $$env:USERPROFILE\.config\kanata)) { New-Item -ItemType Junction -Path $$env:USERPROFILE\.config\kanata -Target $$PWD\kanata | Out-Null }"
 
 .PHONY: push
 

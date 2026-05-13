@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p ~/.config/waybar)",
+      "Bash(ln -s ~/dotfiles/wayland/waybar/config.jsonc ~/.config/waybar/config)",
+      "Bash(ln -s ~/dotfiles/wayland/waybar/style.css ~/.config/waybar/style.css)",
+      "Bash(ags --version)",
+      "Bash(ln -s ~/dotfiles/wayland/ags ~/.config/ags)",
+      "Bash(paru -Ss astal)",
+      "Bash(yay -Ss astal)",
+      "Bash(pacman -Ss astal)",
+      "Bash(pacman -Ss ags)",
+      "Bash(yay -Ss \"^astal\")",
+      "Bash(yay -Ss \"^ags\")",
+      "Bash(yay -Ss ags)"
+    ]
+  }
+}

@@ -1,0 +1,126 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "spacing": 0,
+    "exclusive": true,
+
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/sep",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "network",
+        "custom/sep",
+        "cpu",
+        "memory",
+        "custom/sep",
+        "pulseaudio",
+        "battery",
+        "custom/sep",
+        "tray"
+    ],
+
+    // ── Left ──────────────────────────────────────────────────────────
+
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "active-only": false,
+        "all-outputs": false
+    },
+
+    "custom/sep": {
+        "format": "  ·  ",
+        "tooltip": false
+    },
+
+    "hyprland/window": {
+        "format": "{title}",
+        "max-length": 55,
+        "separate-outputs": true,
+        "rewrite": {
+            "(.*)": " $1"
+        }
+    },
+
+    // ── Center ────────────────────────────────────────────────────────
+
+    "clock": {
+        "format": "{:%H · %M · %S}",
+        "format-alt": "{:%Y-%m-%d   %H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "",
+            "on-scroll": 1,
+            "format": {
+                "months":   "<span color='#c8a86a'><b>{}</b></span>",
+                "weekdays": "<span color='#808090'>{}</span>",
+                "today":    "<span color='#4fc8c8'><b>{}</b></span>"
+            }
+        }
+    },
+
+    // ── Right ─────────────────────────────────────────────────────────
+
+    "network": {
+        "interval": 5,
+        "format-wifi":       "󰤨  {essid}",
+        "format-ethernet":   "󰈀  {ifname}",
+        "format-disconnected":"󰤭  offline",
+        "format-linked":     "󰈀  {ifname} (no IP)",
+        "tooltip-format-wifi":    "SSID: {essid}\nSignal: {signalStrength}%\n{ipaddr}  ↑{bandwidthUpBytes}  ↓{bandwidthDownBytes}",
+        "tooltip-format-ethernet":"{ifname}\n{ipaddr}\n↑{bandwidthUpBytes}  ↓{bandwidthDownBytes}",
+        "on-click": "nm-connection-editor"
+    },
+
+    "cpu": {
+        "format": "󰍛  {usage:02d}%",
+        "interval": 2,
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "󰘚  {used:0.1f}G",
+        "interval": 5,
+        "tooltip-format": "used  {used:0.2f} G\nfree  {avail:0.2f} G\ntotal {total:0.2f} G"
+    },
+
+    "pulseaudio": {
+        "format":       "{icon}  {volume}%",
+        "format-muted": "󰝟  muted",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"],
+            "headphone": "󰋋",
+            "headset": "󰋎"
+        },
+        "scroll-step": 2,
+        "on-click": "ags toggle volume-popup",
+        "tooltip-format": "{desc}\n{volume}%"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format":          "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-plugged":  "󰚥  {capacity}%",
+        "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+        "tooltip-format": "{timeTo}\n{capacity}% · {power:.1f} W"
+    },
+
+    "tray": {
+        "icon-size": 14,
+        "spacing": 8
+    }
+}

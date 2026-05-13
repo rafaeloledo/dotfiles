@@ -13,12 +13,15 @@ yay -S --needed --noconfirm \
   tesseract tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd \
   ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd \
   viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools \
-  quickshell wezterm wlogout wl-clipboard zip zoxide
+  quickshell wezterm wlogout wl-clipboard zip zoxide ghostty hyprlauncher openai-codex-bin \
+  claude-code nautilus wine claude-desktop-bin \
+  aylurs-gtk-shell libastal-meta wireplumber
 
 # Problematic/optional AUR packages. Install manually when needed.
 # yay -S --needed eden-git eh-vial-appimage
 
 sudo systemctl enable keyd --now
+sudo systemctl enable bluetooth --now
 sudo systemctl enable docker --now
 systemctl enable --user syncthing --now
 
@@ -29,5 +32,5 @@ sudo chsh -s /usr/bin/fish rgnh55
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub com.github.wwmm.easyeffects
 
-nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-nix-channel --update
+sudo nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+sudo nix-channel --update

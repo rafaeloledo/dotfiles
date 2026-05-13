@@ -1,0 +1,218 @@
+/*
+ * ╔══════════════════════════════════════════════════════════════════╗
+ * ║  YoRHa Tactical Interface × Section 9 Ghost Protocol            ║
+ * ║                                                                  ║
+ * ║  Palette                                                         ║
+ * ║    bg-0      #0b0b0e   — void black (2B's dress)                ║
+ * ║    bg-1      #13131a   — module tray                            ║
+ * ║    bg-2      #1d1d26   — subtle border surface                  ║
+ * ║    fg-0      #dcdce8   — cold white (2B's hair)                 ║
+ * ║    fg-1      #7a7a8e   — ghost gray                             ║
+ * ║    gold      #c8a86a   — YoRHa insignia                        ║
+ * ║    cyan      #4fc8c8   — Motoko's ghost signal                  ║
+ * ║    red       #c04848   — critical alert                         ║
+ * ║    amber     #c89040   — low-power warning                      ║
+ * ╚══════════════════════════════════════════════════════════════════╝
+ */
+
+@define-color bg0    #0b0b0e;
+@define-color bg1    #13131a;
+@define-color bg2    #1d1d26;
+@define-color fg0    #dcdce8;
+@define-color fg1    #7a7a8e;
+@define-color gold   #c8a86a;
+@define-color cyan   #4fc8c8;
+@define-color red    #c04848;
+@define-color amber  #c89040;
+
+/* ── Reset ─────────────────────────────────────────────────────────── */
+
+* {
+    border:        none;
+    border-radius: 0;
+    padding:       0;
+    margin:        0;
+    font-family:   "JetBrains Mono Nerd Font", "JetBrains Mono", "Iosevka Nerd Font",
+                   "FiraCode Nerd Font", monospace;
+    font-size:     13px;
+    min-height:    0;
+}
+
+/* ── Bar ────────────────────────────────────────────────────────────── */
+
+window#waybar {
+    background-color: @bg0;
+    border-bottom:    1px solid @bg2;
+    color:            @fg0;
+}
+
+/* prevents GTK from adding its own background on transparency */
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* ── Common module defaults ─────────────────────────────────────────── */
+
+.modules-left,
+.modules-center,
+.modules-right {
+    margin: 0;
+}
+
+/* ── Workspaces ─────────────────────────────────────────────────────── */
+
+#workspaces {
+    padding: 0 6px;
+}
+
+#workspaces button {
+    padding:         0 9px;
+    background:      transparent;
+    color:           @fg1;
+    border-bottom:   2px solid transparent;
+    transition:      all 150ms ease;
+}
+
+#workspaces button:hover {
+    background:    rgba(79, 200, 200, 0.06);
+    color:         @fg0;
+    border-bottom: 2px solid @cyan;
+}
+
+#workspaces button.active {
+    color:         @gold;
+    font-weight:   700;
+    border-bottom: 2px solid @gold;
+}
+
+#workspaces button.urgent {
+    color:         @cyan;
+    border-bottom: 2px solid @cyan;
+    animation:     urgent-pulse 1s ease infinite alternate;
+}
+
+@keyframes urgent-pulse {
+    from { color: @cyan; }
+    to   { color: @fg0;  }
+}
+
+/* ── Separator ──────────────────────────────────────────────────────── */
+
+#custom-sep {
+    color:   @bg2;
+    padding: 0 2px;
+}
+
+/* ── Window title ───────────────────────────────────────────────────── */
+
+#window {
+    color:      @fg1;
+    padding:    0 12px;
+    font-style: italic;
+}
+
+
+/* ── Clock ──────────────────────────────────────────────────────────── */
+
+#clock {
+    color:          @fg0;
+    font-size:      15px;
+    font-weight:    700;
+    letter-spacing: 4px;
+    padding:        0 20px;
+}
+
+/* ── Right-side modules shared style ───────────────────────────────── */
+
+#network,
+#cpu,
+#memory,
+#pulseaudio,
+#battery,
+#tray {
+    padding:    0 13px;
+    color:      @fg0;
+    transition: all 150ms ease;
+}
+
+#network:hover,
+#cpu:hover,
+#memory:hover,
+#pulseaudio:hover,
+#battery:hover {
+    color:      @cyan;
+    background: rgba(79, 200, 200, 0.05);
+}
+
+/* ── Network ────────────────────────────────────────────────────────── */
+
+#network.disconnected {
+    color: @fg1;
+}
+
+/* ── CPU ────────────────────────────────────────────────────────────── */
+
+/* no extra rules needed; hover + critical cover it */
+
+/* ── Memory ─────────────────────────────────────────────────────────── */
+
+/* same */
+
+/* ── Audio ──────────────────────────────────────────────────────────── */
+
+#pulseaudio.muted {
+    color: @fg1;
+}
+
+/* ── Battery ────────────────────────────────────────────────────────── */
+
+#battery.good {
+    color: @fg0;
+}
+
+#battery.warning {
+    color: @amber;
+}
+
+#battery.critical {
+    color:     @red;
+    animation: battery-blink 800ms ease infinite alternate;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @cyan;
+}
+
+@keyframes battery-blink {
+    from { color: @red;  }
+    to   { color: @amber; }
+}
+
+/* ── Tray ───────────────────────────────────────────────────────────── */
+
+#tray {
+    padding-right: 10px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @bg1;
+}
+
+/* ── Tooltip ────────────────────────────────────────────────────────── */
+
+tooltip {
+    background:   @bg1;
+    border:       1px solid @bg2;
+    border-radius: 0;
+    color:        @fg0;
+}
+
+tooltip label {
+    color: @fg0;
+}
