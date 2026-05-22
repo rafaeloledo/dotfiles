@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# take a print screen of entire screen
-
-grim - | wl-copy
