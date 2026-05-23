@@ -35,7 +35,7 @@ in
 
 {
   home.file = {
-    ".local/scripts".source = config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/scripts;
+    ".local/scripts".source = config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/linux/system/scripts;
   };
 
   home.file = {
