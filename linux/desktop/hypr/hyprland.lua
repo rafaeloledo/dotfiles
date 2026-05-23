@@ -1,8 +1,8 @@
 ------------------
 ---- MONITORS ----
 ------------------
-hl.monitor({ output = "HDMI-A-1", mode = "3840x2160@60", position = "auto", scale = 1.5 })
-hl.monitor({ output = "DP-1",     mode = "1920x1080@144", position = "auto", scale = 1 })
+-- hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@144", position = "auto", scale = 1 })
+hl.monitor({ output = "DP-1",     mode = "3840x2160@60", position = "auto", scale = 1.5})
 
 
 ---------------------
@@ -65,7 +65,7 @@ hl.config({
         },
     },
 
-    animations = { enabled = true },
+    animations = { enabled = false },
 
     dwindle = { preserve_split = true },
     master  = { new_status     = "master" },
@@ -82,7 +82,7 @@ hl.config({
         kb_options   = "",
         kb_rules     = "",
         follow_mouse = 1,
-        sensitivity  = -0.9,
+        sensitivity  = -0.7,
         touchpad     = { natural_scroll = false },
     },
 })
@@ -118,9 +118,6 @@ hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "q
 ----------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
-hl.device({ name = "epic-mouse-v1", sensitivity = -0.9 })
-
-
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
@@ -133,7 +130,6 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 -- Dotfiles binds
@@ -143,7 +139,7 @@ hl.bind(mainMod .. " + SHIFT + A",    hl.dsp.exec_cmd("pavucontrol"))
 hl.bind(mainMod .. " + B",            hl.dsp.exec_cmd("firefox"))
 hl.bind(mainMod .. " + O",            hl.dsp.exec_cmd("~/.local/scripts/extract_text"))
 hl.bind(mainMod .. " + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
-hl.bind(mainMod .. " + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
+hl.bind(mainMod .. " + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Downloads/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
 hl.bind(mainMod .. " + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
 hl.bind(mainMod .. " + W",            hl.dsp.exec_cmd("killall waybar || waybar"))
 hl.bind(mainMod .. " + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
@@ -157,12 +153,22 @@ hl.bind(mainMod .. " + D",            hl.dsp.window.float({ action = "toggle" })
 -- hl.bind(mainMod .. " + SHIFT + Tab",  hl.dsp.change_group_active("b"))
 
 -- Focus
-hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
 
--- Workspaces
+-------------------
+---- WORKSPACES ---
+-------------------
+for i = 6, 10 do
+    hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
+end
+
+for i = 1, 5 do
+    hl.workspace_rule({ workspace = tostring(i), monitor = "DP-1", default = true })
+end
+
 for i = 1, 10 do
     local key = i % 10
     hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
@@ -192,8 +198,16 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 
 
 --------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
+---- WINDOWS AND -------------------
+---- WORKSPACES ---
+-------------------
+for i = 6, 10 do
+    hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
+end
+for i = 1, 5 do
+    hl.workspace_rule({ workspace = tostring(i), monitor = "DP-1", default = true })
+end
+
 hl.window_rule({
     name  = "suppress-maximize-events",
     match = { class = ".*" },

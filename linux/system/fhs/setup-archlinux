@@ -8,20 +8,23 @@ yay -S --needed --noconfirm \
   jq keyd lazygit less libvirt lutris mako mariadb maven mission-center mtpfs \
   ncdu neovide neovim nix nodejs-ngrok noto-fonts noto-fonts-cjk noto-fonts-emoji \
   noto-fonts-extra obs-studio pamixer pandoc-cli papirus-icon-theme patch pavucontrol \
-  pkgconf plantuml playerctl pnpm power-profiles-daemon pulseaudio-bluetooth qemu-full qmk rembg \
+  pkgconf plantuml playerctl pnpm power-profiles-daemon qemu-full qmk rembg \
   ripgrep rofi-wayland rust scrcpy steam sublime-text-4 swaybg syncthing \
   tesseract tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd \
   ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd \
   viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools \
   quickshell wezterm wlogout wl-clipboard zip zoxide ghostty hyprlauncher openai-codex-bin \
   claude-code nautilus wine claude-desktop-bin \
-  aylurs-gtk-shell libastal-meta wireplumber
+  aylurs-gtk-shell libastal-meta wireplumber \
 
 # Problematic/optional AUR packages. Install manually when needed.
 # yay -S --needed eden-git eh-vial-appimage
 
 sudo systemctl enable keyd --now
+
+yay -S bluez bluez-utils pipewire-pulse wireplumber --needed
 sudo systemctl enable bluetooth --now
+
 sudo systemctl enable docker --now
 systemctl enable --user syncthing --now
 
