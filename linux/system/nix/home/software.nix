@@ -130,6 +130,6 @@
     ".gitconfig".source =
       config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/.gitconfig;
     "wallpapers".source =
-      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/wallpapers;
+      config.lib.file.mkOutOfStoreSymlink /home/rgnh55/dotfiles/linux/wallpapers;
   };
 }

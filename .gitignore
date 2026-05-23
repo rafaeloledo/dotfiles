@@ -4,3 +4,5 @@ yazi/plugins
 yazi/flavors
 result
 *~
+nvim.log
+.codex

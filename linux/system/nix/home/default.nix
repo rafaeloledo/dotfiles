@@ -2,16 +2,15 @@
 
 let
   dotfiles = [
-    "terminal/wezterm"
-    "editor/doom"
-    "dunst"
-    "shell/fish"
-    "wayland/hypr"
-    "rofi"
-    "terminal/tmux"
-    "terminal/yazi"
-    "terminal/ghostty"
-    "terminal/lazygit"
+    "linux/terminal/wezterm"
+    "linux/desktop/dunst"
+    "linux/shell/fish"
+    "linux/desktop/hypr"
+    "linux/desktop/rofi"
+    "linux/terminal/tmux"
+    "linux/terminal/yazi"
+    "linux/terminal/ghostty"
+    "linux/terminal/lazygit"
   ];
 
   inherit (config.lib.file) mkOutOfStoreSymlink;
@@ -45,7 +44,7 @@ in
       source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/${name}";
     };
   }) dotfiles)) // {
-    ".config/nvim".source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/editor/nvim";
+    ".config/nvim".source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/linux/editor/nvim";
   };
 
   manual = {
