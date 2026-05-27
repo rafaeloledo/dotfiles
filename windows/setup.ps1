@@ -5,11 +5,7 @@ $dotfiles = Split-Path -Parent $PSScriptRoot
 function New-Symlink {
     param([string]$Target, [string]$Link)
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Link) | Out-Null
-    if (Test-Path $Link) {
-        Write-Host "Skipped (exists): $Link"
-        return
-    }
-    New-Item -ItemType SymbolicLink -Path $Link -Target $Target | Out-Null
+    New-Item -ItemType SymbolicLink -Path $Link -Target $Target -Force | Out-Null
     Write-Host "Linked: $Link"
 }
 
