@@ -1,25 +1,16 @@
 #Requires -RunAsAdministrator
 
 $dotfiles = Split-Path -Parent $PSScriptRoot
+$config   = "$env:USERPROFILE\.config"
 
-function New-Symlink {
-    param([string]$Target, [string]$Link)
-    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Link) | Out-Null
-    New-Item -ItemType SymbolicLink -Path $Link -Target $Target -Force | Out-Null
-    Write-Host "Linked: $Link"
-}
+if (-not (Test-Path $config)) { throw ".config not found: $config" }
 
-# Editor (shared with Linux)
-New-Symlink "$dotfiles\linux\editor\nvim" "$env:LOCALAPPDATA\nvim"
-New-Symlink "$dotfiles\linux\editor\nvim" "$env:USERPROFILE\.config\nvim"
+function ln($t, $l) { New-Item -ItemType SymbolicLink -Path $l -Target $t -Force | Out-Null }
 
-# Terminal (shared with Linux)
-New-Symlink "$dotfiles\linux\terminal\wezterm" "$env:USERPROFILE\.config\wezterm"
-
-# Windows-specific configs
-New-Symlink "$dotfiles\windows\autohotkey" "$env:USERPROFILE\.config\autohotkey"
-New-Symlink "$dotfiles\windows\kanata"     "$env:USERPROFILE\.config\kanata"
-New-Symlink "$dotfiles\windows\komorebi"   "$env:USERPROFILE\.config\komorebi"
-
-# PowerShell profile
-New-Symlink "$dotfiles\windows\PowerShell\Microsoft.PowerShell_profile.ps1" $PROFILE
+ln "$dotfiles\linux\editor\nvim"                                    "$env:LOCALAPPDATA\nvim"
+ln "$dotfiles\linux\editor\nvim"                                    "$config\nvim"
+ln "$dotfiles\linux\terminal\wezterm"                               "$config\wezterm"
+ln "$dotfiles\windows\autohotkey"                                   "$config\autohotkey"
+ln "$dotfiles\windows\kanata"                                       "$config\kanata"
+ln "$dotfiles\windows\komorebi"                                     "$config\komorebi"
+ln "$dotfiles\windows\PowerShell\Microsoft.PowerShell_profile.ps1"  $PROFILE
