@@ -1,21 +1,27 @@
 #!/usr/bin/env bash
 
-yay -S --needed --noconfirm \
-  android-file-transfer android-studio ani-cli antimicrox arduino-ide-bin \
-  arm-none-eabi-gcc aws-cli bat bc blender brave-bin discord distrobox docker \
-  dunst eza fastfetch firefox fish flatpak fzf gimp github-cli gparted graphviz \
-  grim hyprcursor hyprland hyprpaper hyprpicker hyprshot inkscape jdk17-openjdk \
-  jq keyd lazygit less libvirt lutris mako mariadb maven mission-center mtpfs \
-  ncdu neovide neovim nix nodejs-ngrok noto-fonts noto-fonts-cjk noto-fonts-emoji \
-  noto-fonts-extra obs-studio pamixer pandoc-cli papirus-icon-theme patch pavucontrol \
-  pkgconf plantuml playerctl pnpm power-profiles-daemon qemu-full qmk rembg \
-  ripgrep rofi-wayland rust scrcpy steam sublime-text-4 swaybg syncthing \
-  tesseract tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd \
-  ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd \
-  viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools \
-  quickshell wezterm wlogout wl-clipboard zip zoxide ghostty hyprlauncher openai-codex-bin \
-  claude-code nautilus wine claude-desktop-bin \
-  aylurs-gtk-shell libastal-meta wireplumber \
+set -euo pipefail
+
+arch_packages=(
+  android-file-transfer android-studio ani-cli antimicrox arduino-ide-bin
+  arm-none-eabi-gcc aws-cli bat bc blender brave-bin discord distrobox docker
+  dunst eza fastfetch firefox fish flatpak fzf gimp github-cli gparted graphviz
+  grim hyprcursor hyprland hyprpaper hyprpicker hyprshot inkscape jq keyd
+  lazygit less libvirt lutris mako mariadb mission-center mise mtpfs nautilus
+  ncdu neovide neovim nix nodejs-ngrok noto-fonts noto-fonts-cjk noto-fonts-emoji
+  noto-fonts-extra obs-studio pamixer pandoc-cli papirus-icon-theme patch pavucontrol
+  pkgconf plantuml playerctl power-profiles-daemon qemu-full qmk quickshell rembg
+  ripgrep rofi-wayland scrcpy steam sublime-text-4 swaybg syncthing tesseract
+  tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd
+  ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd
+  viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools
+  wezterm wlogout wl-clipboard zip zoxide ghostty hyprlauncher openai-codex-bin
+  claude-code wine claude-desktop-bin aylurs-gtk-shell libastal-meta wireplumber
+)
+
+yay -S --needed --noconfirm "${arch_packages[@]}"
+# Installs tools declared in ~/.config/mise/config.toml
+mise install
 
 # Problematic/optional AUR packages. Install manually when needed.
 # yay -S --needed eden-git eh-vial-appimage
