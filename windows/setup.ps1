@@ -14,3 +14,12 @@ ln "$dotfiles\windows\autohotkey"                                   "$config\aut
 ln "$dotfiles\windows\kanata"                                       "$config\kanata"
 ln "$dotfiles\windows\komorebi"                                     "$config\komorebi"
 ln "$dotfiles\windows\PowerShell\Microsoft.PowerShell_profile.ps1"  $PROFILE
+
+# Firefox user.js into every existing profile.
+$ffRoot = "$env:APPDATA\Mozilla\Firefox\Profiles"
+if (Test-Path $ffRoot) {
+    Get-ChildItem $ffRoot -Directory | ForEach-Object {
+        ln "$dotfiles\linux\apps\firefox\user.js" "$($_.FullName)\user.js"
+        ln "$dotfiles\linux\apps\firefox\chrome"  "$($_.FullName)\chrome"
+    }
+}
