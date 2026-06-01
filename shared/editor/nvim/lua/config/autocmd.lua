@@ -21,6 +21,24 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
+  desc = 'Reload buffer when file changes on disk',
+  group = vim.api.nvim_create_augroup('auto_reload_changed_files', { clear = true }),
+  callback = function()
+    if vim.fn.mode() ~= 'c' and vim.fn.bufexists(0) == 1 then
+      vim.cmd('checktime')
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileChangedShellPost', {
+  desc = 'Notify when buffer is reloaded due to external change',
+  group = vim.api.nvim_create_augroup('notify_file_changed', { clear = true }),
+  callback = function()
+    vim.notify('File changed on disk. Buffer reloaded.', vim.log.levels.WARN)
+  end,
+})
+
 if vim.fn.argc() == 1 then
   vim.api.nvim_create_user_command('PatchDir', function()
     vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))

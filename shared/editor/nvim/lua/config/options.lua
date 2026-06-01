@@ -53,6 +53,7 @@ vim.opt.timeout = true
 vim.opt.timeoutlen = 300
 
 -- File handling
+vim.opt.autoread = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false

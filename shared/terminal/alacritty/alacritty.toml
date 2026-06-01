@@ -9,23 +9,58 @@
 
 [general]
 live_config_reload = true
+working_directory = "C:\\"
 
 [terminal.shell]
-program = "C:\\scoop\\shims\\nu.exe"
+program = "pwsh.exe"
+args = ["-NoLogo"]
 
 [font]
-size = 12.0
-normal = { family = "Hack Nerd Font" }
-bold = { family = "Hack Nerd Font" }
-italic = { family = "Hack Nerd Font" }
-bold_italic = { family = "Hack Nerd Font" }
+size = 14.0
+normal = { family = "CaskaydiaCove NFM" }
+bold = { family = "CaskaydiaCove NFM" }
+italic = { family = "CaskaydiaCove NFM" }
+bold_italic = { family = "CaskaydiaCove NFM" }
+
 [window]
 dimensions = { columns = 140, lines = 38 }
 position = { x = 400, y = 220 }
-opacity = 1.0
+opacity = 0.92
 padding = { x = 0, y = 0 }
 decorations = "Full"
 startup_mode = "Windowed"
+
+# VSCode Dark+ color scheme — matches Windows Terminal.
+[colors.primary]
+background = "#1E1E1E"
+foreground = "#CCCCCC"
+
+[colors.cursor]
+cursor = "#AEAFAD"
+
+[colors.selection]
+background = "#264F78"
+text = "CellForeground"
+
+[colors.normal]
+black   = "#000000"
+red     = "#CD3131"
+green   = "#0DBC79"
+yellow  = "#E5E510"
+blue    = "#2472C8"
+magenta = "#BC3FBC"
+cyan    = "#11A8CD"
+white   = "#E5E5E5"
+
+[colors.bright]
+black   = "#666666"
+red     = "#F14C4C"
+green   = "#23D18B"
+yellow  = "#F5F543"
+blue    = "#3B8EEA"
+magenta = "#D670D6"
+cyan    = "#29B8DB"
+white   = "#FFFFFF"
 
 [scrolling]
 history = 10000

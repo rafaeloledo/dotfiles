@@ -1,0 +1,25 @@
+[mgr]
+show_hidden = true
+
+[preview]
+tab_size = 2
+max_width = 1920
+max_height = 1080
+ueberzug_scale = 10
+
+# Windows lacks `file(1)`, so swap the default MIME fetcher for `mime-ext`,
+# which derives the type from the file extension.
+# Install once with: ya pkg add yazi-rs/plugins:mime-ext
+[[plugin.prepend_fetchers]]
+id    = "mime"
+url   = "local://*"
+run   = "mime-ext.local"
+prio  = "high"
+group = "mime"
+
+[[plugin.prepend_fetchers]]
+id    = "mime"
+url   = "remote://*"
+run   = "mime-ext.remote"
+prio  = "high"
+group = "mime"

@@ -1,0 +1,14 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+      "adblockultimate@adblockultimate.net": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/adblocker-ultimate/latest.xpi",
+        "default_area": "navbar",
+        "private_browsing": true
+      }
+    },
+    "ExtensionUpdate": true,
+    "DisableAppUpdate": false
+  }
+}

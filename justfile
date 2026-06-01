@@ -9,10 +9,10 @@ archlinux-link:
 
     for src in \
         linux/desktop/{hypr,quickshell,wofi,rofi,ags,dunst,gtk-3.0} \
-        linux/terminal/{ghostty,alacritty,tmux,wezterm,zellij,yazi,lazygit} \
-        linux/editor/{nvim,sublime-text} \
-        linux/shell/fish \
-        linux/system/environment.d
+        linux/system/environment.d \
+        shared/terminal/{ghostty,alacritty,tmux,wezterm,zellij,yazi,lazygit} \
+        shared/editor/{nvim,sublime-text} \
+        shared/shell/fish
     do
         ln -nfs "{{dots}}/$src" "{{cfg}}/$(basename "$src")"
     done
@@ -28,3 +28,8 @@ archlinux-link:
         ln -nfs "{{dots}}/linux/apps/firefox/user.js" "$ff_profile/user.js"
         ln -nfs "{{dots}}/linux/apps/firefox/chrome"  "$ff_profile/chrome"
     done
+
+# Install Firefox enterprise policy (uBlock Origin auto-install). Needs sudo.
+archlinux-adblocker:
+    sudo mkdir -p /etc/firefox/policies
+    sudo ln -nfs "{{dots}}/linux/apps/firefox/policies.json" /etc/firefox/policies/policies.json

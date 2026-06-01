@@ -2,7 +2,7 @@
 ---- MONITORS ----
 ------------------
 -- hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@144", position = "auto", scale = 1 })
-hl.monitor({ output = "DP-1",     mode = "3840x2160@60", position = "auto", scale = 1.5})
+hl.monitor({ output = "HDMI-A-1",     mode = "3840x2160@60", position = "auto", scale = 1.5})
 
 
 ---------------------
@@ -18,7 +18,7 @@ local menu        = "hyprlauncher"
 -------------------
 hl.on("hyprland.start", function()
     hl.exec_cmd("nm-applet &")
-    hl.exec_cmd("qs &")
+    hl.exec_cmd("waybar &")
 end)
 
 
@@ -125,7 +125,7 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("hyprctl dispatch exit"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
