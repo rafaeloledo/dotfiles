@@ -17,7 +17,8 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		lazy = false,
+		event = { "BufReadPost", "BufNewFile" },
+		cmd = { "TSUpdate", "TSInstall", "TSUpdateSync", "TSInstallInfo" },
 		-- main = "nvim-treesitter.configs",
 		opts = {
 			ensure_installed = ensure_installed,
@@ -32,6 +33,11 @@ return {
 
 	{
 		"stevearc/conform.nvim",
+		event = "BufWritePre",
+		cmd = "ConformInfo",
+		keys = {
+			{ "<leader>f", function() require("conform").format({ async = true, lsp_fallback = true }) end, desc = "Format buffer" },
+		},
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },

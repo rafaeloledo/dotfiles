@@ -3,7 +3,9 @@ vim.opt.relativenumber = false
 vim.opt.mouse = "a"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
-vim.opt.clipboard = "unnamed,unnamedplus"
+vim.schedule(function()
+  vim.opt.clipboard = "unnamed,unnamedplus"
+end)
 vim.opt.undofile = true
 
 vim.opt.ignorecase = true
@@ -22,9 +24,8 @@ vim.o.expandtab = true
 
 -- themes --
 
--- vim.cmd("colorscheme solarized-osaka")
-vim.cmd("colorscheme vscode")
-vim.cmd("TransparentEnable") -- override default transprency from vscode theme
+-- colorscheme is set by the vscode.nvim plugin spec (lua/plugins/theme.lua)
+-- vim.cmd("TransparentEnable") -- override default transprency from vscode theme
 -- vim.cmd("source " .. vim.fn.stdpath("config") .. "/lua/config/wez.vim")
 
 -- Better UI

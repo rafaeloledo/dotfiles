@@ -1,17 +1,18 @@
 return {
-  { "echasnovski/mini.indentscope", opts = {} },
-  { "echasnovski/mini.diff", opts = {} },
-  { "echasnovski/mini.move", opts = {} },
-  { "echasnovski/mini.extra", opts = {} },
-  { "echasnovski/mini.ai", opts = {} },
-  { "echasnovski/mini.pairs", opts = {} },
-  { "echasnovski/mini.icons", opts = {} },
-  { "echasnovski/mini.align", opts = {} },
-  { "echasnovski/mini.misc", opts = {} },
+  { "echasnovski/mini.indentscope", enabled = false, opts = {} },
+  { "echasnovski/mini.diff",  event = "VeryLazy", opts = {} },
+  { "echasnovski/mini.move",  event = "VeryLazy", opts = {} },
+  { "echasnovski/mini.extra", lazy = true, opts = {} },
+  { "echasnovski/mini.ai",    event = "VeryLazy", opts = {} },
+  { "echasnovski/mini.pairs", event = "InsertEnter", opts = {} },
+  { "echasnovski/mini.icons", lazy = true, opts = {} },
+  { "echasnovski/mini.align", event = "VeryLazy", opts = {} },
+  { "echasnovski/mini.misc",  lazy = true, opts = {} },
 
   -- alternative for lualine
   {
     "echasnovski/mini.statusline",
+    -- enabled = false,
     opts = {},
     config = function()
       require('mini.statusline').setup({
@@ -19,11 +20,12 @@ return {
           active = function()
             local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 1000 })
 
-            -- Custom fugitive function
+            -- Custom fugitive function (guarded so statusline doesn't autoload fugitive)
             local fugitive = function()
+              if vim.fn.exists('*FugitiveHead') ~= 1 then return '' end
               local head = vim.fn.FugitiveHead()
               if head and head ~= '' then
-                return ' ' .. head
+                return ' ' .. head
               else
                 return ''
               end
@@ -55,22 +57,22 @@ return {
   },
 
   -- `gcc` to toggle line comment
-	{ "echasnovski/mini.comment", opts = {} },
+  { "echasnovski/mini.comment", event = "VeryLazy", opts = {} },
 
   -- with this you can type `fe` and then press `f` to jump to next ocurrencies
-	{ "echasnovski/mini.jump", opts = {} },
+  { "echasnovski/mini.jump", event = "VeryLazy", opts = {} },
 
-  -- the goat
-	{
-		"echasnovski/mini.nvim",
-		config = function()
-			local hipatterns = require("mini.hipatterns")
-
-			hipatterns.setup({
-				highlighters = {
-					hex_color = hipatterns.gen_highlighter.hex_color(),
-				},
-			})
-		end,
-	},
+  -- just hipatterns (replaces the full mini.nvim monolith)
+  {
+    "echasnovski/mini.hipatterns",
+    event = "BufReadPost",
+    config = function()
+      local hipatterns = require("mini.hipatterns")
+      hipatterns.setup({
+        highlighters = {
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      })
+    end,
+  },
 }
