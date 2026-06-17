@@ -54,6 +54,7 @@ dconf write /org/virt-manager/virt-manager/connections/uris "['qemu:///system']"
 
 dconf write /org/gnome/desktop/input-sources/sources "[('xkb', 'us'), ('xkb', 'br')]"
 gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
+gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
 
 dconf write /org/gnome/desktop/wm/preferences/button-layout "'appmenu:minimize,maximize,close'"
 
@@ -77,3 +78,9 @@ dconf write /org/gnome/desktop/wm/keybindings/switch-windows "['']"
 dconf write /org/gnome/desktop/wm/keybindings/switch-windows-backward "['']"
 
 gsettings set org.gnome.mutter check-alive-timeout '0'
+
+gsettings set org.gnome.desktop.interface clock-show-date false
+gsettings set org.gnome.desktop.interface clock-show-weekday false
+gsettings set org.gnome.desktop.interface clock-show-seconds false
+
+gsettings set org.gnome.desktop.peripherals.mouse speed -0.2

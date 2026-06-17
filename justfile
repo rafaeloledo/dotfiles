@@ -8,7 +8,7 @@ archlinux-link:
     set -eu
 
     for src in \
-        linux/desktop/{hypr,quickshell,wofi,rofi,ags,dunst,gtk-3.0} \
+        linux/desktop/{hypr,wofi,rofi,waybar,ags,dunst,gtk-3.0} \
         linux/system/environment.d \
         shared/terminal/{ghostty,alacritty,tmux,wezterm,zellij,yazi,lazygit} \
         shared/editor/{nvim,sublime-text} \
@@ -22,7 +22,7 @@ archlinux-link:
     ln -nfs "{{dots}}/linux/wallpapers"     "{{home}}/wallpapers"
     ln -nfs "{{dots}}/.gitconfig"           "{{home}}/.gitconfig"
 
-    # Firefox user.js + userChrome.css into every existing profile.
+    # Setup firefox profile prebuilt in a strange way
     for ff_profile in "{{home}}"/.config/mozilla/firefox/*.default* "{{home}}"/.mozilla/firefox/*.default*; do
         [ -d "$ff_profile" ] || continue
         ln -nfs "{{dots}}/linux/apps/firefox/user.js" "$ff_profile/user.js"

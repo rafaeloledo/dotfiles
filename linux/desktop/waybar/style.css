@@ -46,9 +46,9 @@ window#waybar {
     color:            @fg0;
 }
 
-/* prevents GTK from adding its own background on transparency */
+/* SIGUSR1: upstream default is 0.2, which does not actually hide the bar */
 window#waybar.hidden {
-    opacity: 0.2;
+    opacity: 0;
 }
 
 /* ── Common module defaults ─────────────────────────────────────────── */

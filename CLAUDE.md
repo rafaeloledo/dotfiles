@@ -5,7 +5,7 @@ Cross-platform dotfiles for Linux (Arch + Hyprland) and Windows.
 ## Layout
 
 - `shared/` — configs used on both Linux and Windows (nvim, fish, tmux, yazi, lazygit, alacritty, etc.).
-- `linux/` — Linux-only: Hyprland, quickshell, wofi, rofi, dunst, GTK, system scripts, Firefox.
+- `linux/` — Linux-only: Hyprland, wofi, rofi, dunst, GTK, system scripts, Firefox.
 - `windows/` — Windows-only: PowerShell profile, kanata, komorebi, autohotkey, Windows Terminal, setup script.
 
 ## Symlinking

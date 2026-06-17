@@ -19,6 +19,7 @@ if not vim.g.vscode then
   return {
     {
       "saghen/blink.cmp",
+      enabled = false,
       dependencies = {
         "rafamadriz/friendly-snippets",
         { "fang2hou/blink-copilot", opts = {} },

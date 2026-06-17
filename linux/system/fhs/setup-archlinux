@@ -3,20 +3,113 @@
 set -euo pipefail
 
 arch_packages=(
-  android-file-transfer android-studio ani-cli antimicrox arduino-ide-bin
-  arm-none-eabi-gcc aws-cli bat bc blender brave-bin discord distrobox docker
-  dunst eza fastfetch firefox fish flatpak fzf gimp github-cli gparted graphviz
-  grim hyprcursor hyprland hyprpaper hyprpicker hyprshot inkscape jq keyd
-  lazygit less libvirt lutris mako mariadb mission-center mise mtpfs nautilus
-  ncdu neovide neovim nix nodejs-ngrok noto-fonts noto-fonts-cjk noto-fonts-emoji
-  noto-fonts-extra obs-studio pamixer pandoc-cli papirus-icon-theme patch pavucontrol
-  pkgconf plantuml playerctl power-profiles-daemon qemu-full qmk quickshell rembg
-  ripgrep rofi-wayland scrcpy steam sublime-text-4 swaybg syncthing tesseract
-  tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd
-  ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd
-  viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools
-  wezterm wlogout wl-clipboard zip zoxide ghostty hyprlauncher openai-codex-bin
-  claude-code wine claude-desktop-bin aylurs-gtk-shell libastal-meta wireplumber
+  android-file-transfer
+  android-studio
+  ani-cli
+  antimicrox
+  arduino-ide-bin
+  arm-none-eabi-gcc
+  aws-cli
+  bat
+  bc
+  blender
+  brave-bin
+  discord
+  distrobox
+  docker
+  dunst
+  eza
+  fastfetch
+  firefox
+  fish
+  flatpak
+  fzf
+  gimp
+  github-cli
+  gparted
+  graphviz
+  grim
+  hyprcursor
+  hyprland
+  hyprpaper
+  hyprpicker
+  hyprshot
+  inkscape
+  jq
+  keyd
+  lazygit
+  less
+  libvirt
+  lutris
+  mako
+  mariadb
+  mission-center
+  mise
+  mtpfs
+  nautilus
+  ncdu
+  neovide
+  neovim
+  nix
+  nodejs-ngrok
+  noto-fonts
+  noto-fonts-cjk
+  noto-fonts-emoji
+  noto-fonts-extra
+  obs-studio
+  pamixer
+  pandoc-cli
+  papirus-icon-theme
+  patch
+  pavucontrol
+  pkgconf
+  plantuml
+  playerctl
+  power-profiles-daemon
+  qemu-full
+  qmk
+  ripgrep
+  rofi-wayland
+  scrcpy
+  sublime-text-4
+  swaybg
+  syncthing
+  tesseract
+  tesseract-data-eng
+  tesseract-data-por
+  ttf-firacode-nerd
+  ttf-hack-nerd
+  ttf-jetbrains-mono-nerd
+  ttf-roboto-mono
+  ttf-roboto-mono-nerd
+  ttf-ubuntu-nerd
+  viewnior
+  virt-manager
+  visual-studio-code-bin
+  vlc
+  vlc-plugins-all
+  vulkan-icd-loader
+  vulkan-tools
+  wezterm
+  wlogout
+  wl-clipboard
+  zip
+  zoxide
+  ghostty
+  hyprlauncher
+  openai-codex-bin
+  claude-code
+  wine
+  wireplumber
+  apollo-git
+  herdr-bin
+  ddcutil
+  bluez
+  bluez-utils
+  pipewire-pulse
+  wireplumber
+  pipewire-alsa
+  alsa-utils
 )
 
 yay -S --needed --noconfirm "${arch_packages[@]}"
@@ -28,7 +121,6 @@ mise install
 
 sudo systemctl enable keyd --now
 
-yay -S bluez bluez-utils pipewire-pulse wireplumber --needed
 sudo systemctl enable bluetooth --now
 
 sudo systemctl enable docker --now
@@ -43,3 +135,7 @@ flatpak install -y flathub com.github.wwmm.easyeffects
 
 sudo nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 sudo nix-channel --update
+
+systemctl enable --user apollo.service --now
+
+sudo modpobre i2c-dev # for monitor
