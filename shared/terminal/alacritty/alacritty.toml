@@ -16,7 +16,7 @@ program = "pwsh.exe"
 args = ["-NoLogo"]
 
 [font]
-size = 14.0
+size = 24
 normal = { family = "CaskaydiaCove NFM" }
 bold = { family = "CaskaydiaCove NFM" }
 italic = { family = "CaskaydiaCove NFM" }

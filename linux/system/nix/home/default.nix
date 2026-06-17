@@ -2,15 +2,17 @@
 
 let
   dotfiles = [
-    "linux/terminal/wezterm"
+    "shared/terminal/wezterm"
     "linux/desktop/dunst"
-    "linux/shell/fish"
+    "shared/shell/fish"
     "linux/desktop/hypr"
+    "linux/desktop/waybar"
     "linux/desktop/rofi"
-    "linux/terminal/tmux"
-    "linux/terminal/yazi"
-    "linux/terminal/ghostty"
-    "linux/terminal/lazygit"
+    "shared/terminal/tmux"
+    "shared/terminal/yazi"
+    "shared/terminal/ghostty"
+    "shared/terminal/lazygit"
+    "shared/editor/nvim"
   ];
 
   inherit (config.lib.file) mkOutOfStoreSymlink;
@@ -28,10 +30,6 @@ in
     ./terminal.nix
    ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1w"
-  ];
-
   home = {
     username = "rgnh55";
     homeDirectory = "/home/rgnh55";
@@ -43,9 +41,7 @@ in
     value = {
       source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/${name}";
     };
-  }) dotfiles)) // {
-    ".config/nvim".source = mkOutOfStoreSymlink "/home/rgnh55/dotfiles/linux/editor/nvim";
-  };
+  }) dotfiles));
 
   manual = {
     html.enable = false;

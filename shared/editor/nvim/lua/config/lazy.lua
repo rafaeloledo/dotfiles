@@ -23,6 +23,23 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "man",          -- irrelevant on Windows
+        "matchit",
+        "netrw",
+        "netrwPlugin",  -- you use oil.nvim
+        "tarPlugin",
+        "tutor",
+        "zipPlugin",
+        "spellfile",
+        "editorconfig", -- only if you don't use .editorconfig files
+        "rplugin",      -- only if you have no remote (Python/Ruby) plugins
+      },
+    },
+  },
   checker = { enabled = false },
   change_detection = { enabled = false },
 })

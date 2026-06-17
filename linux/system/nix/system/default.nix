@@ -29,8 +29,6 @@
   hardware.graphics.enable32Bit = true;
   systemd.enableEmergencyMode = false;
 
-  programs.adb.enable = true;
-
   users.defaultUserShell = pkgs.bash;
   users.users.rgnh55 = {
     isNormalUser = true;
@@ -128,26 +126,50 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
 
-  networking.firewall.allowedTCPPorts = [
-    22
-    80
+  networking.firewall = {
+    enable = true;
+    allowedUDPPorts = [
+      53
+      67
+      68
+      123
+      51820
 
-    5432
-    5173
+      47998
+      47999
+      48000
+      48002
+      48010
+      
+    ];
+    
+    allowedTCPPorts = [
+      22
+      80
 
-    3000
+      5432
+      5173
 
-    8000
-    8080
-    8081
-    8082
-    8096
+      3000
 
-    5000
-    5001
-  ];
+      8000
+      8080
+      8081
+      8082
+      8096
+
+      5000
+      5001
+
+      47984
+      47989
+      47990
+      48010
+    ];
+  };
 
   programs.mtr.enable = true;
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -164,9 +186,9 @@
     roboto-mono
     noto-fonts-cjk-sans
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     noto-fonts-cjk-serif
-    ubuntu_font_family
+    ubuntu-classic
     nerd-fonts.jetbrains-mono
     fira-code
     nerd-fonts.hack

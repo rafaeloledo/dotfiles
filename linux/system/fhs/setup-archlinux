@@ -10,13 +10,13 @@ arch_packages=(
   lazygit less libvirt lutris mako mariadb mission-center mise mtpfs nautilus
   ncdu neovide neovim nix nodejs-ngrok noto-fonts noto-fonts-cjk noto-fonts-emoji
   noto-fonts-extra obs-studio pamixer pandoc-cli papirus-icon-theme patch pavucontrol
-  pkgconf plantuml playerctl power-profiles-daemon qemu-full qmk quickshell rembg
-  ripgrep rofi-wayland scrcpy steam sublime-text-4 swaybg syncthing tesseract
+  pkgconf plantuml playerctl power-profiles-daemon qemu-full qmk quickshell ripgrep rofi-wayland
+  scrcpy sublime-text-4 swaybg syncthing tesseract
   tesseract-data-eng tesseract-data-por ttf-firacode-nerd ttf-hack-nerd
   ttf-jetbrains-mono-nerd ttf-roboto-mono ttf-roboto-mono-nerd ttf-ubuntu-nerd
   viewnior virt-manager visual-studio-code-bin vlc vulkan-icd-loader vulkan-tools
   wezterm wlogout wl-clipboard zip zoxide ghostty hyprlauncher openai-codex-bin
-  claude-code wine claude-desktop-bin aylurs-gtk-shell libastal-meta wireplumber
+  claude-code wine aylurs-gtk-shell libastal-meta wireplumber
 )
 
 yay -S --needed --noconfirm "${arch_packages[@]}"

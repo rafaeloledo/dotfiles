@@ -5,7 +5,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-    "keybindings":
+    "keybindings": 
     [
         {
             "id": "Terminal.CopyToClipboard",
@@ -24,23 +24,23 @@
             "keys": "alt+shift+d"
         }
     ],
-    "newTabMenu":
+    "newTabMenu": 
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles":
+    "profiles": 
     {
-        "defaults":
+        "defaults": 
         {
             "colorScheme": "VSCode Dark+",
-            "font":
+            "font": 
             {
                 "face": "CaskaydiaCove NFM"
             }
         },
-        "list":
+        "list": 
         [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -77,33 +77,51 @@
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "guid": "{846f7506-b835-5314-9e00-fa7c01cb3e52}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{371ceee9-1306-5639-b4af-2c3277ebec9c}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{63b6b3d9-bed0-5108-a0a6-1a0c5577348c}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
             }
         ]
     },
-    "schemes":
+    "schemes": 
     [
         {
-            "name": "VSCode Dark+",
             "background": "#1E1E1E",
-            "foreground": "#CCCCCC",
-            "cursorColor": "#AEAFAD",
-            "selectionBackground": "#264F78",
             "black": "#000000",
-            "red": "#CD3131",
-            "green": "#0DBC79",
-            "yellow": "#E5E510",
             "blue": "#2472C8",
-            "purple": "#BC3FBC",
-            "cyan": "#11A8CD",
-            "white": "#E5E5E5",
             "brightBlack": "#666666",
-            "brightRed": "#F14C4C",
-            "brightGreen": "#23D18B",
-            "brightYellow": "#F5F543",
             "brightBlue": "#3B8EEA",
-            "brightPurple": "#D670D6",
             "brightCyan": "#29B8DB",
-            "brightWhite": "#FFFFFF"
+            "brightGreen": "#23D18B",
+            "brightPurple": "#D670D6",
+            "brightRed": "#F14C4C",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#F5F543",
+            "cursorColor": "#AEAFAD",
+            "cyan": "#11A8CD",
+            "foreground": "#CCCCCC",
+            "green": "#0DBC79",
+            "name": "VSCode Dark+",
+            "purple": "#BC3FBC",
+            "red": "#CD3131",
+            "selectionBackground": "#264F78",
+            "white": "#E5E5E5",
+            "yellow": "#E5E510"
         }
     ],
     "themes": []

@@ -24,7 +24,6 @@
     interception-tools
     hyprpolkitagent
     deskreen
-    windsurf
     blender
     hyprcursor
     wezterm
@@ -62,27 +61,31 @@
     pkgs.xorg.libXrender # why?
     dunst # just dunst
     rofi # rofi
-    imagemagick # dep
-    hyprshot # why?
-    viewnior # lightweight image viewer
-    ani-cli # animes
-    sublime4 # quick annotation editor
-    vial # keyboard
-    bc # calculator for VIM
-    ddcutil # change external monitor brightness
+    imagemagick   # dep
+    hyprshot      # why?
+    viewnior      # lightweight image viewer
+    ani-cli       # animes
+    vial          # keyboard
+    bc            # calculator for VIM
+    ddcutil       # change external monitor brightness
     google-chrome
     brave
-    qmk # keyboard
-    distrobox # emulate other linux distros withtout leaving NixOS
-    rembg # rem bg of images made with py
-    vulkan-tools # graphics
+    qmk           # keyboard
+    distrobox     # emulate other linux distros withtout leaving NixOS
+    rembg         # rem bg of images made with py
+    vulkan-tools  # graphics
     vulkan-loader # graphics
-    tesseract # image to text
-    pandoc # latex
-    texliveFull # latex
-    dconf-editor # gnome system gui manager
-
-
+    tesseract     # image to text
+    pandoc        # latex
+    texliveFull   # latex
+    dconf-editor  # gnome system gui manager
+    waybar
+    spotify
+    hyprlauncher
+    opencode
+    teamviewer
+    rofi
+    
     # svelte-language-server
     # clang-tools
     # jdt-language-server

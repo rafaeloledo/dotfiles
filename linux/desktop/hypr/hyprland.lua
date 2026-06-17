@@ -1,37 +1,18 @@
-------------------
----- MONITORS ----
-------------------
--- hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@144", position = "auto", scale = 1 })
-hl.monitor({ output = "HDMI-A-1",     mode = "3840x2160@60", position = "auto", scale = 1.5})
+-- hl.monitor({ output = "HDMI-A-2", mode = "1920x1080@144", position = "auto",  scale = 1   })
+hl.monitor({ output = "DP-1",     mode = "3840x2160@60",  position = "auto",  scale = 1.5 })
 
-
----------------------
----- MY PROGRAMS ----
----------------------
 local terminal    = "ghostty"
 local fileManager = "nautilus"
-local menu        = "hyprlauncher"
+local menu        = "rofi -show run"
 
-
--------------------
----- AUTOSTART ----
--------------------
 hl.on("hyprland.start", function()
     hl.exec_cmd("nm-applet &")
     hl.exec_cmd("waybar &")
 end)
 
-
--------------------------------
----- ENVIRONMENT VARIABLES ----
--------------------------------
 hl.env("XCURSOR_SIZE",    "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
-
------------------------
----- LOOK AND FEEL ----
------------------------
 hl.config({
     general = {
         gaps_in     = 4,
@@ -87,7 +68,6 @@ hl.config({
     },
 })
 
--- Animation curves
 hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1} } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1} } })
 hl.curve("linear",         { type = "bezier", points = { {0, 0},       {1, 1}   } })
@@ -113,54 +93,42 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "a
 hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "quick" })
 
 
-----------------
----- INPUT  ----
-----------------
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
----------------------
----- KEYBINDINGS ----
----------------------
-local mainMod = "SUPER"
-
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("hyprctl dispatch exit"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
+hl.bind("SUPER + Q", hl.dsp.exec_cmd(terminal))
+hl.bind("SUPER + C", hl.dsp.window.close())
+hl.bind("SUPER + M", hl.dsp.exit())
+hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
+hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
+hl.bind("SUPER + P", hl.dsp.window.pseudo())
+hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 
 -- Dotfiles binds
 hl.bind("PRINT",                      hl.dsp.exec_cmd("grim - | wl-copy"))
-hl.bind(mainMod .. " + A",            hl.dsp.exec_cmd("ani-cli --rofi --vlc"))
-hl.bind(mainMod .. " + SHIFT + A",    hl.dsp.exec_cmd("pavucontrol"))
-hl.bind(mainMod .. " + B",            hl.dsp.exec_cmd("firefox"))
-hl.bind(mainMod .. " + O",            hl.dsp.exec_cmd("~/.local/scripts/extract_text"))
-hl.bind(mainMod .. " + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
-hl.bind(mainMod .. " + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Downloads/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
-hl.bind(mainMod .. " + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
-hl.bind(mainMod .. " + W",            hl.dsp.exec_cmd("killall waybar || waybar"))
-hl.bind(mainMod .. " + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
-hl.bind(mainMod .. " + bracketleft",  hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
-hl.bind(mainMod .. " + page_up",      hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
-hl.bind(mainMod .. " + page_down",    hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
-hl.bind(mainMod .. " + F",            hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + D",            hl.dsp.window.float({ action = "toggle" }))
+hl.bind("SUPER + A",            hl.dsp.exec_cmd("ani-cli --rofi --vlc"))
+hl.bind("SUPER + SHIFT + A",    hl.dsp.exec_cmd("pavucontrol"))
+hl.bind("SUPER + B",            hl.dsp.exec_cmd("google-chrome"))
+hl.bind("SUPER + O",            hl.dsp.exec_cmd("~/.local/scripts/extract_text"))
+hl.bind("SUPER + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
+hl.bind("SUPER + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Downloads/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
+hl.bind("SUPER + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
+hl.bind("SUPER + W",            hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
+hl.bind("SUPER + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
+hl.bind("SUPER + bracketleft",  hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
+hl.bind("SUPER + page_up",      hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
+hl.bind("SUPER + page_down",    hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
+hl.bind("SUPER + F",            hl.dsp.window.fullscreen())
+hl.bind("SUPER + D",            hl.dsp.window.float({ action = "toggle" }))
 -- hl.bind(mainMod .. " + G",            hl.dsp.window.toggle_group())
 -- hl.bind(mainMod .. " + Tab",          hl.dsp.cycle_next())
 -- hl.bind(mainMod .. " + SHIFT + Tab",  hl.dsp.change_group_active("b"))
 
--- Focus
-hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
-hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
+hl.bind("SUPER + H", hl.dsp.focus({ direction = "left" }))
+hl.bind("SUPER + J", hl.dsp.focus({ direction = "down" }))
+hl.bind("SUPER + K", hl.dsp.focus({ direction = "up" }))
+hl.bind("SUPER + L", hl.dsp.focus({ direction = "right" }))
 
--------------------
----- WORKSPACES ---
--------------------
 for i = 6, 10 do
     hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
 end
@@ -171,19 +139,18 @@ end
 
 for i = 1, 10 do
     local key = i % 10
-    hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind("SUPER + " .. key,         hl.dsp.focus({ workspace = i }))
+    hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
-hl.bind(mainMod .. " + S",          hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind("SUPER + S",          hl.dsp.workspace.toggle_special("magic"))
+hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind("SUPER + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
 
-hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind("ALT + C",                 hl.dsp.window.resize(), { mouse = true })
 
--- Multimedia
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer --increase 5 --set-limit 100"),   { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer --decrease 5"),                   { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer --toggle-mute"),                  { locked = true, repeating = true })
@@ -196,11 +163,6 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
-
---------------------------------
----- WINDOWS AND -------------------
----- WORKSPACES ---
--------------------
 for i = 6, 10 do
     hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
 end

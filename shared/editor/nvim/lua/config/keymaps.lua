@@ -26,3 +26,5 @@ set("n", "<S-l>", "<cmd>bn<CR>")
 set("n", "<S-h>", "<cmd>bp<CR>")
 set("n", "<leader>bd", "<cmd>bd<CR>")
 set("t", "<M-q>", "<C-\\><C-n>")
+
+set("n", "<C-p>", "<cmd>lua require('mini.files').open()<CR>")

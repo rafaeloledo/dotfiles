@@ -1,6 +1,7 @@
 return {
 	{
 		"rhart92/codex.nvim",
+    enabled = false,
 		opts = {
 			split = "float",
 			float = {

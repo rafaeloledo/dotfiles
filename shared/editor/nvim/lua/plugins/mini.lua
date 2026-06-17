@@ -8,6 +8,7 @@ return {
   { "echasnovski/mini.icons", lazy = true, opts = {} },
   { "echasnovski/mini.align", event = "VeryLazy", opts = {} },
   { "echasnovski/mini.misc",  lazy = true, opts = {} },
+  { "echasnovski/mini.files",  lazy = true, opts = {} },
 
   -- alternative for lualine
   {
