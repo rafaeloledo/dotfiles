@@ -10,6 +10,9 @@
     hyprpicker
     wlogout
     hyprpaper
+    hypridle
+    hyprlock
+    brightnessctl
 
     mako
   ];

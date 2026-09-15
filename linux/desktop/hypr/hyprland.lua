@@ -5,11 +5,19 @@ local terminal    = "ghostty"
 local fileManager = "nautilus"
 local menu        = "rofi -show run"
 
+local function ensure_hypridle()
+    hl.exec_cmd("pidof hypridle >/dev/null || hypridle")
+end
+
 hl.on("hyprland.start", function()
-    -- hl.exec_cmd("nm-applet &")
-    hl.exec_cmd("waybar &")
-    hl.exec_cmd("apollo &")
+    -- hl.exec_cmd("nm-applet")
+    hl.exec_cmd("waybar")
+    hl.exec_cmd("apollo")
+    ensure_hypridle()
 end)
+
+-- hyprland.start only fires once; restart hypridle if it died or was never started
+hl.on("config.reloaded", ensure_hypridle)
 
 hl.env("XCURSOR_SIZE",    "24")
 hl.env("HYPRCURSOR_SIZE", "24")
@@ -55,6 +63,8 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,
         disable_hyprland_logo   = false,
+        key_press_enables_dpms  = true,
+        mouse_move_enables_dpms = true,
     },
 
     input = {
@@ -123,6 +133,7 @@ hl.bind("SUPER + H", hl.dsp.focus({ direction = "left" }))
 hl.bind("SUPER + J", hl.dsp.focus({ direction = "down" }))
 hl.bind("SUPER + K", hl.dsp.focus({ direction = "up" }))
 hl.bind("SUPER + L", hl.dsp.focus({ direction = "right" }))
+hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("~/.local/scripts/lock-screen"))
 
 hl.bind("PRINT",                      hl.dsp.exec_cmd("grim - | wl-copy"))
 
@@ -152,8 +163,8 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer --increase 5 --set-limi
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer --decrease 5"),                   { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer --toggle-mute"),                  { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pamixer --default-source --toggle-mute"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),          { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),          { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("~/.local/scripts/monitor-brightness up"),   { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("~/.local/scripts/monitor-brightness down"), { locked = true, repeating = true })
 
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })

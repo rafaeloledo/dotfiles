@@ -52,8 +52,7 @@
     // ── Center ────────────────────────────────────────────────────────
 
     "clock": {
-        "format": "{:%H · %M · %S}",
-        "format-alt": "{:%Y-%m-%d   %H:%M:%S}",
+        "format": "{:%A   %Y-%m-%d   %H · %M · %S}",
         "interval": 1,
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -72,12 +71,11 @@
 
     "network": {
         "interval": 5,
-        "format-wifi":       "󰤨  {essid}",
-        "format-ethernet":   "󰈀  {ifname}",
+        "format-wifi":        "󰤨  {essid}",
+        "format-ethernet":    "",
         "format-disconnected":"󰤭  offline",
-        "format-linked":     "󰈀  {ifname} (no IP)",
-        "tooltip-format-wifi":    "SSID: {essid}\nSignal: {signalStrength}%\n{ipaddr}  ↑{bandwidthUpBytes}  ↓{bandwidthDownBytes}",
-        "tooltip-format-ethernet":"{ifname}\n{ipaddr}\n↑{bandwidthUpBytes}  ↓{bandwidthDownBytes}",
+        "format-linked":      "",
+        "tooltip-format-wifi":"SSID: {essid}\nSignal: {signalStrength}%\n{ipaddr}  ↑{bandwidthUpBytes}  ↓{bandwidthDownBytes}",
         "on-click": "nm-connection-editor"
     },
 

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+state="${XDG_RUNTIME_DIR:-/tmp}/monitor-brightness"
+
+current() {
+    ddcutil getvcp 10 --brief | awk '{print $4}'
+}
+
+case "${1:-}" in
+dim)
+    [ -f "$state" ] || current > "$state"
+    ddcutil setvcp 10 10
+    ;;
+restore)
+    if [ -f "$state" ]; then
+        ddcutil setvcp 10 "$(cat "$state")"
+        rm -f "$state"
+    fi
+    ;;
+up)
+    ddcutil setvcp 10 + 5
+    ;;
+down)
+    ddcutil setvcp 10 - 5
+    ;;
+*)
+    echo "usage: $0 {dim|restore|up|down}" >&2
+    exit 1
+    ;;
+esac

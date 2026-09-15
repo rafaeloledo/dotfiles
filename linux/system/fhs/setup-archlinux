@@ -12,6 +12,7 @@ arch_packages=(
   aws-cli
   bat
   bc
+  brightnessctl
   blender
   brave-bin
   discord
@@ -30,7 +31,9 @@ arch_packages=(
   graphviz
   grim
   hyprcursor
+  hypridle
   hyprland
+  hyprlock
   hyprpaper
   hyprpicker
   hyprshot
