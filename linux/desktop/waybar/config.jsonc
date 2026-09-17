@@ -6,7 +6,7 @@
     "exclusive": true,
 
     "modules-left": [
-        "hyprland/workspaces",
+        "ext/workspaces",
         "custom/sep",
         "hyprland/window"
     ],
@@ -27,10 +27,10 @@
 
     // ── Left ──────────────────────────────────────────────────────────
 
-    "hyprland/workspaces": {
-        "format": "{id}",
+    "ext/workspaces": {
+        "format": "{name}",
         "on-click": "activate",
-        "sort-by-number": true,
+        "sort-by-name": true,
         "active-only": false,
         "all-outputs": false
     },

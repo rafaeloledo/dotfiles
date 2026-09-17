@@ -1,23 +1,15 @@
--- hl.monitor({ output = "DP-1",     mode = "3840x2160@60",  position = "auto",  scale = 1.5 })
-hl.monitor({ output = "DP-1",     mode = "2560x1440@60",  position = "auto",  scale = 1 })
+hl.monitor({ output = "DP-1",     mode = "3840x2160@60",  position = "auto",  scale = 1.5 })
 
 local terminal    = "ghostty"
 local fileManager = "nautilus"
 local menu        = "rofi -show run"
 
-local function ensure_hypridle()
-    hl.exec_cmd("pidof hypridle >/dev/null || hypridle")
-end
-
 hl.on("hyprland.start", function()
-    -- hl.exec_cmd("nm-applet")
     hl.exec_cmd("waybar")
     hl.exec_cmd("apollo")
-    ensure_hypridle()
+    hl.exec_cmd("hypridle")
+    hl.exec_cmd("systemctl --user restart xdg-desktop-portal-hyprland xdg-desktop-portal")
 end)
-
--- hyprland.start only fires once; restart hypridle if it died or was never started
-hl.on("config.reloaded", ensure_hypridle)
 
 hl.env("XCURSOR_SIZE",    "24")
 hl.env("HYPRCURSOR_SIZE", "24")
@@ -77,6 +69,10 @@ hl.config({
         sensitivity  = -0.7,
         touchpad     = { natural_scroll = false },
     },
+
+    xwayland = {
+        force_zero_scaling = true,
+    },
 })
 
 hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1} } })
@@ -123,6 +119,7 @@ hl.bind("SUPER + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidia
 hl.bind("SUPER + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Downloads/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
 hl.bind("SUPER + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
 hl.bind("SUPER + W",            hl.dsp.exec_cmd("killall -SIGUSR1 waybar || waybar"))
+hl.bind("SUPER + tab",           hl.dsp.focus({ workspace = "previous" }))
 hl.bind("SUPER + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
 hl.bind("SUPER + bracketleft",  hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
 hl.bind("SUPER + page_up",      hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
