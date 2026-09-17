@@ -15,13 +15,11 @@
     ],
     "modules-right": [
         "network",
-        "custom/sep",
         "cpu",
         "memory",
-        "custom/sep",
         "pulseaudio",
+        "custom/brightness",
         "battery",
-        "custom/sep",
         "tray"
     ],
 
@@ -102,6 +100,20 @@
         "scroll-step": 2,
         "on-click": "ags toggle volume-popup",
         "tooltip-format": "{desc}\n{volume}%"
+    },
+
+    "custom/brightness": {
+        "exec": "ddc-slider waybar",
+        "return-type": "json",
+        "interval": "once",
+        "signal": 10,
+        "exec-on-event": false,
+        "cursor": true,
+        "format": "{text}",
+        "on-click": "sh -c 'ddc-slider popup >/dev/null 2>&1 &'",
+        "on-scroll-up": "ddc-slider up",
+        "on-scroll-down": "ddc-slider down",
+        "tooltip": true
     },
 
     "battery": {

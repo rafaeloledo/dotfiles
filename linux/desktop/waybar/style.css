@@ -59,6 +59,10 @@ window#waybar.hidden {
     margin: 0;
 }
 
+.modules-right {
+    padding: 0 6px 0 0;
+}
+
 /* ── Workspaces ─────────────────────────────────────────────────────── */
 
 #workspaces {
@@ -128,9 +132,10 @@ window#waybar.hidden {
 #cpu,
 #memory,
 #pulseaudio,
+#custom-brightness,
 #battery,
 #tray {
-    padding:    0 13px;
+    padding:    0 6px;
     color:      @fg0;
     transition: all 150ms ease;
 }
@@ -139,6 +144,7 @@ window#waybar.hidden {
 #cpu:hover,
 #memory:hover,
 #pulseaudio:hover,
+#custom-brightness:hover,
 #battery:hover {
     color:      @cyan;
     background: rgba(79, 200, 200, 0.05);
@@ -161,6 +167,10 @@ window#waybar.hidden {
 /* ── Audio ──────────────────────────────────────────────────────────── */
 
 #pulseaudio.muted {
+    color: @fg1;
+}
+
+#custom-brightness.unavailable {
     color: @fg1;
 }
 
@@ -190,10 +200,6 @@ window#waybar.hidden {
 }
 
 /* ── Tray ───────────────────────────────────────────────────────────── */
-
-#tray {
-    padding-right: 10px;
-}
 
 #tray > .passive {
     -gtk-icon-effect: dim;

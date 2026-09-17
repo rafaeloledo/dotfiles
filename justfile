@@ -29,6 +29,10 @@ archlinux-link:
         ln -nfs "{{dots}}/linux/apps/firefox/chrome"  "$ff_profile/chrome"
     done
 
+# Build and install the Waybar DDC/CI brightness applet.
+ddc-slider-install:
+    cargo install --path "{{dots}}/linux/desktop/waybar/ddc-slider" --force
+
 # Install Firefox enterprise policy (uBlock Origin auto-install). Needs sudo.
 archlinux-adblocker:
     sudo mkdir -p /etc/firefox/policies

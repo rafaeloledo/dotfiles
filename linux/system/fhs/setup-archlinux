@@ -107,6 +107,7 @@ arch_packages=(
   apollo-git
   herdr-bin
   ddcutil
+  gtk4-layer-shell
   bluez
   bluez-utils
   pipewire-pulse
@@ -142,3 +143,4 @@ sudo nix-channel --update
 systemctl enable --user apollo.service --now
 
 sudo modpobre i2c-dev # for monitor
+sudo usermod -aG i2c rgnh55

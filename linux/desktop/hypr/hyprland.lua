@@ -5,7 +5,7 @@ local fileManager = "nautilus"
 local menu        = "rofi -show run"
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar")
+    hl.exec_cmd("killall ddc-slider 2>/dev/null; killall waybar 2>/dev/null; waybar")
     hl.exec_cmd("apollo")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user restart xdg-desktop-portal-hyprland xdg-desktop-portal")
