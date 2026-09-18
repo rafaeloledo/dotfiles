@@ -21,7 +21,10 @@ def get_all_workspaces():
     return workspaces
 
 def switch_to_workspace(workspace_id):
-    subprocess.run(['hyprctl', 'dispatch', 'workspace', str(workspace_id)])
+    subprocess.run(
+        ['hyprctl', 'dispatch', f'hl.dsp.focus({{ workspace = "{workspace_id}" }})'],
+        check=False,
+    )
 
 def main():
     current_workspace = get_current_workspace()

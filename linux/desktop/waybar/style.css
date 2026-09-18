@@ -63,10 +63,35 @@ window#waybar.hidden {
     padding: 0 6px 0 0;
 }
 
+/* ── Workspace utilities ────────────────────────────────────────────── */
+
+#custom-ws-prev,
+#custom-ws-next,
+#custom-close {
+    padding:         0 8px;
+    background:      transparent;
+    color:           @fg1;
+    border-bottom:   2px solid transparent;
+    transition:      all 150ms ease;
+}
+
+#custom-ws-prev:hover,
+#custom-ws-next:hover {
+    background:    rgba(79, 200, 200, 0.06);
+    color:         @fg0;
+    border-bottom: 2px solid @cyan;
+}
+
+#custom-close:hover {
+    background:    rgba(192, 72, 72, 0.08);
+    color:         @red;
+    border-bottom: 2px solid @red;
+}
+
 /* ── Workspaces ─────────────────────────────────────────────────────── */
 
 #workspaces {
-    padding: 0 6px;
+    padding: 0 2px;
 }
 
 #workspaces button {
@@ -144,10 +169,13 @@ window#waybar.hidden {
 #cpu:hover,
 #memory:hover,
 #pulseaudio:hover,
-#custom-brightness:hover,
 #battery:hover {
     color:      @cyan;
     background: rgba(79, 200, 200, 0.05);
+}
+
+#custom-brightness:hover {
+    background: transparent;
 }
 
 /* ── Network ────────────────────────────────────────────────────────── */
@@ -170,8 +198,25 @@ window#waybar.hidden {
     color: @fg1;
 }
 
-#custom-brightness.unavailable {
+#custom-brightness.unavailable,
+#custom-brightness.stale {
     color: @fg1;
+}
+
+#custom-brightness.low {
+    color: @fg0;
+}
+
+#custom-brightness.mid {
+    color: @cyan;
+}
+
+#custom-brightness.high {
+    color: @amber;
+}
+
+#custom-brightness.critical {
+    color: @red;
 }
 
 /* ── Battery ────────────────────────────────────────────────────────── */

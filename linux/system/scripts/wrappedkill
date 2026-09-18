@@ -5,5 +5,5 @@ if [ "$(hyprctl activewindow -j | jq -r ".class")" = "com.github.wwmm.easyeffect
   dunstify "closing window..."
 else
   dunstify "killing window..."
-  hyprctl dispatch killactive ""
+  hyprctl dispatch 'hl.dsp.window.close()'
 fi

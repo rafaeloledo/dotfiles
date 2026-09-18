@@ -32,6 +32,7 @@ archlinux-link:
 # Build and install the Waybar DDC/CI brightness applet.
 ddc-slider-install:
     cargo install --path "{{dots}}/linux/desktop/waybar/ddc-slider" --force
+    rm -f "{{home}}/.cargo/bin/ddc-slider-tui"
 
 # Install Firefox enterprise policy (uBlock Origin auto-install). Needs sudo.
 archlinux-adblocker:

@@ -1,12 +1,8 @@
 [package]
 name = "ddc-slider"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
-description = "Waybar brightness applet with DDC/CI slider popup"
-
-[[bin]]
-name = "ddc-slider"
-path = "src/main.rs"
+description = "Waybar DDC/CI brightness applet with native popup"
 
 [dependencies]
 anyhow = "1"

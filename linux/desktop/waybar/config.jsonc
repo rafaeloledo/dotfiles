@@ -6,7 +6,10 @@
     "exclusive": true,
 
     "modules-left": [
+        "custom/ws-prev",
         "ext/workspaces",
+        "custom/ws-next",
+        "custom/close",
         "custom/sep",
         "hyprland/window"
     ],
@@ -24,6 +27,24 @@
     ],
 
     // ── Left ──────────────────────────────────────────────────────────
+
+    "custom/ws-prev": {
+        "format": "󰅁",
+        "tooltip-format": "Previous workspace",
+        "on-click": "$HOME/.local/scripts/previousworkspace"
+    },
+
+    "custom/ws-next": {
+        "format": "󰅂",
+        "tooltip-format": "Next workspace",
+        "on-click": "$HOME/.local/scripts/nextworkspace"
+    },
+
+    "custom/close": {
+        "format": "󰅖",
+        "tooltip-format": "Close window",
+        "on-click": "hyprctl dispatch 'hl.dsp.window.close()'"
+    },
 
     "ext/workspaces": {
         "format": "{name}",
@@ -108,7 +129,7 @@
         "interval": "once",
         "signal": 10,
         "exec-on-event": false,
-        "cursor": true,
+        "cursor": false,
         "format": "{text}",
         "on-click": "sh -c 'ddc-slider popup >/dev/null 2>&1 &'",
         "on-scroll-up": "ddc-slider up",
