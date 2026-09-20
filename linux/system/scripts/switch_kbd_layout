@@ -5,20 +5,20 @@ session=$DESKTOP_SESSION
 if [ "$session" == "wayland" ]; then
   layout=$(hyprctl getoption input:kb_layout | rg "str:")
   if [ "$layout" == "str: br, us" ]; then
-    dunstify "kbd is now us"
+    notify-send "kbd is now us"
     hyprctl keyword input:kb_layout "us, br"
   else
-    dunstify "kbd is now br"
+    notify-send "kbd is now br"
     hyprctl keyword input:kb_layout "br, us"
   fi
 else
   kb_format=$(setxkbmap -print -verbose 10 | rg "layout:")
 
   if [ "$kb_format" == "layout:     us" ]; then
-    dunstify "kbd is now br"
+    notify-send "kbd is now br"
     setxkbmap br
   else
-    dunstify "kbd is now us"
+    notify-send "kbd is now us"
     setxkbmap us
   fi
 fi

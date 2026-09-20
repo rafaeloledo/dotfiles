@@ -1,0 +1,76 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║  YoRHa Tactical Interface — Ghost Protocol Notification Unit    ║
+# ║  Palette synced with waybar/style.css                           ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+font=JetBrainsMono Nerd Font 20
+background-color=#13131a
+text-color=#dcdce8
+width=420
+height=200
+anchor=top-right
+layer=overlay
+outer-margin=48,16,0,0
+margin=0,0,10,0
+padding=14,16
+border-size=2
+border-color=#1d1d26
+border-radius=10
+progress-color=over #4fc8c8
+icons=1
+max-icon-size=48
+icon-path=/usr/share/icons/Papirus-Dark
+icon-location=left
+icon-border-radius=8
+markup=1
+actions=1
+history=1
+max-history=20
+max-visible=5
+sort=-time
+text-alignment=left
+default-timeout=6000
+ignore-timeout=0
+format=<span foreground='#4fc8c8' weight='bold'>▸</span> <span size='small' foreground='#c8a86a' weight='semibold'>%a</span>\n<b><span foreground='#dcdce8'>%s</span></b>\n<span size='small' foreground='#7a7a8e'>%b</span>
+
+on-button-left=dismiss
+on-button-middle=invoke-default-action
+on-button-right=dismiss-all
+
+[urgency=low]
+background-color=#0b0b0e
+text-color=#7a7a8e
+border-color=#1d1d26
+progress-color=over #7a7a8e
+default-timeout=4000
+
+[urgency=normal]
+background-color=#13131a
+text-color=#dcdce8
+border-color=#c8a86a
+progress-color=over #4fc8c8
+default-timeout=6000
+
+[urgency=critical]
+background-color=#13131a
+text-color=#dcdce8
+border-color=#c04848
+progress-color=over #c04848
+default-timeout=0
+ignore-timeout=1
+
+[app-name=VOLUME]
+border-color=#4fc8c8
+progress-color=over #4fc8c8
+format=<span foreground='#4fc8c8' weight='bold'>♫</span> <span size='small' foreground='#c8a86a' weight='semibold'>AUDIO</span>\n<b><span foreground='#dcdce8'>%s</span></b>
+default-timeout=2000
+group-by=app-name
+
+[summary~="^kbd is now"]
+border-color=#4fc8c8
+format=<span foreground='#4fc8c8' weight='bold'>⌨</span> <span size='small' foreground='#c8a86a'>INPUT</span>\n<b><span foreground='#dcdce8'>%s</span></b>
+default-timeout=2000
+
+[summary~="^Set wallaper"]
+border-color=#c8a86a
+format=<span foreground='#c8a86a' weight='bold'>◈</span> <span size='small' foreground='#7a7a8e'>VISUAL</span>\n<span size='small' foreground='#7a7a8e'>%s</span>

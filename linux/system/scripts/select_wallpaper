@@ -3,4 +3,4 @@
 folder=~/wallpapers
 file="$(ls "$folder" | rofi -dmenu)"
 
-swaybg -i "$folder"/"$file" & dunstify "Set wallaper to $file"
+swaybg -i "$folder"/"$file" & notify-send "Set wallaper to $file"

@@ -8,7 +8,7 @@ archlinux-link:
     set -eu
 
     for src in \
-        linux/desktop/{hypr,wofi,rofi,waybar,ags,dunst,gtk-3.0} \
+        linux/desktop/{hypr,wofi,rofi,waybar,ags,mako,gtk-3.0} \
         linux/system/environment.d \
         shared/terminal/{ghostty,alacritty,tmux,wezterm,zellij,yazi,lazygit} \
         shared/editor/{nvim,sublime-text} \

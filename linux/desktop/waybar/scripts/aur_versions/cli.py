@@ -6,7 +6,7 @@ from .notify import notify
 from .waybar import payload_from, signal_waybar, waybar_line
 
 
-# --notify implies refresh + dunstify + Waybar signal. Always prints JSON, exits 0.
+# --notify implies refresh + notify-send + Waybar signal. Always prints JSON, exits 0.
 def main() -> int:
     notify_user = "--notify" in sys.argv
     payload = load_payload(

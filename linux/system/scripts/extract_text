@@ -2,7 +2,7 @@
 # Dependencies: tesseract imagemagick wl-clipboard hyprshot
 
 die() {
-  dunstify "$1"
+  notify-send "$1"
   exit 1
 }
 cleanup() {
@@ -19,5 +19,5 @@ sleep 0.1
 mogrify -modulate 100,0 -resize 400% "$SCR_IMG/scr.png" || die "failed to convert image"
 tesseract "$SCR_IMG/scr.png" "$SCR_IMG/scr" &>/dev/null || die "failed to extract text"
 wl-copy <"$SCR_IMG/scr.txt" || die "failed to copy text to clipboard"
-dunstify "Text extracted from image" || die "failed to send notification"
+notify-send "Text extracted from image" || die "failed to send notification"
 exit

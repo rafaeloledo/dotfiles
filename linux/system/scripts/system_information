@@ -2,6 +2,6 @@
 
 info=$(i3-msg -t get_workspaces | jq '.[] | select(.focused).num')
 
-dunstify "$(date -R)"
-dunstify "current workspace: $info"
-dunstify "current volume: $(pamixer --get-volume)"
+notify-send "$(date -R)"
+notify-send "current workspace: $info"
+notify-send "current volume: $(pamixer --get-volume)"

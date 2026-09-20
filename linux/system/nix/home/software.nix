@@ -59,7 +59,6 @@
     rustup
     python313
     pkgs.xorg.libXrender # why?
-    dunst # just dunst
     rofi # rofi
     imagemagick   # dep
     hyprshot      # why?

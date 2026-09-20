@@ -17,7 +17,7 @@ def main():
             "96"
         ], shell=True, capture_output=True)
         subprocess.run([
-            "dunstify",
+            "notify-send",
             "set display"
         ])
 

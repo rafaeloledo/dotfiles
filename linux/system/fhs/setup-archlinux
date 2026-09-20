@@ -18,7 +18,7 @@ arch_packages=(
   discord
   distrobox
   docker
-  dunst
+  libnotify
   eza
   fastfetch
   firefox

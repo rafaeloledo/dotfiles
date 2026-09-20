@@ -6,9 +6,11 @@ function fish_user_key_bindings
     bind alt-k up-or-search
     bind alt-j down-or-search
     bind ctrl-o yazi
+    bind alt-a cursor_agent_prompt
     bind ctrl-l 'clear; commandline -f repaint'
 
     bind \b backward-kill-line
+    bind ctrl-alt-d kill-whole-line
     bind \e\[3\;5~ kill-word
 
     # bind --erase --key ctrl-_

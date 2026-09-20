@@ -3,7 +3,7 @@
 Waybar module that compares local AUR package trees against upstream.
 
 The bar shows an Arch Linux icon. Hover lists each package; click re-checks and
-sends a dunst notification. Gold means something is behind, red means the check
+sends a mako notification. Gold means something is behind, red means the check
 failed.
 
 ## Packages
@@ -52,7 +52,7 @@ a checker under `aur_versions/sources/` registered in `SOURCES`.
 | `checks.py` | run every `REPOS` entry |
 | `waybar.py` | payload, JSON line, `RTMIN+11` |
 | `cache.py` | `~/.cache/waybar/aur-versions.json` |
-| `notify.py` | dunstify |
+| `notify.py` | notify-send |
 | `cli.py` | `--refresh` / `--notify` |
 
 ## Implementations
@@ -71,7 +71,7 @@ Swap the `exec` / `on-click` paths in `config.jsonc` to use another copy.
 ```bash
 ~/.config/waybar/scripts/aur-versions            # JSON for Waybar (uses 15s cache)
 ~/.config/waybar/scripts/aur-versions --refresh  # ignore cache, print JSON
-~/.config/waybar/scripts/aur-versions --notify   # refresh, dunstify, poke Waybar
+~/.config/waybar/scripts/aur-versions --notify   # refresh, notify-send, poke Waybar
 ```
 
 `--notify` implies a refresh. Results are written to

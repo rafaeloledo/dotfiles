@@ -2,7 +2,9 @@ down() {
 	pamixer -d 2
 	volume=$(pamixer --get-volume)
 	[$volume -gt 0 ] && volume=$(expr $volume)
-	dunstify -a "VOLUME" "Decreasing to $volume%" -h int:value:"$volume" -i audio-volume-low-symbolic -r 2593 -u normal
+	notify-send -a "VOLUME" -u normal -i audio-volume-low-symbolic \
+		-h int:value:"$volume" -h string:x-canonical-private-synchronous:volume \
+		"Decreasing to $volume%"
 	canberra-gtk-play -i dialog-error -d "error"
 }
 
@@ -10,7 +12,9 @@ up() {
 	pamixer -i 2
 	volume=$(pamixer --get-volume)
 	[ $volume -lt 100 ] && volume=$(expr $volume)
-	dunstify -a "VOLUME" "Increasing to $volume%" -h int:value:"$volume" -i audio-volume-high-symbolic -r 2593 -u normal
+	notify-send -a "VOLUME" -u normal -i audio-volume-high-symbolic \
+		-h int:value:"$volume" -h string:x-canonical-private-synchronous:volume \
+		"Increasing to $volume%"
 	canberra-gtk-play -i dialog-error -d "error"
 }
 
@@ -18,10 +22,12 @@ mute() {
 	muted="$(pamixer --get-mute)"
 	if $muted; then
 		pamixer -u
-		dunstify -a "VOLUME" "UNMUTED" -i audio-volume-high-symbolic -r 2593 -u normal
+		notify-send -a "VOLUME" -u normal -i audio-volume-high-symbolic \
+			-h string:x-canonical-private-synchronous:volume "UNMUTED"
 	else
 		pamixer -m
-		dunstify -a "VOLUME" "MUTED" -i audio-volume-muted-symbolic -r 2593 -u normal
+		notify-send -a "VOLUME" -u normal -i audio-volume-muted-symbolic \
+			-h string:x-canonical-private-synchronous:volume "MUTED"
 	fi
 }
 

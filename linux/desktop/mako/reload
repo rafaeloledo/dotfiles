@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+pkill dunst 2>/dev/null || true
+
+if ! makoctl reload 2>/dev/null; then
+  mako &
+  sleep 0.3
+fi
+
+notify-send -u low      -a "System" "Ghost link idle"            "No new transmissions on this channel."
+notify-send -u normal   -a "YoRHa"  "Pod 042 online"             "All systems nominal. Good morning, 9S."
+notify-send -u critical -a "YoRHa"  "Hostile signature detected" "Goliath-class unit approaching sector 7."
+notify-send -a "VOLUME" -u normal -i audio-volume-high-symbolic \
+  -h int:value:67 -h string:x-canonical-private-synchronous:volume "Increasing to 67%"
+notify-send -a "VOLUME" -u normal -i audio-volume-low-symbolic \
+  -h int:value:23 -h string:x-canonical-private-synchronous:volume "Decreasing to 23%"
+notify-send "kbd is now us"

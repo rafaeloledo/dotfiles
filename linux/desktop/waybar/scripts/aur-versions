@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Compare local AUR package trees against upstream for the Waybar Arch icon.
 # Prints JSON (`text`, `class`, `alt`, `tooltip`). See README.md.
-# --refresh  ignore 15s cache    --notify  refresh, dunstify, RTMIN+11
+# --refresh  ignore 15s cache    --notify  refresh, notify-send, RTMIN+11
 
 from aur_versions.cli import main
 

@@ -3,7 +3,7 @@
 let
   dotfiles = [
     "shared/terminal/wezterm"
-    "linux/desktop/dunst"
+    "linux/desktop/mako"
     "shared/shell/fish"
     "linux/desktop/hypr"
     "linux/desktop/waybar"

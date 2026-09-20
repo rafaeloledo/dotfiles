@@ -2,8 +2,8 @@
 
 if [ "$(hyprctl activewindow -j | jq -r ".class")" = "com.github.wwmm.easyeffects" ]; then
   xdotool getactivewindow windowunmap
-  dunstify "closing window..."
+  notify-send "closing window..."
 else
-  dunstify "killing window..."
+  notify-send "killing window..."
   hyprctl dispatch 'hl.dsp.window.close()'
 fi
