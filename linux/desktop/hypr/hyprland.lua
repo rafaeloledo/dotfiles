@@ -104,6 +104,7 @@ hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
 hl.bind("SUPER + Q", hl.dsp.exec_cmd(terminal))
 hl.bind("SUPER + C", hl.dsp.window.close())
+hl.bind("SUPER + ESCAPE", hl.dsp.exec_cmd("dunstctl close-all"))
 hl.bind("SUPER + M", hl.dsp.exit())
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
