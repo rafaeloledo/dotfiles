@@ -135,9 +135,8 @@ window#waybar.hidden {
 /* ── Window title ───────────────────────────────────────────────────── */
 
 #window {
-    color:      @fg1;
+    color:      @fg0;
     padding:    0 12px;
-    font-style: italic;
 }
 
 
@@ -158,6 +157,7 @@ window#waybar.hidden {
 #memory,
 #pulseaudio,
 #custom-brightness,
+#custom-aur,
 #battery,
 #tray {
     padding:    0 6px;
@@ -169,13 +169,33 @@ window#waybar.hidden {
 #cpu:hover,
 #memory:hover,
 #pulseaudio:hover,
-#battery:hover {
+#battery:hover,
+#custom-aur:hover {
     color:      @cyan;
     background: rgba(79, 200, 200, 0.05);
 }
 
 #custom-brightness:hover {
     background: transparent;
+}
+
+/* ── AUR version check ──────────────────────────────────────────────── */
+
+#custom-aur {
+    padding: 0 10px;
+    color:   @fg1;
+}
+
+#custom-aur.current {
+    color: @fg0;
+}
+
+#custom-aur.updates {
+    color: @gold;
+}
+
+#custom-aur.error {
+    color: @red;
 }
 
 /* ── Network ────────────────────────────────────────────────────────── */

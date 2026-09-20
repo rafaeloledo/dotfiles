@@ -17,6 +17,7 @@
         "clock"
     ],
     "modules-right": [
+        "custom/aur",
         "network",
         "cpu",
         "memory",
@@ -60,11 +61,13 @@
     },
 
     "hyprland/window": {
-        "format": "{title}",
-        "max-length": 55,
+        "format": "{class}  {title}",
+        "max-length": 64,
         "separate-outputs": true,
+        "tooltip": true,
+        "escape": true,
         "rewrite": {
-            "(.*)": " $1"
+            "^\\s*$": "desktop"
         }
     },
 
@@ -87,6 +90,17 @@
     },
 
     // ── Right ─────────────────────────────────────────────────────────
+
+    "custom/aur": {
+        "exec": "$HOME/.config/waybar/scripts/aur-versions",
+        "return-type": "json",
+        "interval": 1800,
+        "signal": 11,
+        "exec-on-event": false,
+        "format": "{text}",
+        "on-click": "$HOME/.config/waybar/scripts/aur-versions --notify",
+        "tooltip": true
+    },
 
     "network": {
         "interval": 5,
