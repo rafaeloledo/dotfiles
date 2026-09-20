@@ -10,7 +10,6 @@ function ln($t, $l) { New-Item -ItemType SymbolicLink -Path $l -Target $t -Force
 ln "$dotfiles\shared\editor\nvim"                                   "$env:LOCALAPPDATA\nvim"
 ln "$dotfiles\shared\terminal\wezterm"                              "$config\wezterm"
 ln "$dotfiles\windows\autohotkey"                                   "$config\autohotkey"
-ln "$dotfiles\windows\kanata"                                       "$config\kanata"
 ln "$dotfiles\windows\komorebi"                                     "$config\komorebi"
 ln "$dotfiles\windows\PowerShell\Microsoft.PowerShell_profile.ps1"  $PROFILE
 ln "$dotfiles\windows\terminal\psmux"                               "$config\psmux"
