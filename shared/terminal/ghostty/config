@@ -1,5 +1,11 @@
 window-decoration = true
-font-size = 24
+font-size = 22.5
+
+font-family = CommitMono
+
+window-padding-x = 0
+window-padding-balance = true
+
 mouse-hide-while-typing = true
 confirm-close-surface = false
 background = #000000

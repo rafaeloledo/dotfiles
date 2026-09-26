@@ -5,13 +5,8 @@ set -euo pipefail
 arch_packages=(
   android-file-transfer
   android-studio
-  ani-cli
-  antimicrox
-  arduino-ide-bin
-  arm-none-eabi-gcc
   aws-cli
   bat
-  bc
   brightnessctl
   blender
   brave-bin
@@ -80,12 +75,8 @@ arch_packages=(
   tesseract
   tesseract-data-eng
   tesseract-data-por
-  ttf-firacode-nerd
-  ttf-hack-nerd
-  ttf-jetbrains-mono-nerd
-  ttf-roboto-mono
-  ttf-roboto-mono-nerd
-  ttf-ubuntu-nerd
+  tesseract-data-jpn
+  tesseract-data-ind
   viewnior
   virt-manager
   visual-studio-code-bin
@@ -114,6 +105,8 @@ arch_packages=(
   wireplumber
   pipewire-alsa
   alsa-utils
+  chntpw
+  ntfs-3g
 )
 
 yay -S --needed --noconfirm "${arch_packages[@]}"

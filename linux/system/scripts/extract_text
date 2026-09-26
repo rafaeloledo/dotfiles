@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Dependencies: tesseract imagemagick wl-clipboard hyprshot
+# Dependencies: tesseract imagemagick wl-clipboard grim slurp python3
 
 die() {
   notify-send "$1"
@@ -14,10 +14,109 @@ SCR_IMG=$(mktemp -d) || die "failed to create tmpdir"
 # shellcheck disable=SC2064
 trap "cleanup '$SCR_IMG'" EXIT
 
-hyprshot -m region -f scr.png --silent -o $SCR_IMG
-sleep 0.1
-mogrify -modulate 100,0 -resize 400% "$SCR_IMG/scr.png" || die "failed to convert image"
-tesseract "$SCR_IMG/scr.png" "$SCR_IMG/scr" &>/dev/null || die "failed to extract text"
-wl-copy <"$SCR_IMG/scr.txt" || die "failed to copy text to clipboard"
+# One capture at a time. A stuck slurp or wl-copy makes the next hotkey look dead.
+exec 9>/tmp/extract_text.lock
+if ! flock -n 9; then
+  pkill -x slurp 2>/dev/null || true
+  pkill -x tesseract 2>/dev/null || true
+  pkill -x wl-copy 2>/dev/null || true
+  flock -w 2 9 || die "previous OCR is still running"
+fi
+
+# The bind fires on key-up, but Super can still be held. Wait until it is
+# released before slurp grabs the keyboard, or Hyprland misses that key-up.
+for _ in $(seq 1 100); do
+  state=$(hyprctl repl 'return (hl.is_key_down("Super_L") or hl.is_key_down("Super_R") or hl.is_key_down("o") or hl.is_key_down("O")) and "down" or "up"' 2>/dev/null || true)
+  [[ -z $state || $state == *up* ]] && break
+  sleep 0.02
+done
+
+# slurp returns as soon as the region is chosen. Run grim in the foreground so the
+# PNG is finished before OCR; hyprshot returns earlier and drops large captures.
+geometry=$(slurp -d) || exit 0
+# A stale mouse-up makes slurp exit immediately with a 1x1 region.
+if [[ $geometry =~ ([0-9]+)x([0-9]+)$ ]]; then
+  (( BASH_REMATCH[1] < 8 || BASH_REMATCH[2] < 8 )) && exit 0
+fi
+grim -g "$geometry" "$SCR_IMG/scr.png" || die "failed to capture region"
+
+python3 - "$SCR_IMG/scr.png" "$SCR_IMG/scr.txt" <<'PY' || die "failed to extract text"
+import re, subprocess, sys
+from pathlib import Path
+
+src = Path(sys.argv[1])
+dst = Path(sys.argv[2])
+
+def magick(*args, stdin=None):
+    result = subprocess.run(["magick", *args], input=stdin, capture_output=True)
+    if result.returncode != 0:
+        sys.stderr.buffer.write(result.stderr)
+        sys.exit(1)
+    return result.stdout
+
+width, height = map(int, magick("identify", "-format", "%w %h", str(src)).split())
+raw = magick(str(src), "-alpha", "off", "-colorspace", "gray", "-depth", "8", "gray:-")
+if len(raw) != width * height:
+    sys.exit(1)
+
+# Tesseract is trained on black text. Light lyrics on a dark screen stay unread
+# unless the page is flipped. A 4x upscale also fuses CJK strokes on text that
+# is already large, so only tiny UI captures are scaled.
+pixels = bytes(255 - b for b in raw) if (sum(raw) / len(raw)) < 128 else raw
+min_ink = max(3, width // 200)
+bands = []
+in_band = False
+start = 0
+for y in range(height):
+    ink = sum(p < 180 for p in pixels[y * width:(y + 1) * width])
+    if ink >= min_ink and not in_band:
+        start = y
+        in_band = True
+    elif ink < min_ink and in_band:
+        bands.append(y - start)
+        in_band = False
+if in_band:
+    bands.append(height - start)
+
+work = src.with_name("work.png")
+magick("-size", f"{width}x{height}", "-depth", "8", "gray:-", str(work), stdin=pixels)
+# Scaling a whole paragraph makes Tesseract turn "42" into "④②".
+# Only bump a single short line, which is the case that otherwise drops kana.
+if len(bands) == 1:
+    line_height = bands[0]
+    if 4 <= line_height < 15:
+        factor = min(3.0, 32 / line_height)
+        if max(width, height) * factor > 4000:
+            factor = 4000 / max(width, height)
+        if factor > 1.05:
+            magick(str(work), "-filter", "Lanczos", "-resize", f"{int(width * factor)}x{int(height * factor)}!", str(work))
+
+magick(str(work), "-bordercolor", "white", "-border", "16", str(work))
+ocr = subprocess.run(
+    ["tesseract", str(work), "stdout", "-l", "eng+jpn+por+ind", "--psm", "4"],
+    capture_output=True, text=True,
+)
+if ocr.returncode != 0:
+    sys.stderr.write(ocr.stderr)
+    sys.exit(1)
+
+cjk = r"[\u3000-\u303f\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]"
+text = ocr.stdout
+text = re.sub(rf"(?<={cjk})[ \t]+(?={cjk})", "", text)
+text = re.sub(r"(?m)(?:^|(?<=\s))[|l](?=\s)", "I", text)
+text = re.sub(r"(?<=[\u3040-\u309f\u4e00-\u9fff])ヘ(?![\u30a0-\u30ff])", "へ", text)
+text = re.sub(r"[ \t]+([?!.,:;])", r"\1", text)
+text = re.sub(r"[ \t]*…[ \t]*", "... ", text)
+text = re.sub(r"\n{3,}", "\n\n", text)
+text = "\n".join(line.rstrip() for line in text.splitlines()).strip() + "\n"
+dst.write_text(text, encoding="utf-8")
+PY
+
+# Copy in a new session. Otherwise wl-copy stays in Hyprland's process group and
+# a client that never finishes reading the previous offer blocks the next copy.
+if ! timeout 3 setsid wl-copy <"$SCR_IMG/scr.txt" >/dev/null 2>&1; then
+  pkill -x wl-copy 2>/dev/null || true
+  timeout 3 setsid wl-copy <"$SCR_IMG/scr.txt" >/dev/null 2>&1 || die "failed to copy text to clipboard"
+fi
 notify-send "Text extracted from image" || die "failed to send notification"
 exit

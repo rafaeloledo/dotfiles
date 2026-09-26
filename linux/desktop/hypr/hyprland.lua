@@ -115,9 +115,14 @@ hl.bind("SUPER + A",            hl.dsp.exec_cmd("ani-cli --rofi --vlc"))
 hl.bind("SUPER + SHIFT + A",    hl.dsp.exec_cmd("pavucontrol"))
 -- hl.bind("SUPER + B",            hl.dsp.exec_cmd("firefox"))
 hl.bind("SUPER + B",            hl.dsp.exec_cmd("google-chrome-stable"))
-hl.bind("SUPER + O",            hl.dsp.exec_cmd("~/.local/scripts/extract_text"))
+-- Fire on release. A press bind starts slurp while Super is still down, slurp
+-- takes the keyboard, and Hyprland never sees the key-up. The chord stays
+-- latched, so this bind does not run again until the session is restarted.
+hl.bind("SUPER + O", hl.dsp.exec_cmd("~/.local/scripts/extract_text"), { release = true, dont_inhibit = true })
 hl.bind("SUPER + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
 hl.bind("SUPER + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Downloads/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
+-- Wayland clients do not get global hotkeys. Pass press and release to OBS.
+hl.bind("CTRL + ALT + S",     hl.dsp.pass({ window = "class:com\\.obsproject\\.Studio" }))
 hl.bind("SUPER + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
 hl.bind("SUPER + W",            hl.dsp.exec_cmd("killall -SIGUSR1 waybar || waybar"))
 hl.bind("SUPER + tab",           hl.dsp.focus({ workspace = "previous" }))
@@ -137,7 +142,7 @@ hl.bind("SUPER + K", hl.dsp.focus({ direction = "up" }))
 hl.bind("SUPER + L", hl.dsp.focus({ direction = "right" }))
 hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("~/.local/scripts/lock-screen"))
 
-hl.bind("PRINT",                      hl.dsp.exec_cmd("grim - | wl-copy"))
+hl.bind("SUPER + SHIFT + P",                      hl.dsp.exec_cmd("grim - | wl-copy"))
 
 for i = 6, 10 do
     hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
