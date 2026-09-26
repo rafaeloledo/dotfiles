@@ -34,6 +34,13 @@ ddc-slider-install:
     cargo install --path "{{dots}}/linux/desktop/waybar/ddc-slider" --force
     rm -f "{{home}}/.cargo/bin/ddc-slider-tui"
 
+# Caps Lock → Ctrl via keyd. Needs sudo.
+archlinux-keyd:
+    sudo mkdir -p /etc/keyd
+    sudo ln -nfs "{{dots}}/linux/system/keyd/default.conf" /etc/keyd/default.conf
+    sudo systemctl enable --now keyd
+    sudo keyd reload
+
 # Install Firefox enterprise policy (uBlock Origin auto-install). Needs sudo.
 archlinux-adblocker:
     sudo mkdir -p /etc/firefox/policies

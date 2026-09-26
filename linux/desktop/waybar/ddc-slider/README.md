@@ -56,5 +56,5 @@ ddc-slider detect
 |--------|--------|
 | Show | Icon + brightness % |
 | Hover | Bordered tooltip |
-| Click | Native overlay |
+| Click | Native overlay (closes when the pointer leaves it, or Escape) |
 | Scroll | ±5 brightness |

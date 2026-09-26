@@ -7,6 +7,7 @@ use crate::panel::{Panel, PanelInput, PANEL_HEIGHT_PX, PANEL_INNER_WIDTH, PANEL_
 use crate::theme::Theme;
 use crate::util;
 use anyhow::{Context, Result};
+use gtk4::gdk::prelude::{DeviceExt, SeatExt};
 use gtk4::glib::{self, ControlFlow, MainLoop};
 use gtk4::prelude::*;
 use gtk4::{Box as GtkBox, Label, Orientation, Window};
@@ -20,10 +21,15 @@ use std::thread;
 use std::time::Duration;
 
 const PID_FILE: &str = "ddc-slider.pid";
+const DISMISS_STAMP: &str = "ddc-slider.dismiss";
+const DISMISS_GRACE_MS: u128 = 400;
 
 /// Open the popup, or close it when already running.
 pub fn run(display: u8) -> Result<()> {
     if close_existing()? {
+        return Ok(());
+    }
+    if recently_dismissed() {
         return Ok(());
     }
 
@@ -155,6 +161,7 @@ fn build_window(display: u8) -> (Window, Rc<Widgets>) {
     });
     widgets.paint();
     bind_escape(&window);
+    bind_pointer_dismiss(&window);
 
     (window, widgets)
 }
@@ -195,6 +202,133 @@ fn bind_escape(window: &Window) {
         }
     });
     window.add_controller(controller);
+}
+
+const POINTER_POLL_MS: u64 = 50;
+const OPEN_GRACE_MS: u64 = 350;
+const OUTSIDE_TICKS_TO_CLOSE: u32 = 2;
+
+/// Close the popup when the pointer leaves its bounds after having entered them.
+fn bind_pointer_dismiss(window: &Window) {
+    let was_inside = Rc::new(Cell::new(false));
+    let dismiss_armed = Rc::new(Cell::new(false));
+    let outside_ticks = Rc::new(Cell::new(0));
+
+    window.connect_map({
+        let window = window.clone();
+        let was_inside = was_inside.clone();
+        let dismiss_armed = dismiss_armed.clone();
+        let outside_ticks = outside_ticks.clone();
+        move |_| {
+            let dismiss_armed_grace = dismiss_armed.clone();
+            glib::timeout_add_local(Duration::from_millis(OPEN_GRACE_MS), move || {
+                dismiss_armed_grace.set(true);
+                ControlFlow::Break
+            });
+
+            let window = window.clone();
+            let was_inside = was_inside.clone();
+            let dismiss_armed = dismiss_armed.clone();
+            let outside_ticks = outside_ticks.clone();
+            glib::timeout_add_local(Duration::from_millis(POINTER_POLL_MS), move || {
+                if !window.is_visible() {
+                    return ControlFlow::Break;
+                }
+
+                if !dismiss_armed.get() {
+                    return ControlFlow::Continue;
+                }
+
+                if pointer_inside_window(&window) {
+                    was_inside.set(true);
+                    outside_ticks.set(0);
+                    return ControlFlow::Continue;
+                }
+
+                if !was_inside.get() {
+                    return ControlFlow::Continue;
+                }
+
+                if pointer_button_pressed(&window) {
+                    outside_ticks.set(0);
+                    return ControlFlow::Continue;
+                }
+
+                let ticks = outside_ticks.get() + 1;
+                outside_ticks.set(ticks);
+                if ticks >= OUTSIDE_TICKS_TO_CLOSE {
+                    write_dismiss_stamp();
+                    window.close();
+                    return ControlFlow::Break;
+                }
+
+                ControlFlow::Continue
+            });
+        }
+    });
+}
+
+fn pointer_inside_window(window: &Window) -> bool {
+    let display = RootExt::display(window);
+    let Some(seat) = display.default_seat() else {
+        return false;
+    };
+    let Some(pointer) = seat.pointer() else {
+        return false;
+    };
+    let Some(window_surface) = window.surface() else {
+        return false;
+    };
+
+    let (surface, x, y) = pointer.surface_at_position();
+    let Some(at) = surface else {
+        return false;
+    };
+    if at != window_surface {
+        return false;
+    }
+
+    let w = window.width().max(1) as f64;
+    let h = window.height().max(1) as f64;
+    (0.0..w).contains(&x) && (0.0..h).contains(&y)
+}
+
+fn pointer_button_pressed(window: &Window) -> bool {
+    let display = RootExt::display(window);
+    let Some(seat) = display.default_seat() else {
+        return false;
+    };
+    let Some(pointer) = seat.pointer() else {
+        return false;
+    };
+    let state = pointer.modifier_state();
+    state.contains(gtk4::gdk::ModifierType::BUTTON1_MASK)
+        || state.contains(gtk4::gdk::ModifierType::BUTTON2_MASK)
+        || state.contains(gtk4::gdk::ModifierType::BUTTON3_MASK)
+}
+
+fn write_dismiss_stamp() {
+    let ms = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_millis())
+        .unwrap_or(0);
+    let _ = fs::write(util::runtime_file(DISMISS_STAMP), ms.to_string());
+}
+
+fn recently_dismissed() -> bool {
+    let path = util::runtime_file(DISMISS_STAMP);
+    let Ok(raw) = fs::read_to_string(&path) else {
+        return false;
+    };
+    let _ = fs::remove_file(&path);
+    let Ok(stamp) = raw.trim().parse::<u128>() else {
+        return false;
+    };
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_millis())
+        .unwrap_or(0);
+    now.saturating_sub(stamp) < DISMISS_GRACE_MS
 }
 
 fn refresh_brightness(

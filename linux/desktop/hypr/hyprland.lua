@@ -63,7 +63,7 @@ hl.config({
         kb_layout    = "us,br",
         kb_variant   = "",
         kb_model     = "",
-        kb_options   = "grp:alt_shift_toggle",
+        kb_options   = "grp:alt_shift_toggle,ctrl:nocaps",
         kb_rules     = "",
         follow_mouse = 1,
         sensitivity  = -0.7,
@@ -125,6 +125,10 @@ hl.bind("SUPER + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"
 hl.bind("SUPER + bracketleft",  hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
 hl.bind("SUPER + page_up",      hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
 hl.bind("SUPER + page_down",    hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
+hl.bind("SUPER + left",         hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
+hl.bind("SUPER + right",        hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
+hl.bind("SUPER + up",           hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
+hl.bind("SUPER + down",         hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
 hl.bind("SUPER + F",            hl.dsp.window.fullscreen())
 hl.bind("SUPER + D",            hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + H", hl.dsp.focus({ direction = "left" }))

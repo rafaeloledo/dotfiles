@@ -123,7 +123,10 @@ mise install
 # Problematic/optional AUR packages. Install manually when needed.
 # yay -S --needed eden-git eh-vial-appimage
 
+sudo mkdir -p /etc/keyd
+sudo ln -nfs "$HOME/dotfiles/linux/system/keyd/default.conf" /etc/keyd/default.conf
 sudo systemctl enable keyd --now
+sudo keyd reload || true
 
 sudo systemctl enable bluetooth --now
 
