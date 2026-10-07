@@ -1,13 +1,8 @@
-# ╔══════════════════════════════════════════════════════════════════╗
-# ║  YoRHa Tactical Interface — Ghost Protocol Notification Unit    ║
-# ║  Palette synced with waybar/style.css                           ║
-# ╚══════════════════════════════════════════════════════════════════╝
-
 font=JetBrainsMono Nerd Font 20
 background-color=#13131a
 text-color=#dcdce8
 width=420
-height=200
+height=420
 anchor=top-right
 layer=overlay
 outer-margin=48,16,0,0
@@ -15,7 +10,7 @@ margin=0,0,10,0
 padding=14,16
 border-size=2
 border-color=#1d1d26
-border-radius=10
+border-radius=6
 progress-color=over #4fc8c8
 icons=1
 max-icon-size=48
