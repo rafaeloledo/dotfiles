@@ -31,7 +31,7 @@ sort=-time
 text-alignment=left
 default-timeout=6000
 ignore-timeout=0
-format=<span foreground='#4fc8c8' weight='bold'>▸</span> <span size='small' foreground='#c8a86a' weight='semibold'>%a</span>\n<b><span foreground='#dcdce8'>%s</span></b>\n<span size='small' foreground='#7a7a8e'>%b</span>
+format=<span size='small' foreground='#c8a86a' weight='semibold'>%a</span>\n<b><span foreground='#dcdce8'>%s</span></b>\n<span foreground='#7a7a8e'>%b</span>
 
 on-button-left=dismiss
 on-button-middle=invoke-default-action
