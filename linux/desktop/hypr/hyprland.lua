@@ -120,7 +120,7 @@ hl.bind("SUPER + B",            hl.dsp.exec_cmd("google-chrome-stable"))
 -- latched, so this bind does not run again until the session is restarted.
 hl.bind("SUPER + O", hl.dsp.exec_cmd("~/.local/scripts/extract_text"), { release = true, dont_inhibit = true })
 hl.bind("SUPER + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
-hl.bind("SUPER + SHIFT + S",    hl.dsp.exec_cmd('grim -g "$(slurp)" - | tee ~/Downloads/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
+hl.bind("SUPER + SHIFT + S",    hl.dsp.exec_cmd('mkdir -p ~/Screenshots && geom=$(slurp) && [ -n "$geom" ] && grim -g "$geom" - | tee ~/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
 -- Wayland clients do not get global hotkeys. Pass press and release to OBS.
 hl.bind("CTRL + ALT + S",     hl.dsp.pass({ window = "class:com\\.obsproject\\.Studio" }))
 hl.bind("SUPER + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
