@@ -1,0 +1,677 @@
+#!/usr/bin/env python3
+# Waybar module for the ngrok tunnel to localhost:8080.
+# Prints JSON (`text`, `class`, `alt`, `tooltip`).
+# default            read the agent API; never starts ngrok
+# --click            copy a message with the public URL, or start `ngrok http 8080` once
+# --restart          stop `ngrok http 8080` and start it again
+# --serve-clipboard  offer that message as text/plain and text/html until replaced
+# --whatsapp         send the plain message with `wacli` (spawned on tunnel restart)
+
+import fcntl
+import html
+import json
+import os
+import select
+import shutil
+import signal
+import socket
+import struct
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+from urllib.parse import urlparse
+
+PORT = "8080"
+API = "http://127.0.0.1:4040/api/tunnels"
+SIGNAL = "12"  # must match custom/ngrok "signal" in config.jsonc
+ICON = "󰖟"
+LOCK = Path.home() / ".cache" / "waybar" / "ngrok-8080.lock"
+LOG = Path.home() / ".cache" / "waybar" / "ngrok-8080.log"
+STATE = Path.home() / ".cache" / "waybar" / "ngrok-8080.state.json"
+# Outside this repo. One phone, JID, or unique chat name per line.
+# A restart sends the clipboard plain text to every line at the same time.
+WHATSAPP = Path.home() / ".config" / "ngrok-tunnel" / "whatsapp"
+
+
+# Hostname label of an ngrok URL: d61a-177-193-213-204.ngrok-free.app → d61a-177-193-213-204.
+def alphanumeric(url: str) -> str:
+    host = urlparse(url).hostname or url
+    return host.split(".", 1)[0] or host
+
+
+def pango(text: str) -> str:
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+# Agent API payload, or None when ngrok is not answering on 4040.
+def fetch_api() -> dict | None:
+    try:
+        with urllib.request.urlopen(API, timeout=0.5) as resp:
+            data = json.load(resp)
+    except (OSError, urllib.error.URLError, json.JSONDecodeError, TimeoutError, ValueError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+# https URL whose tunnel target is :8080. Prefers https over http.
+def public_url(data: dict | None) -> str | None:
+    tunnels = (data or {}).get("tunnels") or []
+    found: list[tuple[bool, str]] = []
+    for tunnel in tunnels:
+        if not isinstance(tunnel, dict):
+            continue
+        addr = str((tunnel.get("config") or {}).get("addr") or "")
+        if addr.rsplit(":", 1)[-1].split("/")[0] != PORT:
+            continue
+        url = str(tunnel.get("public_url") or "")
+        if url:
+            found.append((tunnel.get("proto") == "https", url))
+    if not found:
+        return None
+    found.sort(key=lambda item: not item[0])
+    return found[0][1]
+
+
+# PIDs whose command is exactly `ngrok http 8080`.
+def ngrok_http_pids() -> list[int]:
+    found: list[int] = []
+    for pid in filter(str.isdigit, os.listdir("/proc")):
+        try:
+            raw = Path(f"/proc/{pid}/cmdline").read_bytes()
+        except OSError:
+            continue
+        args = [arg for arg in raw.decode(errors="replace").split("\0") if arg]
+        if len(args) >= 3 and Path(args[0]).name == "ngrok" and args[1] == "http" and args[2] == PORT:
+            found.append(int(pid))
+    return found
+
+
+def ngrok_http_running() -> bool:
+    return bool(ngrok_http_pids())
+
+
+def payload() -> dict:
+    data = fetch_api()
+    url = public_url(data)
+    if url:
+        label = alphanumeric(url)
+        return {
+            "text": f"{ICON}  {label}",
+            "class": "up",
+            "alt": "up",
+            "tooltip": pango(f"{url}\nclick to copy the message\nright-click to restart"),
+            "url": url,
+        }
+    if data is None and ngrok_http_running():
+        return {
+            "text": f"{ICON}  …",
+            "class": "starting",
+            "alt": "starting",
+            "tooltip": "starting ngrok http 8080",
+        }
+    if data is not None:
+        return {
+            "text": ICON,
+            "class": "error",
+            "alt": "error",
+            "tooltip": "ngrok is up but not forwarding :8080",
+        }
+    return {
+        "text": ICON,
+        "class": "down",
+        "alt": "down",
+        "tooltip": "click to start ngrok http 8080\nright-click to restart",
+    }
+
+
+def waybar_line(info: dict) -> str:
+    return json.dumps({
+        "text": info.get("text", ICON),
+        "class": info.get("class", "down"),
+        "alt": info.get("alt", "down"),
+        "tooltip": info.get("tooltip", ""),
+    }, ensure_ascii=False)
+
+
+def signal_waybar() -> None:
+    subprocess.run(["pkill", f"-RTMIN+{SIGNAL}", "waybar"], check=False)
+
+
+# Plain text for chats and terminals; HTML so a rich paste keeps a real link.
+def tunnel_message(url: str) -> tuple[str, str]:
+    title = "Tunel Ngrok do Odara App reiniciado 🥷:"
+    plain = f"{title}\n\n{url}"
+    href = html.escape(url, quote=True)
+    document = (
+        "<!DOCTYPE html>"
+        "<html lang=\"pt-BR\"><head><meta charset=\"utf-8\"></head><body>"
+        "<article>"
+        f"<p>{html.escape(title)}</p>"
+        f"<p><a href=\"{href}\">{href}</a></p>"
+        "</article></body></html>"
+    )
+    return plain, document
+
+
+def copy_plain(text: str) -> bool:
+    if not shutil.which("wl-copy"):
+        return False
+    result = subprocess.run(["wl-copy"], input=text.encode(), check=False)
+    return result.returncode == 0
+
+
+def copy_message(url: str) -> bool:
+    plain, document = tunnel_message(url)
+    if os.environ.get("WAYLAND_DISPLAY") and os.environ.get("XDG_RUNTIME_DIR"):
+        if serve_rich_clipboard(plain, document):
+            return True
+    return copy_plain(plain)
+
+
+def notify(title: str, body: str, urgency: str = "low") -> None:
+    subprocess.run(
+        ["notify-send", "-a", "ngrok", "-u", urgency, title, body],
+        check=False,
+    )
+
+
+def wacli_bin() -> str | None:
+    found = shutil.which("wacli")
+    if found:
+        return found
+    for candidate in (Path.home() / ".local" / "bin" / "wacli", Path("/usr/bin/wacli")):
+        if candidate.is_file() and os.access(candidate, os.X_OK):
+            return str(candidate)
+    return None
+
+
+def whatsapp_recipients() -> list[str]:
+    try:
+        lines = WHATSAPP.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError):
+        return []
+    return [line.strip() for line in lines if line.strip() and not line.strip().startswith("#")]
+
+
+def load_state() -> dict:
+    try:
+        data = json.loads(STATE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, UnicodeError):
+        return {}
+    if not isinstance(data, dict) or not data.get("seen"):
+        return {}
+    return {"seen": True, "up": bool(data.get("up")), "url": str(data.get("url") or "")}
+
+
+# First URL is only recorded. A later URL change, or the tunnel coming back, is a restart.
+def tunnel_transition(state: dict, url: str | None) -> tuple[dict, bool]:
+    if not url:
+        if state.get("up"):
+            return {**state, "up": False}, False
+        return state, False
+    restarted = bool(state.get("seen")) and (not state.get("up") or state.get("url") != url)
+    return {"seen": True, "up": True, "url": url}, restarted
+
+
+def observe_tunnel(url: str | None) -> None:
+    LOCK.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(LOCK, os.O_CREAT | os.O_RDWR, 0o644)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX)
+        state = load_state()
+        new_state, restarted = tunnel_transition(state, url)
+        if new_state != state:
+            STATE.write_text(json.dumps(new_state, ensure_ascii=False), encoding="utf-8")
+    finally:
+        os.close(fd)
+    if restarted and url:
+        queue_whatsapp(tunnel_message(url)[0])
+
+
+def queue_whatsapp(text: str) -> None:
+    targets = whatsapp_recipients()
+    if not targets:
+        return
+    if wacli_bin() is None:
+        notify("ngrok", "wacli não está instalado", "normal")
+        return
+    proc = subprocess.Popen(
+        [sys.executable, str(Path(__file__).resolve()), "--whatsapp"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+    assert proc.stdin is not None
+    proc.stdin.write(json.dumps({"text": text, "to": targets}, ensure_ascii=False).encode())
+    proc.stdin.close()
+
+
+def whatsapp_command(binary: str, target: str, text: str) -> list[str]:
+    return [
+        binary, "--lock-wait", "35s",
+        "send", "text",
+        "--to", target,
+        "--message", text,
+        "--no-preview",
+    ]
+
+
+def send_whatsapp() -> int:
+    try:
+        payload = json.loads(sys.stdin.buffer.read().decode())
+        text = str(payload["text"])
+        targets = [str(item) for item in payload["to"]]
+    except (OSError, json.JSONDecodeError, KeyError, UnicodeError, TypeError):
+        return 1
+    binary = wacli_bin()
+    if binary is None:
+        notify("ngrok", "wacli não está instalado", "normal")
+        return 1
+    running: list[tuple[str, subprocess.Popen[bytes]]] = []
+    for target in targets:
+        running.append((target, subprocess.Popen(
+            whatsapp_command(binary, target, text),
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )))
+    sent: list[str] = []
+    failed: list[str] = []
+    for target, proc in running:
+        try:
+            stdout, stderr = proc.communicate(timeout=50)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.communicate()
+            failed.append(target)
+            continue
+        if proc.returncode == 0:
+            sent.append(target)
+            continue
+        failed.append(target)
+        detail = (stderr or stdout or b"").decode(errors="replace").strip()
+        try:
+            with LOG.open("a", encoding="utf-8") as log:
+                log.write(f"whatsapp {target}: {detail}\n")
+        except OSError:
+            pass
+    if failed:
+        notify("ngrok", "WhatsApp falhou para " + ", ".join(failed), "normal")
+        return 1
+    if sent:
+        notify("ngrok", "WhatsApp enviado para " + ", ".join(sent))
+    return 0
+
+
+# Caller holds LOCK.
+def spawn_ngrok() -> str:
+    if not shutil.which("ngrok"):
+        return "missing"
+    if public_url(fetch_api()) or ngrok_http_running():
+        return "running"
+    with open(LOG, "ab") as log:
+        subprocess.Popen(
+            ["ngrok", "http", PORT],
+            stdin=subprocess.DEVNULL,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+    return "started"
+
+
+# Hold the lock only around the spawn so two clicks cannot start two agents.
+def start_ngrok() -> str:
+    if not shutil.which("ngrok"):
+        return "missing"
+    LOCK.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(LOCK, os.O_CREAT | os.O_RDWR, 0o644)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX)
+        return spawn_ngrok()
+    finally:
+        os.close(fd)
+
+
+def stop_ngrok() -> bool:
+    for pid in ngrok_http_pids():
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except OSError:
+            pass
+    for _ in range(25):
+        if not ngrok_http_running() and public_url(fetch_api()) is None:
+            return True
+        time.sleep(0.2)
+    for pid in ngrok_http_pids():
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except OSError:
+            pass
+    time.sleep(0.2)
+    return not ngrok_http_running() and public_url(fetch_api()) is None
+
+
+# Caller holds LOCK. A later URL is then treated as a restart.
+def mark_down() -> None:
+    state = load_state()
+    new_state, _restarted = tunnel_transition(state, None)
+    if new_state != state:
+        STATE.write_text(json.dumps(new_state, ensure_ascii=False), encoding="utf-8")
+
+
+def arm_waiter() -> None:
+    subprocess.Popen(
+        [sys.executable, str(Path(__file__).resolve()), "--wait-signal"],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+
+
+def restart() -> None:
+    if not shutil.which("ngrok"):
+        notify("ngrok", "ngrok is not installed", "critical")
+        return
+    LOCK.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(LOCK, os.O_CREAT | os.O_RDWR, 0o644)
+    try:
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            notify("ngrok", "restart already in progress")
+            return
+        notify("ngrok", "restarting ngrok http 8080")
+        if not stop_ngrok():
+            notify("ngrok", "failed to stop ngrok http 8080", "critical")
+            signal_waybar()
+            return
+        mark_down()
+        started = spawn_ngrok()
+    finally:
+        os.close(fd)
+    if started != "started":
+        notify("ngrok", "ngrok did not restart", "critical")
+        signal_waybar()
+        return
+    signal_waybar()
+    arm_waiter()
+
+
+# Poll until the public URL shows up, then refresh the module and announce it.
+def wait_and_signal() -> None:
+    url = None
+    for _ in range(30):
+        url = public_url(fetch_api())
+        if url:
+            break
+        time.sleep(0.4)
+    signal_waybar()
+    if not url:
+        return
+    plain, _document = tunnel_message(url)
+    notify("ngrok", plain, "low" if copy_message(url) else "normal")
+
+
+def click() -> None:
+    url = public_url(fetch_api())
+    if url:
+        plain, _document = tunnel_message(url)
+        if copy_message(url):
+            notify("ngrok", plain)
+        else:
+            notify("ngrok", "failed to copy the tunnel message", "critical")
+        return
+    if ngrok_http_running():
+        notify("ngrok", "tunnel to :8080 is still starting")
+        signal_waybar()
+        return
+    started = start_ngrok()
+    if started == "missing":
+        notify("ngrok", "ngrok is not installed", "critical")
+        return
+    if started == "running":
+        notify("ngrok", "ngrok is up but not forwarding :8080", "normal")
+        signal_waybar()
+        return
+    notify("ngrok", "starting ngrok http 8080")
+    signal_waybar()
+    arm_waiter()
+
+
+def _pad(size: int) -> int:
+    return (size + 3) & ~3
+
+
+def _enc_str(text: str) -> bytes:
+    raw = text.encode() + b"\0"
+    return struct.pack("<I", len(raw)) + raw + b"\0" * (_pad(len(raw)) - len(raw))
+
+
+def _dec_str(buf: bytes, offset: int) -> tuple[str, int]:
+    (size,) = struct.unpack_from("<I", buf, offset)
+    text = buf[offset + 4:offset + 4 + size - 1].decode()
+    return text, offset + _pad(4 + size)
+
+
+# Owns the Wayland selection until another copy replaces it.
+# wl-copy can only offer one MIME type; this speaks wlr-data-control directly.
+class ClipboardSession:
+    def __init__(self, parts: dict[str, bytes]):
+        runtime = os.environ["XDG_RUNTIME_DIR"]
+        display = os.environ["WAYLAND_DISPLAY"]
+        self.parts = parts
+        self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.sock.connect(os.path.join(runtime, display))
+        self.sock.set_inheritable(False)
+        self.buf = b""
+        self.fds: list[int] = []
+        self.next_id = 2
+        self.source = 0
+        self.device = 0
+        self.held = {"selection": 0, "primary": 0}
+
+    def alloc(self) -> int:
+        object_id = self.next_id
+        self.next_id += 1
+        return object_id
+
+    def send(self, object_id: int, opcode: int, payload: bytes = b"") -> None:
+        header = struct.pack("<IHH", object_id, opcode, 8 + len(payload))
+        self.sock.sendall(header + payload)
+
+    def publish(self) -> None:
+        registry = self.alloc()
+        self.send(1, 1, struct.pack("<I", registry))
+        globals_ = self._collect_globals(registry)
+        seat = next(item for item in globals_ if item[1] == "wl_seat")
+        manager = next(
+            item for item in globals_
+            if item[1] in ("zwlr_data_control_manager_v1", "ext_data_control_manager_v1")
+        )
+        seat_id = self._bind(registry, seat, 1)
+        manager_id = self._bind(registry, manager, 1)
+        self.device = self.alloc()
+        self.source = self.alloc()
+        self.send(manager_id, 1, struct.pack("<II", self.device, seat_id))
+        self.send(manager_id, 0, struct.pack("<I", self.source))
+        for mime in self.parts:
+            self.send(self.source, 0, _enc_str(mime))
+        self.send(self.device, 0, struct.pack("<I", self.source))
+        self._roundtrip()
+
+    def serve(self) -> None:
+        while True:
+            ready, _, _ = select.select([self.sock], [], [])
+            if not ready:
+                continue
+            self._recv()
+            if not self._handle(self._messages()):
+                return
+
+    def _bind(self, registry: int, item: tuple[int, str, int], version: int) -> int:
+        object_id = self.alloc()
+        name, interface, advertised = item
+        payload = struct.pack("<I", name) + _enc_str(interface)
+        payload += struct.pack("<II", min(version, advertised), object_id)
+        self.send(registry, 0, payload)
+        return object_id
+
+    def _collect_globals(self, registry: int) -> list[tuple[int, str, int]]:
+        found: list[tuple[int, str, int]] = []
+        callback = self.alloc()
+        self.send(1, 0, struct.pack("<I", callback))
+        seen = False
+        while not seen:
+            self._recv()
+            for object_id, opcode, body in self._messages():
+                self._check_display(object_id, opcode, body)
+                if object_id == registry and opcode == 0:
+                    name = struct.unpack_from("<I", body)[0]
+                    interface, offset = _dec_str(body, 4)
+                    version = struct.unpack_from("<I", body, offset)[0]
+                    found.append((name, interface, version))
+                if object_id == callback and opcode == 0:
+                    seen = True
+        return found
+
+    def _roundtrip(self) -> None:
+        callback = self.alloc()
+        self.send(1, 0, struct.pack("<I", callback))
+        seen = False
+        while not seen:
+            self._recv()
+            messages = self._messages()
+            if not self._handle(messages, callback):
+                raise OSError("clipboard selection was cancelled")
+            seen = any(object_id == callback and opcode == 0 for object_id, opcode, _body in messages)
+
+    def _recv(self) -> None:
+        data, ancillary, _flags, _addr = self.sock.recvmsg(1 << 16, socket.CMSG_SPACE(256))
+        if not data:
+            raise EOFError("wayland display hung up")
+        for level, kind, payload in ancillary:
+            if level == socket.SOL_SOCKET and kind == socket.SCM_RIGHTS:
+                count = len(payload) // 4
+                self.fds.extend(struct.unpack("=" + "i" * count, payload[:count * 4]))
+        self.buf += data
+
+    def _messages(self) -> list[tuple[int, int, bytes]]:
+        messages = []
+        while len(self.buf) >= 8:
+            object_id, opcode, size = struct.unpack_from("<IHH", self.buf)
+            if size < 8 or len(self.buf) < size:
+                break
+            messages.append((object_id, opcode, self.buf[8:size]))
+            self.buf = self.buf[size:]
+        return messages
+
+    def _check_display(self, object_id: int, opcode: int, body: bytes) -> None:
+        if object_id == 1 and opcode == 0:
+            message, _offset = _dec_str(body, 8)
+            raise OSError(message)
+
+    # False means this selection is gone and the server can exit.
+    def _handle(self, messages: list[tuple[int, int, bytes]], ignore: int = 0) -> bool:
+        for object_id, opcode, body in messages:
+            self._check_display(object_id, opcode, body)
+            if object_id == ignore:
+                continue
+            if object_id == self.device and opcode in (1, 3) and len(body) >= 4:
+                slot = "selection" if opcode == 1 else "primary"
+                incoming = struct.unpack_from("<I", body)[0]
+                previous = self.held[slot]
+                if previous:
+                    self.send(previous, 1)
+                self.held[slot] = incoming
+            elif object_id == self.device and opcode == 2:
+                return False
+            elif object_id == self.source and opcode == 0:
+                mime, _offset = _dec_str(body, 0)
+                fd = self.fds.pop(0)
+                try:
+                    view = memoryview(self.parts.get(mime, b""))
+                    while view:
+                        view = view[os.write(fd, view):]
+                finally:
+                    os.close(fd)
+            elif object_id == self.source and opcode == 1:
+                self.send(self.source, 1)
+                return False
+        return True
+
+
+def serve_clipboard() -> int:
+    try:
+        payload = json.loads(sys.stdin.buffer.read().decode())
+        plain = str(payload["plain"])
+        document = str(payload["html"])
+        session = ClipboardSession({
+            "text/html": document.encode(),
+            "text/plain;charset=utf-8": plain.encode(),
+            "text/plain": plain.encode(),
+            "UTF8_STRING": plain.encode(),
+        })
+        session.publish()
+    except (OSError, EOFError, KeyError, json.JSONDecodeError, UnicodeError, StopIteration, struct.error, IndexError):
+        sys.stdout.buffer.write(b"err\n")
+        sys.stdout.buffer.flush()
+        return 1
+    sys.stdout.buffer.write(b"ok\n")
+    sys.stdout.buffer.flush()
+    try:
+        session.serve()
+    except (OSError, EOFError, struct.error, IndexError):
+        return 1
+    return 0
+
+
+def serve_rich_clipboard(plain: str, document: str) -> bool:
+    proc = subprocess.Popen(
+        [sys.executable, str(Path(__file__).resolve()), "--serve-clipboard"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+    assert proc.stdin is not None and proc.stdout is not None
+    proc.stdin.write(json.dumps({"plain": plain, "html": document}, ensure_ascii=False).encode())
+    proc.stdin.close()
+    if not select.select([proc.stdout], [], [], 2)[0]:
+        proc.kill()
+        proc.wait(timeout=1)
+        return False
+    ok = proc.stdout.readline().strip() == b"ok"
+    proc.stdout.close()
+    if not ok:
+        proc.wait(timeout=1)
+    return ok
+
+
+def main() -> int:
+    if "--serve-clipboard" in sys.argv:
+        return serve_clipboard()
+    if "--whatsapp" in sys.argv:
+        return send_whatsapp()
+    if "--wait-signal" in sys.argv:
+        wait_and_signal()
+        return 0
+    if "--click" in sys.argv:
+        click()
+        return 0
+    if "--restart" in sys.argv:
+        restart()
+        return 0
+    info = payload()
+    observe_tunnel(info.get("url"))
+    print(waybar_line(info), flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

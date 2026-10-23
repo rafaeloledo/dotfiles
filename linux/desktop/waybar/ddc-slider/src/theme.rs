@@ -1,5 +1,3 @@
-//! YoRHa palette aligned with waybar/style.css.
-
 /// Semantic color roles for the shared brightness panel.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PanelRole {

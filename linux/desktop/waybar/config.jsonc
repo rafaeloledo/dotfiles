@@ -9,7 +9,6 @@
         "custom/ws-prev",
         "ext/workspaces",
         "custom/ws-next",
-        "custom/close",
         "custom/sep",
         "hyprland/window"
     ],
@@ -17,6 +16,7 @@
         "clock"
     ],
     "modules-right": [
+        "custom/ngrok",
         "custom/aur",
         "network",
         "cpu",
@@ -39,12 +39,6 @@
         "format": "󰅂",
         "tooltip-format": "Next workspace",
         "on-click": "$HOME/.local/scripts/nextworkspace"
-    },
-
-    "custom/close": {
-        "format": "󰅖",
-        "tooltip-format": "Close window",
-        "on-click": "hyprctl dispatch 'hl.dsp.window.close()'"
     },
 
     "ext/workspaces": {
@@ -90,6 +84,18 @@
     },
 
     // ── Right ─────────────────────────────────────────────────────────
+
+    "custom/ngrok": {
+        "exec": "$HOME/.config/waybar/scripts/ngrok-tunnel",
+        "return-type": "json",
+        "interval": 5,
+        "signal": 12,
+        "exec-on-event": false,
+        "format": "{text}",
+        "on-click": "$HOME/.config/waybar/scripts/ngrok-tunnel --click",
+        "on-click-right": "$HOME/.config/waybar/scripts/ngrok-tunnel --restart",
+        "tooltip": true
+    },
 
     "custom/aur": {
         "exec": "$HOME/.config/waybar/scripts/aur-versions",

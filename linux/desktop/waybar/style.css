@@ -1,20 +1,3 @@
-/*
- * ╔══════════════════════════════════════════════════════════════════╗
- * ║  YoRHa Tactical Interface × Section 9 Ghost Protocol            ║
- * ║                                                                  ║
- * ║  Palette                                                         ║
- * ║    bg-0      #0b0b0e   — void black (2B's dress)                ║
- * ║    bg-1      #13131a   — module tray                            ║
- * ║    bg-2      #1d1d26   — subtle border surface                  ║
- * ║    fg-0      #dcdce8   — cold white (2B's hair)                 ║
- * ║    fg-1      #7a7a8e   — ghost gray                             ║
- * ║    gold      #c8a86a   — YoRHa insignia                        ║
- * ║    cyan      #4fc8c8   — Motoko's ghost signal                  ║
- * ║    red       #c04848   — critical alert                         ║
- * ║    amber     #c89040   — low-power warning                      ║
- * ╚══════════════════════════════════════════════════════════════════╝
- */
-
 @define-color bg0    #0b0b0e;
 @define-color bg1    #13131a;
 @define-color bg2    #1d1d26;
@@ -66,8 +49,7 @@ window#waybar.hidden {
 /* ── Workspace utilities ────────────────────────────────────────────── */
 
 #custom-ws-prev,
-#custom-ws-next,
-#custom-close {
+#custom-ws-next {
     padding:         0 8px;
     background:      transparent;
     color:           @fg1;
@@ -80,12 +62,6 @@ window#waybar.hidden {
     background:    rgba(79, 200, 200, 0.06);
     color:         @fg0;
     border-bottom: 2px solid @cyan;
-}
-
-#custom-close:hover {
-    background:    rgba(192, 72, 72, 0.08);
-    color:         @red;
-    border-bottom: 2px solid @red;
 }
 
 /* ── Workspaces ─────────────────────────────────────────────────────── */
@@ -157,6 +133,7 @@ window#waybar.hidden {
 #memory,
 #pulseaudio,
 #custom-brightness,
+#custom-ngrok,
 #custom-aur,
 #battery,
 #tray {
@@ -196,6 +173,34 @@ window#waybar.hidden {
 
 #custom-aur.error {
     color: @red;
+}
+
+/* ── ngrok tunnel to :8080 ──────────────────────────────────────────── */
+
+#custom-ngrok {
+    padding: 0 10px;
+    color:   @fg1;
+}
+
+#custom-ngrok.up {
+    color: @cyan;
+}
+
+#custom-ngrok.starting {
+    color: @gold;
+}
+
+#custom-ngrok.down {
+    color: @fg1;
+}
+
+#custom-ngrok.error {
+    color: @red;
+}
+
+#custom-ngrok:hover {
+    color:      @cyan;
+    background: rgba(79, 200, 200, 0.05);
 }
 
 /* ── Network ────────────────────────────────────────────────────────── */
