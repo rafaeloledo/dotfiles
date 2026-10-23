@@ -55,6 +55,7 @@ arch_packages=(
   noto-fonts-emoji
   noto-fonts-extra
   obs-studio
+  obs-backgroundremoval
   pamixer
   pandoc-cli
   papirus-icon-theme
