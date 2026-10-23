@@ -1,5 +1,7 @@
+# ctrl+shift+, - reload
+
 window-decoration = true
-font-size = 22.5
+font-size = 14
 
 font-family = CommitMono
 
