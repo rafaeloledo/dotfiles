@@ -1,12 +1,13 @@
 function fish_user_key_bindings
     bind ctrl-q 'fg 2>&1 | tee ~/fg_output.log > /dev/null; commandline -f repaint'
+    bind ctrl-x 'commandline -r fg; commandline -f execute'
     bind ctrl-f tmux_sessionizer
 
     bind alt-l forward-char
     bind alt-k up-or-search
     bind alt-j down-or-search
     bind ctrl-o yazi
-    bind alt-a cursor_agent_prompt
+    bind alt-a agy_agent_prompt
     bind ctrl-l 'clear; commandline -f repaint'
 
     bind \b backward-kill-line
