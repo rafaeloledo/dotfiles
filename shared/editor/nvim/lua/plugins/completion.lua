@@ -1,7 +1,11 @@
 if not vim.g.vscode then
 	local sources = {
 		default = { "lsp", "path", "snippets", "buffer", "copilot" },
-    per_filetype = { sql = { "dadbod" } },
+		per_filetype = {
+			sql = { "snippets", "dadbod", "buffer" },
+			mysql = { "snippets", "dadbod", "buffer" },
+			plsql = { "snippets", "dadbod", "buffer" },
+		},
 		providers = {
 			dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 			copilot = {

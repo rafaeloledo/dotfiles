@@ -16,6 +16,17 @@ return {
         preview = true,
       },
     },
+    config = function(_, opts)
+      require("mini.files").setup(opts)
+      require("lib.mini-files-git").setup()
+    end,
+  },
+
+  {
+    "echasnovski/mini-git",
+    main = "mini.git",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
   },
 
   -- alternative for lualine
@@ -29,18 +40,14 @@ return {
           active = function()
             local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 1000 })
 
-            -- Custom fugitive function (guarded so statusline doesn't autoload fugitive)
-            local fugitive = function()
-              if vim.fn.exists('*FugitiveHead') ~= 1 then return '' end
+            local git = MiniStatusline.section_git({ trunc_width = 40 })
+            if git == '' and vim.fn.exists('*FugitiveHead') == 1 then
               local head = vim.fn.FugitiveHead()
               if head and head ~= '' then
-                return ' ' .. head
-              else
-                return ''
+                git = ' ' .. head
               end
             end
 
-            local git           = MiniStatusline.section_git({ trunc_width = 40 })
             local diff          = MiniStatusline.section_diff({ trunc_width = 75 })
             local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
             local lsp           = MiniStatusline.section_lsp({ trunc_width = 75 })
@@ -51,7 +58,7 @@ return {
 
             return MiniStatusline.combine_groups({
               { hl = mode_hl,                  strings = { mode } },
-              { hl = 'MiniStatuslineDevinfo',  strings = { fugitive(), git, diff, diagnostics, lsp } },
+              { hl = 'MiniStatuslineDevinfo',  strings = { git, diff, diagnostics, lsp } },
               '%<', -- Mark general truncate point
               { hl = 'MiniStatuslineFilename', strings = { filename } },
               '%=', -- End left alignment
