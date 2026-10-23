@@ -56,3 +56,5 @@
 [user]
 	email = rafaeloliveiraledo@gmail.com
 	name = rafaeloledo
+[safe]
+	directory = /home/rgnh55/repos/actions-runner/_work/my-app/my-app

@@ -8,3 +8,5 @@ nvim.log
 .codex
 .claude
 startup.log
+__pycache__/
+*.pyc
