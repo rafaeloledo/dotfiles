@@ -1,4 +1,48 @@
-hl.monitor({ output = "DP-1",     mode = "3840x2160@60",  position = "auto",  scale = 1.5 })
+local tablet_active = hl.get_monitor("TABLET") ~= nil
+
+if tablet_active then
+    hl.monitor({
+        output   = "TABLET",
+        mode     = "3200x2136@120",
+        position = "0x0",
+        scale    = 1.6,
+        mirror   = "",
+        disabled = false,
+    })
+    hl.monitor({
+        output   = "DP-1",
+        disabled = true,
+    })
+else
+    hl.monitor({
+        output   = "DP-1",
+        mode     = "3840x2160@60",
+        position = "0x0",
+        scale    = 1.5,
+        mirror   = "",
+        disabled = false,
+    })
+end
+
+hl.device({
+    name   = "touch-passthrough-1",
+    output = "TABLET",
+})
+
+hl.device({
+    name   = "mouse-passthrough-(absolute)",
+    output = "TABLET",
+})
+
+hl.device({
+    name   = "touch-passthrough",
+    output = "TABLET",
+})
+
+hl.device({
+    name   = "pen-passthrough",
+    output = "TABLET",
+})
 
 local terminal    = "ghostty"
 local fileManager = "nautilus"
@@ -6,7 +50,7 @@ local menu        = "rofi -show run"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("killall ddc-slider 2>/dev/null; killall waybar 2>/dev/null; waybar")
-    hl.exec_cmd("apollo")
+    hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP && systemctl --user restart apollo.service")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user restart xdg-desktop-portal-hyprland xdg-desktop-portal")
 end)
@@ -102,34 +146,29 @@ hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "q
 
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
-hl.bind("SUPER + Q", hl.dsp.exec_cmd(terminal))
-hl.bind("SUPER + C", hl.dsp.window.close())
-hl.bind("SUPER + ESCAPE", hl.dsp.exec_cmd("makoctl dismiss --all"))
-hl.bind("SUPER + M", hl.dsp.exit())
-hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
+hl.bind("ALT + Q", hl.dsp.exec_cmd(terminal))
+hl.bind("ALT + C", hl.dsp.window.close())
+hl.bind("ALT + ESCAPE", hl.dsp.exec_cmd("makoctl dismiss --all"))
+hl.bind("ALT + M", hl.dsp.exit())
+hl.bind("ALT + E", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
+hl.bind("ALT + R", hl.dsp.exec_cmd(menu))
 hl.bind("SUPER + P", hl.dsp.window.pseudo())
 hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind("SUPER + A",            hl.dsp.exec_cmd("ani-cli --rofi --vlc"))
-hl.bind("SUPER + SHIFT + A",    hl.dsp.exec_cmd("pavucontrol"))
--- hl.bind("SUPER + B",            hl.dsp.exec_cmd("firefox"))
-hl.bind("SUPER + B",            hl.dsp.exec_cmd("google-chrome-stable"))
--- Fire on release. A press bind starts slurp while Super is still down, slurp
--- takes the keyboard, and Hyprland never sees the key-up. The chord stays
--- latched, so this bind does not run again until the session is restarted.
-hl.bind("SUPER + O", hl.dsp.exec_cmd("~/.local/scripts/extract_text"), { release = true, dont_inhibit = true })
+hl.bind("ALT + SHIFT + A",    hl.dsp.exec_cmd("pavucontrol"))
+hl.bind("ALT + B",            hl.dsp.exec_cmd("brave"))
+-- hl.bind("SUPER + B",            hl.dsp.exec_cmd("google-chrome-stable"))
+hl.bind("ALT + O", hl.dsp.exec_cmd("~/.local/scripts/extract_text"), { release = true, dont_inhibit = true })
 hl.bind("SUPER + N",            hl.dsp.exec_cmd("flatpak run md.obsidian.Obsidian"))
 hl.bind("SUPER + SHIFT + S",    hl.dsp.exec_cmd('mkdir -p ~/Screenshots && geom=$(slurp) && [ -n "$geom" ] && grim -g "$geom" - | tee ~/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy'))
--- Wayland clients do not get global hotkeys. Pass press and release to OBS.
-hl.bind("CTRL + ALT + S",     hl.dsp.pass({ window = "class:com\\.obsproject\\.Studio" }))
 hl.bind("SUPER + T",            hl.dsp.exec_cmd("pamixer --default-source -t"))
 hl.bind("SUPER + W",            hl.dsp.exec_cmd("killall -SIGUSR1 waybar || waybar"))
 hl.bind("SUPER + tab",           hl.dsp.focus({ workspace = "previous" }))
-hl.bind("SUPER + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
-hl.bind("SUPER + bracketleft",  hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
-hl.bind("SUPER + page_up",      hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
-hl.bind("SUPER + page_down",    hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
+hl.bind("ALT + bracketright", hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
+hl.bind("ALT + bracketleft",  hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
+hl.bind("ALT + page_up",      hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
+hl.bind("ALT + page_down",    hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
 hl.bind("SUPER + left",         hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
 hl.bind("SUPER + right",        hl.dsp.exec_cmd("~/.local/scripts/nextworkspace"))
 hl.bind("SUPER + up",           hl.dsp.exec_cmd("~/.local/scripts/previousworkspace"))
@@ -140,36 +179,27 @@ hl.bind("SUPER + H", hl.dsp.focus({ direction = "left" }))
 hl.bind("SUPER + J", hl.dsp.focus({ direction = "down" }))
 hl.bind("SUPER + K", hl.dsp.focus({ direction = "up" }))
 hl.bind("SUPER + L", hl.dsp.focus({ direction = "right" }))
-hl.bind("SUPER + ALT + L", hl.dsp.exec_cmd("~/.local/scripts/lock-screen"))
-
+-- hl.bind("ALT + ALT + L", hl.dsp.exec_cmd("~/.local/scripts/lock-screen"))
 hl.bind("SUPER + SHIFT + P",                      hl.dsp.exec_cmd("grim - | wl-copy"))
 
-for i = 6, 10 do
-    hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
-end
-
-for i = 1, 5 do
-    hl.workspace_rule({ workspace = tostring(i), monitor = "DP-1", default = true })
-end
 
 for i = 1, 10 do
     local key = i % 10
-    hl.bind("SUPER + " .. key,         hl.dsp.focus({ workspace = i }))
-    hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind("ALT + " .. key,         hl.dsp.focus({ workspace = i }))
+    hl.bind("ALT + CTRL + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 hl.bind("SUPER + S",          hl.dsp.workspace.toggle_special("magic"))
 hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind("SUPER + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
 
-hl.bind("SUPER + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind("ALT + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind("ALT + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind("ALT + C",                 hl.dsp.window.resize(), { mouse = true })
 
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer --increase 5 --set-limit 100"),   { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer --decrease 5"),                   { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("pamixer --toggle-mute"),                  { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("pamixer --default-source --toggle-mute"), { locked = true, repeating = true })
+hl.bind("SUPER + SHIFT + D",     hl.dsp.exec_cmd("pamixer --default-source --toggle-mute"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("~/.local/scripts/monitor-brightness up"),   { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("~/.local/scripts/monitor-brightness down"), { locked = true, repeating = true })
 
@@ -178,12 +208,6 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
-for i = 6, 10 do
-    hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
-end
-for i = 1, 5 do
-    hl.workspace_rule({ workspace = tostring(i), monitor = "DP-1", default = true })
-end
 
 hl.window_rule({
     name  = "suppress-maximize-events",
@@ -210,3 +234,7 @@ hl.window_rule({
     move  = "20 monitor_h-120",
     float = true,
 })
+
+hl.bind("CTRL + ALT + S",     hl.dsp.pass({ window = "class:com\\.obsproject\\.Studio" }))
+hl.bind("Control_L",          hl.dsp.pass({ window = "class:discord" }))
+hl.bind("Control_R",          hl.dsp.pass({ window = "class:discord" }))

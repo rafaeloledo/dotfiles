@@ -1,0 +1,244 @@
+#!/usr/bin/env python3
+"""Switch Hyprland display output and workspaces between DP-1 and TABLET."""
+
+import json
+import subprocess
+import sys
+import time
+
+DP_NAME = "DP-1"
+TABLET_NAME = "TABLET"
+
+DP_SPEC = {
+    "output": DP_NAME,
+    "mode": "3840x2160@60",
+    "position": "0x0",
+    "scale": 1.5,
+    "mirror": "",
+    "disabled": False,
+}
+
+TABLET_SPEC = {
+    "output": TABLET_NAME,
+    "mode": "3200x2136@120",
+    "position": "0x0",
+    "scale": 1.6,
+    "mirror": "",
+    "disabled": False,
+}
+
+
+def hypr_json(args: list[str]):
+    out = subprocess.check_output(["hyprctl", "-j", *args], text=True)
+    return json.loads(out)
+
+
+def hypr_repl(code: str) -> str:
+    res = subprocess.run(["hyprctl", "repl", code], check=True, capture_output=True, text=True)
+    return res.stdout.strip()
+
+
+def to_lua_table(spec: dict) -> str:
+    parts = []
+    for k, v in spec.items():
+        if isinstance(v, bool):
+            val = "true" if v else "false"
+        elif isinstance(v, (int, float)):
+            val = str(v)
+        else:
+            val = json.dumps(str(v))
+        parts.append(f"{k} = {val}")
+    return "{ " + ", ".join(parts) + " }"
+
+
+def find_monitor(monitors: list[dict], name: str) -> dict | None:
+    return next((m for m in monitors if m.get("name") == name), None)
+
+
+def wait_until(predicate, timeout: float = 2.5, interval: float = 0.025):
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        val = predicate()
+        if val:
+            return val
+        time.sleep(interval)
+    return predicate()
+
+
+def workspace_target(ws: dict) -> str:
+    addr = ws.get("address")
+    if addr:
+        return addr
+    ws_id = ws.get("id")
+    if isinstance(ws_id, int) and ws_id > 0:
+        return str(ws_id)
+    name = ws.get("name", "")
+    return name if name.startswith("name:") else f"name:{name}"
+
+
+def active_workspace_of(mon: dict | None) -> str:
+    if not mon:
+        return ""
+    active = mon.get("activeWorkspace") or {}
+    return active.get("address") or active.get("name") or ""
+
+
+def is_regular_workspace_on(ws: dict, monitor_name: str) -> bool:
+    if ws.get("monitor") != monitor_name:
+        return False
+    return ws.get("type") != "special" and not str(ws.get("name", "")).startswith("special:")
+
+
+def hypr_dispatch(expr: str) -> None:
+    out = hypr_repl(
+        f"local r = hl.dispatch({expr}); if type(r) == 'table' and r.ok == false then error(tostring(r.error)) end; return 'ok'"
+    )
+    if out != "ok":
+        raise RuntimeError(f"hyprctl dispatch failed for {expr}: {out}")
+
+
+def move_workspace(ws_target: str, monitor_name: str) -> None:
+    hypr_dispatch(
+        f"hl.dsp.workspace.move({{ workspace = {json.dumps(ws_target)}, monitor = {json.dumps(monitor_name)} }})"
+    )
+
+
+def move_workspaces(source: str, target: str, active_ws: str = "", skip_active: bool = False) -> str:
+    monitors = hypr_json(["monitors", "all"])
+    workspaces = hypr_json(["workspaces"])
+
+    if not active_ws:
+        active_ws = active_workspace_of(find_monitor(monitors, source))
+
+    for ws in workspaces:
+        if not is_regular_workspace_on(ws, source):
+            continue
+        ws_addr = workspace_target(ws)
+        if skip_active and ws_addr == active_ws:
+            continue
+        move_workspace(ws_addr, target)
+
+    return active_ws
+
+
+def ensure_monitor_active(name: str, spec: dict, expected_size: tuple[int, int]) -> None:
+    hypr_repl(f"hl.monitor({to_lua_table(spec)})")
+
+    exp_w, exp_h = expected_size
+    ready = wait_until(
+        lambda: (
+            (m := find_monitor(hypr_json(["monitors", "all"]), name)) is not None
+            and not m.get("disabled", False)
+            and m.get("mirrorOf") == "none"
+            and m.get("width") == exp_w
+            and m.get("height") == exp_h
+        )
+    )
+    if not ready:
+        raise RuntimeError(f"Monitor {name} failed to reach {exp_w}x{exp_h}")
+
+
+def focus_monitor_workspace(monitor_name: str, ws_target: str) -> None:
+    hypr_dispatch(f"hl.dsp.focus({{ monitor = {json.dumps(monitor_name)} }})")
+    if ws_target:
+        hypr_dispatch(f"hl.dsp.focus({{ workspace = {json.dumps(ws_target)} }})")
+        wait_until(
+            lambda: active_workspace_of(find_monitor(hypr_json(["monitors", "all"]), monitor_name)) == ws_target,
+            timeout=1.0,
+        )
+
+
+def connect() -> None:
+    monitors = hypr_json(["monitors", "all"])
+    dp = find_monitor(monitors, DP_NAME)
+    active_ws = active_workspace_of(dp)
+
+    if find_monitor(monitors, TABLET_NAME) is None:
+        subprocess.run(["hyprctl", "output", "create", "headless", TABLET_NAME], check=True)
+        appeared = wait_until(
+            lambda: find_monitor(hypr_json(["monitors", "all"]), TABLET_NAME) is not None
+        )
+        if not appeared:
+            raise RuntimeError("Headless output TABLET did not appear")
+
+    ensure_monitor_active(TABLET_NAME, TABLET_SPEC, (3200, 2136))
+
+    monitors = hypr_json(["monitors", "all"])
+    dp = find_monitor(monitors, DP_NAME)
+    if dp is not None and not dp.get("disabled", False):
+        # Leave DP-1's active workspace until DP-1 is disabled so Hyprland does
+        # not spawn a temporary filler workspace before evacuating it to TABLET.
+        active_ws = move_workspaces(DP_NAME, TABLET_NAME, active_ws=active_ws, skip_active=True)
+        hypr_repl(f"hl.monitor({{ output = {json.dumps(DP_NAME)}, disabled = true }})")
+        wait_until(
+            lambda: (
+                (m := find_monitor(hypr_json(["monitors", "all"]), DP_NAME)) is None
+                or m.get("disabled", False)
+            )
+        )
+        move_workspaces(DP_NAME, TABLET_NAME, skip_active=False)
+
+    if not active_ws:
+        active_ws = active_workspace_of(find_monitor(hypr_json(["monitors", "all"]), TABLET_NAME))
+
+    focus_monitor_workspace(TABLET_NAME, active_ws)
+    time.sleep(0.1)
+
+
+def disconnect() -> None:
+    monitors = hypr_json(["monitors", "all"])
+    dp = find_monitor(monitors, DP_NAME)
+    tablet = find_monitor(monitors, TABLET_NAME)
+
+    if (
+        tablet is None
+        and dp is not None
+        and not dp.get("disabled", False)
+        and dp.get("mirrorOf") == "none"
+    ):
+        return
+
+    active_ws = active_workspace_of(tablet)
+
+    if dp is not None:
+        ensure_monitor_active(DP_NAME, DP_SPEC, (3840, 2160))
+
+    if tablet is not None:
+        # Ensure TABLET is enabled before moving/removing: `hyprctl output remove`
+        # only finds outputs that are currently enabled.
+        if tablet.get("disabled", False):
+            ensure_monitor_active(TABLET_NAME, TABLET_SPEC, (3200, 2136))
+
+        if dp is not None:
+            move_workspaces(TABLET_NAME, DP_NAME, active_ws=active_ws, skip_active=True)
+
+        subprocess.run(["hyprctl", "output", "remove", TABLET_NAME], check=True)
+        wait_until(
+            lambda: find_monitor(hypr_json(["monitors", "all"]), TABLET_NAME) is None
+        )
+
+        if dp is not None:
+            move_workspaces(TABLET_NAME, DP_NAME, skip_active=False)
+            if not active_ws:
+                active_ws = active_workspace_of(find_monitor(hypr_json(["monitors", "all"]), DP_NAME))
+            focus_monitor_workspace(DP_NAME, active_ws)
+    elif dp is not None:
+        if not active_ws:
+            active_ws = active_workspace_of(find_monitor(hypr_json(["monitors", "all"]), DP_NAME))
+        focus_monitor_workspace(DP_NAME, active_ws)
+
+
+def main() -> int:
+    if len(sys.argv) != 2 or sys.argv[1] not in ("connect", "disconnect"):
+        print(f"usage: {sys.argv[0]} {{connect|disconnect}}", file=sys.stderr)
+        return 2
+
+    if sys.argv[1] == "connect":
+        connect()
+    else:
+        disconnect()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
