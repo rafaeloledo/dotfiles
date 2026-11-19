@@ -1,0 +1,305 @@
+/**
+ * YoRHa / NieR:Automata theme for Rofi (Wayland)
+ *
+ * Palette aligned with Waybar, Mako, and ddc-slider:
+ *   bg0    #0b0b0e  (obsidian void)
+ *   bg1    #13131a  (panel surface)
+ *   bg2    #1d1d26  (hairline border / badge fill)
+ *   fg0    #dcdce8  (ivory text)
+ *   fg1    #7a7a8e  (muted slate)
+ *   gold   #c8a86a  (YoRHa primary accent)
+ *   cyan   #4fc8c8  (Pod scan / match accent)
+ *   red    #c04848  (critical)
+ *   amber  #c89040  (warning)
+ */
+
+* {
+    bg0:              #0b0b0e;
+    bg1:              #13131a;
+    bg2:              #1d1d26;
+    bg-sel:           #1c1914;
+    bg-active:        #0f1b1e;
+    bg-urgent:        #1d1014;
+    fg0:              #dcdce8;
+    fg1:              #7a7a8e;
+    gold:             #c8a86a;
+    cyan:             #4fc8c8;
+    red:              #c04848;
+    amber:            #c89040;
+
+    background-color: transparent;
+    text-color:       @fg0;
+    border-color:     @bg2;
+    margin:           0px;
+    padding:          0px;
+    spacing:          0px;
+    border-radius:    0px;
+}
+
+window {
+    location:         center;
+    anchor:           center;
+    width:            680px;
+    background-color: @bg0;
+    border:           1px solid;
+    border-color:     @gold;
+    children:         [ mainbox ];
+}
+
+mainbox {
+    orientation:      vertical;
+    background-color: transparent;
+    children:         [ hud-header, inputbar, message, listview, mode-switcher ];
+}
+
+hud-header {
+    orientation:      horizontal;
+    expand:           false;
+    background-color: @bg1;
+    border:           0px 0px 1px 0px solid;
+    border-color:     @bg2;
+    padding:          8px 14px;
+    spacing:          4px;
+    children:         [ textbox-hud-tag, dummy-header, num-filtered-rows, textbox-num-sep, num-rows ];
+}
+
+textbox-hud-tag {
+    expand:           false;
+    markup:           true;
+    content:          "<span color='#c8a86a' weight='bold'>◈</span>  <span color='#dcdce8' weight='bold'>YORHA</span> <span color='#7a7a8e'>// TERMINAL</span>";
+    font:             "JetBrainsMono Nerd Font 9";
+    vertical-align:   0.5;
+}
+
+dummy-header {
+    expand:           true;
+}
+
+num-filtered-rows {
+    expand:           false;
+    text-color:       @cyan;
+    font:             "JetBrainsMono Nerd Font 9";
+    vertical-align:   0.5;
+}
+
+textbox-num-sep {
+    expand:           false;
+    str:              "/";
+    text-color:       @fg1;
+    font:             "JetBrainsMono Nerd Font 9";
+    vertical-align:   0.5;
+}
+
+num-rows {
+    expand:           false;
+    text-color:       @fg1;
+    font:             "JetBrainsMono Nerd Font 9";
+    vertical-align:   0.5;
+}
+
+inputbar {
+    orientation:      horizontal;
+    expand:           false;
+    background-color: @bg1;
+    border:           0px 0px 1px 0px solid;
+    border-color:     @bg2;
+    padding:          11px 14px;
+    spacing:          10px;
+    children:         [ prompt, textbox-prompt-sep, entry, overlay, case-indicator ];
+}
+
+prompt {
+    expand:           false;
+    background-color: @bg2;
+    border:           0px 0px 0px 2px solid;
+    border-color:     @gold;
+    padding:          4px 10px;
+    text-color:       @gold;
+    font:             "JetBrainsMono Nerd Font Bold 10";
+    vertical-align:   0.5;
+}
+
+textbox-prompt-sep {
+    expand:           false;
+    str:              "›";
+    text-color:       @cyan;
+    font:             "JetBrainsMono Nerd Font Bold 12";
+    vertical-align:   0.5;
+}
+
+entry {
+    expand:           true;
+    background-color: transparent;
+    text-color:       @fg0;
+    placeholder:      "Search command or unit...";
+    placeholder-color:@fg1;
+    cursor:           text;
+    cursor-color:     @cyan;
+    cursor-width:     2px;
+    blink:            false;
+    vertical-align:   0.5;
+}
+
+overlay {
+    expand:           false;
+    background-color: @gold;
+    text-color:       @bg0;
+    padding:          2px 8px;
+    vertical-align:   0.5;
+}
+
+case-indicator {
+    expand:           false;
+    text-color:       @cyan;
+    font:             "JetBrainsMono Nerd Font 9";
+    vertical-align:   0.5;
+}
+
+message {
+    background-color: @bg1;
+    border:           0px 0px 1px 0px solid;
+    border-color:     @bg2;
+    padding:          10px 14px;
+}
+
+textbox {
+    text-color:       @fg0;
+    font:             "JetBrainsMono Nerd Font 10";
+    vertical-align:   0.5;
+}
+
+listview {
+    background-color: @bg0;
+    columns:          1;
+    lines:            9;
+    dynamic:          true;
+    fixed-height:     false;
+    scrollbar:        true;
+    cycle:            true;
+    padding:          8px 10px;
+    spacing:          3px;
+    border:           0px;
+}
+
+scrollbar {
+    width:                  3px;
+    handle-width:           3px;
+    handle-color:           @gold;
+    handle-rounded-corners: false;
+    background-color:       @bg1;
+    margin:                 0px 0px 0px 8px;
+}
+
+element {
+    orientation:      horizontal;
+    padding:          8px 10px;
+    spacing:          10px;
+    border:           0px 0px 0px 2px solid;
+    border-color:     transparent;
+    background-color: transparent;
+    text-color:       @fg0;
+    cursor:           pointer;
+    children:         [ element-icon, element-text ];
+}
+
+element-icon {
+    size:             1.25em;
+    vertical-align:   0.5;
+    cursor:           inherit;
+}
+
+element-text {
+    vertical-align:   0.5;
+    text-color:       inherit;
+    highlight:        bold #4fc8c8;
+    cursor:           inherit;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+    text-color:       @fg0;
+    border-color:     transparent;
+}
+
+element normal.active,
+element alternate.active {
+    background-color: @bg-active;
+    text-color:       @cyan;
+    border-color:     @cyan;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color: @bg-urgent;
+    text-color:       @red;
+    border-color:     @red;
+}
+
+element selected.normal {
+    background-color: @bg-sel;
+    text-color:       @gold;
+    border-color:     @gold;
+}
+
+element selected.active {
+    background-color: @bg-active;
+    text-color:       @cyan;
+    border-color:     @cyan;
+}
+
+element selected.urgent {
+    background-color: @bg-urgent;
+    text-color:       @red;
+    border-color:     @red;
+}
+
+mode-switcher {
+    orientation:      horizontal;
+    expand:           false;
+    background-color: @bg1;
+    border:           1px 0px 0px 0px solid;
+    border-color:     @bg2;
+    padding:          0px 8px;
+    spacing:          4px;
+}
+
+button {
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+    background-color: transparent;
+    text-color:       @fg1;
+    border:           0px 0px 2px 0px solid;
+    border-color:     transparent;
+    padding:          7px 12px;
+    font:             "JetBrainsMono Nerd Font 9";
+    cursor:           pointer;
+}
+
+button selected {
+    background-color: @bg-sel;
+    text-color:       @gold;
+    border-color:     @gold;
+    font:             "JetBrainsMono Nerd Font Bold 9";
+}
+
+error-message {
+    background-color: @bg1;
+    border:           1px solid;
+    border-color:     @red;
+    padding:          12px;
+}
+
+@media ( enabled: DMENU ) {
+    mode-switcher {
+        enabled: false;
+    }
+
+    element-icon {
+        enabled: false;
+    }
+
+    textbox-hud-tag {
+        content: "<span color='#c8a86a' weight='bold'>◈</span>  <span color='#dcdce8' weight='bold'>YORHA</span> <span color='#7a7a8e'>// INPUT</span>";
+    }
+}
